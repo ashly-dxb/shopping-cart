@@ -3,7 +3,8 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import path from "path";
 
-const uri = "mongodb://localhost:27017";
+// const uri = "mongodb://localhost:27017";
+const uri = "mongodb+srv://ashlythomas:mylove@1980@cluster0.nobtacb.mongodb.net/vue-node-shopping?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 const app = express();
