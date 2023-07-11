@@ -3,7 +3,6 @@
     <div class="page-wrap">
       <router-view :user="user"></router-view>
     </div>
-
 </template>
 
 <script>
@@ -21,12 +20,16 @@ export default {
           user: null
         }
     },
+
+    mounted: function () {
+        this.created();
+    },
     
     methods: {
         created: async function () {
             const auth = getAuth();
-            onAuthStateChanged(auth, user => {
-                this.user = user; 
+            await onAuthStateChanged(auth, user => {
+                this.user = user;
             });
         }
     }
