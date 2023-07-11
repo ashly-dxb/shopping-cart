@@ -23,13 +23,18 @@ export default {
 
     mounted: function () {
         this.created();
+
+        console.log("mounted VUE");
     },
     
     methods: {
-        created: async function () {
+        created: function () {
+            console.log("createed 1");
             const auth = getAuth();
-            await onAuthStateChanged(auth, user => {
+            console.log("createed 2");
+            onAuthStateChanged(auth, user => {
                 this.user = user;
+                console.log("createed 3");
             });
         }
     }
