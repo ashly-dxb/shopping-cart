@@ -92,8 +92,10 @@ export default {
             }
 
             await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-            alert('A login link was sent to the email you provided');
+            
             window.localStorage.setItem('emailForSignIn', email);
+
+            alert('A login link was sent to the email you provided');
         }
     },
 }

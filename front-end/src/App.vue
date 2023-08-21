@@ -22,9 +22,9 @@ export default {
     },
 
     mounted: function () {
-        this.created();
-
         console.log("mounted VUE");
+
+        this.created();        
     },
     
     methods: {
