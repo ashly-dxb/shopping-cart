@@ -1,7 +1,6 @@
 require("dotenv").config();
 
 import express from "express";
-// import { MongoClient } from "mongodb";
 import path from "path";
 
 import bcryptjs from "bcryptjs";
@@ -24,14 +23,6 @@ async function dbConnect() {
   console.log("Connected to MongoDB database.");
   connection.isConnected = db.connections[0].readyState;
 }
-
-// const password = process.env.MONGODB_PASS;
-// const dbURL =
-//   "mongodb+srv://ashlythomas:" +
-//   password +
-//   "@cluster0.nobtacb.mongodb.net/vue-node-shopping?retryWrites=true&w=majority";
-// const dbURL = "mongodb://localhost:27017";
-// const dbConnection = new MongoClient(dbURL);
 
 const app = express();
 app.use(express.json());
