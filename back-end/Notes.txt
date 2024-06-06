@@ -1,0 +1,5 @@
+To run backend:
+
+npx nodemon --exec npx babel-node src/server.js
+OR
+npm run dev

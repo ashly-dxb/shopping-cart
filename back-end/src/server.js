@@ -1,19 +1,37 @@
 require("dotenv").config();
 
 import express from "express";
-import { MongoClient } from "mongodb";
+// import { MongoClient } from "mongodb";
 import path from "path";
 
-const password = process.env.MONGODB_PASS;
+import bcryptjs from "bcryptjs";
+import mongoose from "mongoose";
+import Users from "./models/Users";
+import Products from "./models/Products";
+// import { URLSearchParams } from "url";
 
-const dbURL =
-  "mongodb+srv://ashlythomas:" +
-  password +
-  "@cluster0.nobtacb.mongodb.net/vue-node-shopping?retryWrites=true&w=majority";
+const connection = {};
+async function dbConnect() {
+  if (connection.isConnected) {
+    return;
+  }
 
+  const db = await mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+
+  console.log("Connected to MongoDB database.");
+  connection.isConnected = db.connections[0].readyState;
+}
+
+// const password = process.env.MONGODB_PASS;
+// const dbURL =
+//   "mongodb+srv://ashlythomas:" +
+//   password +
+//   "@cluster0.nobtacb.mongodb.net/vue-node-shopping?retryWrites=true&w=majority";
 // const dbURL = "mongodb://localhost:27017";
-
-const client = new MongoClient(dbURL);
+// const dbConnection = new MongoClient(dbURL);
 
 const app = express();
 app.use(express.json());
@@ -26,50 +44,139 @@ app.use(
 );
 
 app.get("/api/hello", async (req, res) => {
-  await client.connect();
-  const db = client.db("vue-node-shopping");
-  const products = await db.collection("products").find({}).toArray();
+  await dbConnect();
+
+  const products = await Products.find({}).toArray();
   res.send(products);
+});
+
+app.post("/api/register", async (req, res) => {
+  await dbConnect();
+
+  try {
+    const { username, email, password } = req.body;
+    const user = await Users.findOne({ email });
+    if (user) {
+      return res.json({
+        success: false,
+        message: "The email is already existing",
+      });
+    }
+
+    const salt = await bcryptjs.genSalt(10);
+    const hashedPassword = await bcryptjs.hash(password, salt);
+
+    const newUser = new Users({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    const savedUser = await newUser.save();
+
+    // const userID = savedUser._id;
+
+    return res.json({
+      message: "User Created",
+      success: true,
+      savedUser,
+    });
+  } catch (error) {
+    res.status(400).send({ success: false, message: "Error occured", error });
+  }
+});
+
+app.post("/api/login", async (req, res) => {
+  await dbConnect();
+
+  const email = req.body.email;
+  const password = req.body.password;
+
+  try {
+    const user = await Users.findOne({ email: email });
+
+    if (user) {
+      const isMatch = await bcryptjs.compare(password, user.password);
+
+      if (isMatch) {
+        // return user;
+        res.send({ success: true });
+      } else {
+        // throw new Error("Incorrect Email or Password");
+        res
+          .status(400)
+          .send({ success: false, message: "Incorrect Email or Password" });
+      }
+    }
+  } catch (error) {
+    res.status(400).send({ success: false, message: "Error occured", error });
+  }
 });
 
 app.get("/api/products", async (req, res) => {
-  await client.connect();
-  const db = client.db("vue-node-shopping");
-  const products = await db.collection("products").find({}).toArray();
-  res.send(products);
+  await dbConnect();
+
+  // await Products.updateMany({}, [{ $set: { price: { $toInt: "$price" } } }]);
+  // console.log("UPADTE DONE!!!");
+
+  try {
+    const products = await Products.find({});
+    res.json(products);
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
 });
 
 app.get("/api/products/:productId", async (req, res) => {
-  await client.connect();
-  const db = client.db("vue-node-shopping");
-
   const productId = req.params.productId;
-  const product = await db.collection("products").findOne({ id: productId });
-  res.json(product);
+
+  await dbConnect();
+
+  try {
+    const product = await Products.findOne({ id: productId });
+
+    console.log("productId: 333", product);
+
+    res.json(product);
+  } catch (error) {
+    res.status(400).json({ success: false });
+  }
 });
 
 async function populateCartIds(ids) {
-  await client.connect();
-  const db = client.db("vue-node-shopping");
-  return Promise.all(
-    ids.map((id) => db.collection("products").findOne({ id }))
-  );
+  await dbConnect();
+  return Promise.all(ids.map((id) => Products.findOne({ id })));
 }
 
 app.get("/api/users/:userId/cart", async (req, res) => {
-  await client.connect();
-  const db = client.db("vue-node-shopping");
+  /*
+  await dbConnection.connect();
+  const db = dbConnection.db("vue-node-shopping");
   const user = await db.collection("users").findOne({ id: req.params.userId });
   const populatedCart = await populateCartIds(user?.cartItems || []);
   res.json(populatedCart);
+  */
+
+  await dbConnect();
+
+  try {
+    const user = await Users.findOne({ id: req.params.userId });
+    const populatedCart = await populateCartIds(user?.cartItems || []);
+    res.json(populatedCart);
+  } catch (error) {
+    res.status(400).send({ success: false });
+  }
 });
 
 app.post("/api/users/:userId/cart", async (req, res) => {
-  await client.connect();
-  const db = client.db("vue-node-shopping");
+  await dbConnect();
 
   const userId = req.params.userId;
   const productId = req.body.id;
+
+  /*
+  await dbConnection.connect();
+  const db = dbConnection.db("vue-node-shopping");
 
   const existingUser = await db.collection("users").findOne({ id: userId });
   if (!existingUser) {
@@ -83,18 +190,35 @@ app.post("/api/users/:userId/cart", async (req, res) => {
     }
   );
 
-  const user = await db.collection("users").findOne({ id: req.params.userId });
+  const user = await db.collection("users").findOne({ id: userId });
+  */
+
+  const existingUser = await Users.findOne({ id: userId });
+  if (!existingUser) {
+    await Users.insertOne({ id: userId, cartItems: [] });
+  }
+
+  await Users.updateOne(
+    { id: userId },
+    {
+      $addToSet: { cartItems: productId },
+    }
+  );
+
+  const user = await Users.findOne({ id: userId });
+
   const populatedCart = await populateCartIds(user?.cartItems || []);
   res.json(populatedCart);
 });
 
 app.delete("/api/users/:userId/cart/:productId", async (req, res) => {
-  await client.connect();
-  const db = client.db("vue-node-shopping");
+  await dbConnect();
 
   const userId = req.params.userId;
   const productId = req.params.productId;
-
+  /*
+  await dbConnection.connect();
+  const db = dbConnection.db("vue-node-shopping");
   await db.collection("users").updateOne(
     { id: userId },
     {
@@ -102,11 +226,24 @@ app.delete("/api/users/:userId/cart/:productId", async (req, res) => {
     }
   );
 
-  const user = await db.collection("users").findOne({ id: req.params.userId });
+  const user = await db.collection("users").findOne({ id: userId });
+  const populatedCart = await populateCartIds(user?.cartItems || []);
+  res.json(populatedCart);
+  */
+
+  await Users.updateOne(
+    { id: userId },
+    {
+      $pull: { cartItems: productId },
+    }
+  );
+
+  const user = await Users.findOne({ id: userId });
   const populatedCart = await populateCartIds(user?.cartItems || []);
   res.json(populatedCart);
 });
 
+/* all routing */
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist/index.html"));
 });
