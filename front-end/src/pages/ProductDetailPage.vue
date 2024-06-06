@@ -1,21 +1,30 @@
 <template>
-    <div v-if="product">
-        <div class="img-wrap">
-            <img :src="product.imageUrl">
+    <div class='max-w-3xl bg-white px-5 m-auto my-2 border-2 '>
+        <div class="m-auto mt-4">
+          <h3 class='text-green-700 text-xl font-bold'>Product Details</h3>
         </div>
 
-        <div class="product-details">
-            <h1>{{ product.name }}</h1>
-            <h3 class="price">{{ product.price }}</h3>
+        <div v-if="product" class="pb-4 mb-4">
+            <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+                <div class="w-full w-fixed flex-grow-0 px-4"><img :src="product.imageUrl" class="img-wrap" /></div>
+                <div class="w-full w-fixed flex-grow-0 px-4 mt-7">aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc aaaa bbbbb cccc</div>
+            </div>
+            
+            <div class="product-details">
+                <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+                    <div class="w-full flex-grow-0 px-4"><h3>{{ product.name }}</h3></div>
+                    <div class="w-full flex-grow-0 px-4"><h3 class="price">AED {{ product.price }}</h3></div>
+                </div>                
 
-            <button class="add-to-cart" v-if="user && !itemIsInCart" @click="addToCart">Add to cart</button>
-            <button class="grey-button" v-if="user && itemIsInCart">Item is in cart</button>
-            <button class="sign-in" v-if="!user" @click="signIn">Sign in to add to cart</button>
+                <button class="add-to-cart" v-if="user && !itemIsInCart" @click="addToCart">Add to cart</button>
+                <button class="grey-button" v-if="user && itemIsInCart">Item is in cart</button>
+                <button class="sign-in" v-if="!user" @click="signIn">Sign in to add to cart</button>
+            </div>
         </div>
-    </div>
 
-    <div v-else>
-        <NotFoundPage />
+        <div v-else>
+            <NotFoundPage />
+        </div>
     </div>
 </template>
 
@@ -28,24 +37,20 @@ import axios from 'axios';
 export default {
     name: 'ProductDetailPage',
     props: ['user'],
-
     components: {
         NotFoundPage,
     },
-
     data() {
         return {
             product: {},
             cartItems: [],
         }
     },
-
     computed: {
         itemIsInCart() {
             return this.cartItems.some(item => item.id === this.$route.params.productId);
         }
     },
-
     watch: {
         async user(newUserValue) {
             if (newUserValue) {
@@ -54,18 +59,17 @@ export default {
             }
         }
     },
-
     mounted: function () {
         this.created();
     },
-
     methods: {
         created: async function () {
             const auth = getAuth();
             if (isSignInWithEmailLink(auth, window.location.href)) {
                 const email = window.localStorage.getItem('emailForSignIn');
                 await signInWithEmailLink(auth, email, window.location.href);
-                alert('Successfully signed in!');
+
+                alert('Successfully Signed In');
                 window.localStorage.removeItem('emailForSignIn');                
             }
 
@@ -77,15 +81,13 @@ export default {
                 this.cartItems = response2.data;
             }
         },
-
         addToCart: async function () {
             const response = await axios.post(`/api/users/${this.user.uid}/cart`, {id: this.$route.params.productId} );
-            alert('Successfully added item to cart!');
+            alert('Successfully added the item to the cart!');
         },
-
         signIn: async function () {
-            const email = prompt('Enter your email to sign-in');
             const auth = getAuth();
+            const email = prompt('Enter your email to sign-in');
             const actionCodeSettings = {
                 url: `https://shopping-cart-deployment.onrender.com/products/${this.$route.params.productId}`,
                 handleCodeInApp: true
@@ -95,9 +97,8 @@ export default {
             
             window.localStorage.setItem('emailForSignIn', email);
 
-            alert('A login link was sent to the email you provided');
+            alert('Login link has been sent to your email. Please follow the link in it.');
         }
     },
 }
-
 </script>

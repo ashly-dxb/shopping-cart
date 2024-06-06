@@ -1,7 +1,7 @@
 <template>
-    <NavBar />
-    <div class="page-wrap">
-      <router-view :user="user"></router-view>
+    <div class='bg-green-300 m-auto border-2 border-red-400'>
+        <NavBar />
+        <router-view :user="user"></router-view>
     </div>
 </template>
 
@@ -14,30 +14,25 @@ export default {
     components: {
         NavBar,
     },
-
-    data() {
+    data: function () {
+        console.log("data() App.vue");
         return {
           user: null
         }
     },
-
     mounted: function () {
-        console.log("mounted VUE");
-
-        this.created();        
+        console.log("mounted() App.vue");
+        this.created();
     },
-    
     methods: {
         created: function () {
-            console.log("createed 1");
+            console.log("created() 1");
             const auth = getAuth();
-            console.log("createed 2");
             onAuthStateChanged(auth, user => {
                 this.user = user;
-                console.log("createed 3");
+                console.log("created() onAuthStateChanged", user);
             });
         }
     }
 }
-
 </script>

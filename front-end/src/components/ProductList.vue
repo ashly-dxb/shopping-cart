@@ -3,13 +3,15 @@
         <div
             class="product-item"
             v-for="product in products"
-            :key="product.id">
-            <img :src="product.imageUrl" />
+            :key="product.id"
+        >
+            <img :src="product.imageUrl" class="ssssssssssssssss" />
+
             <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-price">{{ product.price }}</p>
+            <h3 class="product-price">AED {{ product.price }}</h3>
 
             <router-link :to="'/products/' + product.id">
-                <button >View Details</button>
+                <button>View Details</button>
             </router-link>
         </div>
     </div>
@@ -19,7 +21,7 @@
 <script>
 
 export default {
-    name: 'ProductsList',
+    name: 'ProductList',
     props: ['products'],
 }
 

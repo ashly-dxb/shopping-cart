@@ -1,6 +1,6 @@
 <template>
     <div class="product-container" v-for="product in items" :key="product.id">
-        <img class="product-image" :src="product.imageUrl">
+        <img :src="product.imageUrl" class="product-image" />
 
         <div class="details-wrap">
             <h3>{{ product.name }}</h3>
@@ -11,12 +11,9 @@
     </div>
 </template>
 
-
 <script>
-
 export default {
     name: 'CartItems',
     props: ['items'],
 }
-
 </script>

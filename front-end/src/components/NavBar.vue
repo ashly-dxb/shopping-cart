@@ -1,19 +1,34 @@
 <template>
-    <div class="nav-bar">
-        <router-link to="/products" class="products-link">
-            <div class="logo-wrap">
-                <img :src="logo" />
+    <header class="p-2 bg-white shadow-md border-2">
+        <nav class="columns-3">
+            <div class="w-full">
+                <img :src="logo" class="logo-wrap" />
             </div>
-        </router-link>
+            <div class="w-full">
+                <ul class="flex justify-end text-lg">
+                    <li class="hover:text-blue-500 cursor-pointer px-4">
+                        <router-link to="/Register">Register</router-link>
+                    </li>
+                    <li class="hover:text-blue-500 cursor-pointer px-4">
+                        <router-link to="/Login">Login</router-link>
+                    </li>
+                    <li class="hover:text-blue-500 cursor-pointer px-4">
+                        <router-link to="/">Home</router-link>
+                    </li>
+                    <li class="hover:text-blue-500 cursor-pointer px-4">
+                        <router-link to="/products">Products</router-link>
+                    </li>
+                    <li class="hover:text-blue-500 cursor-pointer px-4">
+                        <router-link to="/cart">Cart</router-link>
+                    </li>
+                    <li class="hover:text-blue-500 cursor-pointer px-4">
+                        <button @click="signOut" v-if="user">Sign out</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-        <div class="nav-buttons-wrap">
-            <button @click="signOut" v-if="user">Sign out</button>
-            <router-link to="/cart" class="cart-link">
-                <button>Shopping cart</button>
-            </router-link>
-        </div>
-
-    </div>
 </template>
 
 <script>
@@ -23,13 +38,11 @@ import logo from '@/assets/logo-hexagon.svg';
 export default {
     name: 'NavBar',
     props: ['user'],
-
     data() {
         return {
             logo,
         }
-    },
-    
+    },    
     methods: {
         signOut() {
             const auth = getAuth();
@@ -37,5 +50,4 @@ export default {
         }
     }
 }
-
 </script>
