@@ -6,6 +6,7 @@ require("dotenv").config();
 // import all the API endpoints
 const users = require("./routes/users");
 const products = require("./routes/products");
+const usercart = require("./routes/usercart");
 
 const connection = require("./dbconnection");
 
@@ -52,6 +53,7 @@ app.use(
 // include all the API endpoint groups
 app.use("/api/users", users);
 app.use("/api/products", products);
+app.use("/api/cart", usercart);
 
 /* all routing */
 

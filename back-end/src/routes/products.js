@@ -4,8 +4,6 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/list", async (req, res) => {
-  // console.log("Prod List call");
-
   // await Products.updateMany({}, [{ $set: { price: { $toInt: "$price" } } }]);
   // console.log("UPADTE DONE!!!");
 
