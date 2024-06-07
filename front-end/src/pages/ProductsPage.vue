@@ -10,7 +10,8 @@
 
 <script>
 import ProductList from '../components/ProductList.vue'
-import axios from 'axios'; 
+import axios from 'axios';
+import baseURL from "../components/Config";
 
 export default {
     name: 'ProductsPage',
@@ -27,7 +28,7 @@ export default {
     },
     methods: {
         created: async function () {
-            const response = await axios.get('/api/products');
+            const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
         }
     },

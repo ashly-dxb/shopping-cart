@@ -1,5 +1,5 @@
 <template>
-    <header class="p-2 bg-white shadow-md border-2">
+    <header class="bg-white shadow-md border-2">
         <nav class="columns-3">
             <div class="w-full">
                 <img :src="logo" class="logo-wrap" />
@@ -28,7 +28,6 @@
             </div>
         </nav>
     </header>
-
 </template>
 
 <script>

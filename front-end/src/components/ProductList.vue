@@ -5,7 +5,7 @@
             v-for="product in products"
             :key="product.id"
         >
-            <img :src="product.imageUrl" class="ssssssssssssssss" />
+            <img :src="require(`@/assets${product.imageUrl}`)" class="xxxx" />
 
             <h3 class="product-name">{{ product.name }}</h3>
             <h3 class="product-price">AED {{ product.price }}</h3>

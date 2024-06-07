@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-col m-auto max-w-2xl border-2">
+    <div class="max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-2">
         <form v-on:submit.prevent="register">
             <div class="m-auto mb-3 mt-4">
-                <h2 class="text-2xl">Register</h2>
+                <h2 class='text-green-700 text-xl font-bold'>Register</h2>
             </div>
 
             <div class="m-auto mb-3 mt-4">
@@ -37,7 +37,7 @@
                     {{this.errors.password}}
                 </div>
 
-                <button type="submit">Register</button>
+                <button type="submit" class="login-button">Register</button>
             </div>
         </form> 
     </div>
@@ -46,6 +46,8 @@
 <script>
 // import ProductList from '../components/ProductList.vue'
 import axios from 'axios'; 
+import baseURL from "../components/Config";
+
 // import VueRouter from 'vue-router';
 // import router from '../router';
 
@@ -61,7 +63,7 @@ export default {
     },
     methods: {
         created: async function () {
-            // const response = await axios.get('/api/products');
+            // const response = await axios.get(baseURL + 'XXXXXXXXXXXX/yyyyyy');
             // this.products = response.data;
         },
 
@@ -103,7 +105,7 @@ export default {
                     password: password
                 };
 
-                axios.post("/api/register", data)
+                axios.post(baseURL + "/users/register", data)
                     .then((response) => {
                         console.log("Registered successfully");
                         router.push("/Login");
@@ -115,9 +117,6 @@ export default {
 
             doRegister();
         },
-        
     },
-
 }
 </script>
-

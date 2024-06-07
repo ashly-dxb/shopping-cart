@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-col m-auto max-w-xl border-2">
+    <div class="max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-2">
         <form @submit.prevent="login">
             <div class="m-auto mb-3 mt-4">
-                <h2 class="text-2xl">Login</h2>
+                <h2 class='text-green-700 text-xl font-bold'>Login</h2>
             </div>
 
             <div class="m-auto mb-3 mt-4">
@@ -23,7 +23,7 @@
                     {{errors}}
                 </div>
 
-                <button type="submit">Login</button>
+                <button type="submit" class="login-button">Login</button>
             </div>
         </form> 
     </div>
@@ -31,7 +31,8 @@
 
 <script>
 // import ProductList from '../components/ProductList.vue'
-import axios from 'axios'; 
+import axios from 'axios';
+import baseURL from "../components/Config";
 
 export default {
     name: 'Login',
@@ -49,8 +50,7 @@ export default {
     },
     methods: {
         created: async function () {
-            // const response = await axios.get('/api/products');
-            // this.products = response.data;
+            // this.XXX = response.data;
         },
 
         login(e) {    
@@ -76,7 +76,7 @@ export default {
                     password: password
                 };
 
-                axios.post("/api/login", data)
+                axios.post(baseURL + "/users/login", data)
                     .then((response) => {
                         console.log("Logged in successfully");
                         router.push("/");
