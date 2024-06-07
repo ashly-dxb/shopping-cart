@@ -57,7 +57,7 @@ router.post("/:userId", async (req, res) => {
   await UserCart.updateOne(
     { id: userId },
     {
-      $addToSet: { cartItems: productId },
+      $addToSet: { cartItems: parseInt(productId) },
     }
   );
 
@@ -78,7 +78,7 @@ router.delete("/:userId/:productId", async (req, res) => {
   const result = await UserCart.updateOne(
     { id: userId },
     {
-      $pull: { cartItems: productId },
+      $pull: { cartItems: parseInt(productId) },
     }
   );
 
