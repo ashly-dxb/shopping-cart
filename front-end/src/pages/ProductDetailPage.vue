@@ -87,8 +87,8 @@ export default {
             return imageUrl ? require("@/assets" + imageUrl) : "no-image";
         },
         addToCart: async function () {
-            const response = await axios.post(baseURL + `/users/${this.user.uid}/cart`, {id: this.$route.params.productId} );
-            alert('Successfully added the item to the cart!');
+            const response = await axios.post(baseURL + `/${this.user.uid}`, {id: this.$route.params.productId} );
+            alert('Item added to the cart!');
         },
         signIn: async function () {
             // const auth = getAuth();

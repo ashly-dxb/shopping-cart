@@ -4,6 +4,9 @@
           <h3 class='text-green-700 text-xl font-bold'>Product List</h3>
         </div>
 
+        <div v-if="loading" class="loading">Loading...</div>
+        <div v-if="error" class="error">{{error}}</div>
+
         <ProductList :products="products" />
     </div>
 </template>
@@ -13,6 +16,8 @@ import ProductList from '../components/ProductList.vue'
 import axios from 'axios';
 import baseURL from "../components/Config";
 
+// watch(() => route.params.id, fetchData, { immediate: true })
+
 export default {
     name: 'ProductsPage',
     components: {
@@ -20,7 +25,18 @@ export default {
     },
     data() {
         return {
-            products: []
+            products: [],
+            loading: false,
+            error: '',
+        }
+    },
+    async beforeRouteEnter(to, from, next) {
+        console.log("beforeRouteEnter");
+        try {
+            const response = await axios.get(baseURL + '/products/list');
+            next(vm => vm.setPost(response.data))
+        } catch (err) {
+            next(vm => vm.setError(err))
         }
     },
     mounted: function () {
@@ -28,8 +44,19 @@ export default {
     },
     methods: {
         created: async function () {
+            this.loading = true;
+
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
+
+            this.loading = false;            
+        },
+        setPost(products) {
+            console.log("setPost", products);
+            this.products = products;
+        },
+        setError(err) {
+            this.error = err.toString()
         }
     },
 }

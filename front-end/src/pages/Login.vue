@@ -33,6 +33,7 @@
 // import ProductList from '../components/ProductList.vue'
 import axios from 'axios';
 import baseURL from "../components/Config";
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
     name: 'Login',
@@ -42,7 +43,8 @@ export default {
     data() {
         return {
             showErrors: false,
-            errors: null
+            errors: null,
+            router : useRouter()
         }
     },
     mounted: function () {
@@ -50,7 +52,6 @@ export default {
     },
     methods: {
         created: async function () {
-            // this.XXX = response.data;
         },
 
         login(e) {    

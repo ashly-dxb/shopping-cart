@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import baseURL from '@/components/Config';
 import CartItems from '../components/CartItems.vue';
 import axios from 'axios';
 
@@ -33,7 +34,7 @@ export default {
         async user(newUserValue) {
             console.log("newUserValue: ", newUserValue);
             if (newUserValue) {
-                const response2 = await axios.get(`/api/users/${newUserValue.uid}/cart`);
+                const response2 = await axios.get(baseURL + `/api/cart/${newUserValue.uid}`);
                 this.cartItems = response2.data;
             }
         }
@@ -46,13 +47,13 @@ export default {
             console.log("this.user : ", this.user);
 
             if(this.user) {
-                const response = await axios.get(`/api/users/${this.user.uid}/cart`);
+                const response = await axios.get(baseURL + `/api/cart/${this.user.uid}`);
                 this.cartItems = response.data;
             }
         },
         removeFromCart: async function (productId) {
             if(this.user) {
-                const response = await axios.delete(`/api/users/${this.user.uid}/cart/${productId}`);
+                const response = await axios.delete(baseURL + `/api/cart/${this.user.uid}/${productId}`);
                 this.cartItems = response.data;
             }
         }

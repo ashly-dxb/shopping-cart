@@ -4,12 +4,29 @@
           <h3 class='text-green-700 text-xl font-bold'>Home</h3>
         </div>
 
-        Welcome to home page!
+        Welcome to home page! {{ fullName }}
     </div>
 </template>
 
 <script>
+import { ref, computed } from 'vue';
+
+
 export default {
     name: 'HomePage',
+    data() {
+        return {
+            firstName: 'Ashly',
+            lastName: 'Thomas',    
+            fullName: computed({
+                get() {
+                    return this.firstName + ' ' + this.lastName
+                },
+                set(newValue) {
+                    [this.firstName, this.lastName] = newValue.split(' ')
+                }
+            }),
+        }
+    }
 }
 </script>
