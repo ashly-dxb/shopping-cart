@@ -35,5 +35,5 @@ const UserSchema = new mongoose.Schema({
   verifyTokenExpiry: Date,
 });
 
-export default mongoose.models.user_register ||
-  mongoose.model("user_register", UserSchema);
+// export default mongoose.models.user_register || mongoose.model("user_register", UserSchema);
+module.exports = mongoose.model("user_register", UserSchema);
