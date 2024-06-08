@@ -80,7 +80,7 @@ export default {
                 axios.post(baseURL + "/users/login", data)
                     .then((response) => {
                         console.log("Logged in successfully");
-                        router.push("/");
+                        // router.push("/");
                     })
                     .catch((errors) => {
                         console.log("Error in log in:", errors);

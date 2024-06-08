@@ -49,14 +49,14 @@ export default {
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
 
-            this.loading = false;            
+            this.loading = false;
         },
         setPost(products) {
             console.log("setPost", products);
             this.products = products;
         },
-        setError(err) {
-            this.error = err.toString()
+        setError(error) {
+            this.error = error.toString();
         }
     },
 }

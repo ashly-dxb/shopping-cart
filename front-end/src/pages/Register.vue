@@ -12,9 +12,9 @@
                     v-model="username"
                     class="border-2 border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
                     />
-                <div v-if="this.errors.username" class="p-4 my-4 flex space-x-4 bg-red-300 text-red-700">
+                <span v-if="this.errors.username" class="p-2 my-4 bg-red-300 text-red-700">
                     {{this.errors.username}}
-                </div>
+                </span>
 
                 <input
                     type="email"
@@ -22,9 +22,9 @@
                     v-model="email"
                     class="border-2 border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
                     />
-                <div v-if="this.errors.email" class="p-4 my-4 flex space-x-4 bg-red-300 text-red-700">
+                <span v-if="this.errors.email" class="p-2 my-4 bg-red-300 text-red-700">
                     {{this.errors.email}}
-                </div>
+                </span>
                     
                 <input
                     type="password"
@@ -33,23 +33,21 @@
                     class="border-2 border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
                     />
 
-                <div v-if="this.errors.password" class="p-4 my-4 flex space-x-4 bg-red-300 text-red-700">
+                <span v-if="this.errors.password" class="p-2 my-4 bg-red-300 text-red-700">
                     {{this.errors.password}}
-                </div>
+                </span>
 
-                <button type="submit" class="login-button">Register</button>
+                <div class="p-2">
+                    <button type="submit" class="login-button">Register</button>
+                </div>
             </div>
         </form> 
     </div>
 </template>
 
 <script>
-// import ProductList from '../components/ProductList.vue'
 import axios from 'axios'; 
 import baseURL from "../components/Config";
-
-// import VueRouter from 'vue-router';
-// import router from '../router';
 
 export default {
     name: 'Register',
@@ -63,7 +61,7 @@ export default {
     },
     methods: {
         created: async function () {
-            // const response = await axios.get(baseURL + 'XXXXXXXXXXXX/yyyyyy');
+            // const response = await axios.get(baseURL + 'xxx/yyy');
             // this.products = response.data;
         },
 

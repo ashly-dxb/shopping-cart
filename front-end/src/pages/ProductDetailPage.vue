@@ -4,6 +4,9 @@
           <h3 class='text-green-700 text-xl font-bold'>Product Details</h3>
         </div>
 
+        <div v-if="loading" class="loading">Loading...</div>
+        <div v-if="error" class="error">{{error}}</div>
+
         <div v-if="product" class="pb-4 mb-4">
             <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
                 <div class="w-full w-fixed flex-grow-0 px-4"><img :src="getIMGPath(product.imageUrl)" class="img-wrap" /></div>
@@ -44,6 +47,8 @@ export default {
         return {
             product: {},
             cartItems: [],
+            loading: false,
+            error: '',
         }
     },
     computed: {
@@ -64,7 +69,8 @@ export default {
     },
     methods: {
         created: async function () {
-            console.log("In created...")
+            this.loading = true;
+
             // const auth = getAuth();
             // if (isSignInWithEmailLink(auth, window.location.href)) {
             //     const email = window.localStorage.getItem('emailForSignIn');
@@ -78,9 +84,11 @@ export default {
             this.product = response.data;
 
             if(this.user) {
-                const response2 = await axios.get(baseURL + `/users/${this.user.uid}/cart`);
+                const response2 = await axios.get(baseURL + `/users/cart/${this.user.uid}`);
                 this.cartItems = response2.data;
             }
+
+            this.loading = false;
         },
         getIMGPath: function(imageUrl) {
             console.log("gettimg image src", imageUrl);

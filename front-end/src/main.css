@@ -10,6 +10,7 @@
     font-weight: 400;
     font-style: normal;
     font-display: auto;
+    /* color: #2c3e50; */
 }
 
 /*
@@ -25,6 +26,15 @@
     width: 40px;
     height: 40px;
 }
+
+.active-link {
+    color: #fff;
+    background-color: #adabab;
+    padding: 4px 8px;
+    border-radius: 12px;
+    border: 1px solid gray;
+}
+
 
 button {
     background-color: black;
@@ -203,3 +213,4 @@ h1 {
     flex: 1;
     margin: auto;
 }
+

@@ -1,5 +1,5 @@
 <template>
-    <div class='bg-gray-300'>
+    <div class='xxxxxx'>
         <NavBar />
         <router-view :user="user" class='pb-5 mt-5'></router-view>
     </div>

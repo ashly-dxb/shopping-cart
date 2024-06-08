@@ -1,5 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import store from "./store";
+
 import "./main.css";
 import * as VueRouter from "vue-router";
 
@@ -7,6 +9,7 @@ import ShoppingCartPage from "./pages/ShoppingCartPage.vue";
 import ProductsPage from "./pages/ProductsPage.vue";
 import Login from "./pages/Login.vue";
 import Register from "./pages/Register.vue";
+import Airport from "./pages/Airport.vue";
 import HomePage from "./pages/HomePage.vue";
 import ProductDetailPage from "./pages/ProductDetailPage.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
@@ -28,6 +31,8 @@ initializeApp(firebaseConfig);
 createApp(App)
   .use(
     VueRouter.createRouter({
+      linkActiveClass: "border-indigo-500",
+      linkExactActiveClass: "border-indigo-700",
       history: VueRouter.createWebHistory(process.env.BASE_URL),
       routes: [
         {
@@ -41,6 +46,10 @@ createApp(App)
         {
           path: "/Register",
           component: Register,
+        },
+        {
+          path: "/airports",
+          component: Airport,
         },
         {
           path: "/cart",
@@ -64,4 +73,5 @@ createApp(App)
       ],
     })
   )
+  .use(store)
   .mount("#app");

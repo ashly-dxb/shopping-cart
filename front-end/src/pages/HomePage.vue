@@ -4,28 +4,26 @@
           <h3 class='text-green-700 text-xl font-bold'>Home</h3>
         </div>
 
-        Welcome to home page! {{ fullName }}
+        Welcome to home page!
+        <!--
+        <div>{{ //$store.state.counter }}</div>
+        <button type="button" class="login-button" @click="$store.commit('decreaseCounter')">-</button>
+        <button type="button" class="login-button" @click="$store.commit('increaseCounter')">+</button>
+        -->
     </div>
 </template>
 
 <script>
 import { ref, computed } from 'vue';
 
-
 export default {
     name: 'HomePage',
+    methods: {
+        
+    },
     data() {
         return {
-            firstName: 'Ashly',
-            lastName: 'Thomas',    
-            fullName: computed({
-                get() {
-                    return this.firstName + ' ' + this.lastName
-                },
-                set(newValue) {
-                    [this.firstName, this.lastName] = newValue.split(' ')
-                }
-            }),
+            error: '',           
         }
     }
 }
