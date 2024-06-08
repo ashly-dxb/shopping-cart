@@ -12,6 +12,7 @@ const connection = require("./dbconnection");
 
 const express = require("express");
 const cors = require("cors");
+const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
@@ -25,7 +26,7 @@ connection();
 const app = express();
 app.use(express.json());
 
-/*copied from react todo  app */
+/* copied from react todo  app */
 app.use(
   cors({
     origin: [
@@ -40,7 +41,21 @@ app.use(
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-/*copied from react todo  app */
+
+app.use(
+  session({
+    secret: "my-secret-key",
+    resave: true,
+    saveUninitialized: true,
+    name: "secret.ckname",
+    cookie: {
+      secure: true,
+      sameSite: "None",
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
+);
+/* copied from react todo  app */
 
 app.use("/images", express.static(path.join(__dirname, "../assets")));
 app.use(

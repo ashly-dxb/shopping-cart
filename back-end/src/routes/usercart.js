@@ -7,14 +7,10 @@ const router = express.Router();
 // retrieve cart list
 router.get("/list", async (req, res) => {
   try {
-    console.log("Cart List START :::: ", Products);
-    console.log("Products List :::: ", Products);
     const products = await Products.find({});
 
     res.json(products);
   } catch (error) {
-    console.log("Product List error: ", error);
-
     res.status(400).json({ success: false });
   }
 
@@ -72,17 +68,12 @@ router.delete("/:userId/:productId", async (req, res) => {
   const userId = req.params.userId;
   const productId = req.params.productId;
 
-  console.log("userId:", userId);
-  console.log("productId:", productId);
-
   const result = await UserCart.updateOne(
     { id: userId },
     {
       $pull: { cartItems: parseInt(productId) },
     }
   );
-
-  console.log("DEL result:", result);
 
   const user = await UserCart.findOne({ id: userId });
   const populatedCart = await populateCartIds(user?.cartItems || []);
