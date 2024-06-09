@@ -9,6 +9,20 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 // const salt = 10;
 
+router.get("/set-cookie", (req, res) => {
+  res.cookie("user_test", "AshlyTest", { maxAge: 900000, httpOnly: true });
+  res.send("Cookie success");
+});
+
+router.get("/get-cookie", (req, res) => {
+  let userCookie = req.cookies.user_test;
+  if (userCookie) {
+    res.send(`Cookie value: ${userCookie}`);
+  } else {
+    res.send("No cookie found");
+  }
+});
+
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -30,9 +44,7 @@ router.post("/register", async (req, res) => {
     });
 
     const savedUser = await newUser.save();
-
     // const userID = savedUser._id;
-
     return res.json({
       message: "User Created",
       success: true,
@@ -63,28 +75,6 @@ router.post("/login", async (req, res) => {
     });
   }
 
-  /*
-  try {
-    const user = await Users.findOne({ email: email });
-
-    if (user) {
-      const isMatch = await bcryptjs.compare(password, user.password);
-
-      if (isMatch) {
-        // return user;
-        res.send({ success: true });
-      } else {
-        // throw new Error("Incorrect Email or Password");
-        res
-          .status(400)
-          .send({ success: false, message: "Incorrect Email or Password" });
-      }
-    }
-  } catch (error) {
-    res.status(400).send({ success: false, message: "Error occured", error });
-  }
-    */
-
   Users.findOne({ email: email })
     .then((user) => {
       if (user) {
@@ -97,7 +87,7 @@ router.post("/login", async (req, res) => {
 
               req.session.username = user.username;
               req.session.email = user.email;
-              await req.session.save();
+              // await req.session.save();
 
               //store the token in cookie
               const token = jwt.sign(
@@ -108,9 +98,8 @@ router.post("/login", async (req, res) => {
                 }
               );
 
-              console.log("SESSION MAIL##############", req.session.email);
-
-              res.cookie("cart", { items: [1, 2, 3] });
+              // console.log("SESSION MAIL:", req.session.email);
+              console.log(req.session);
 
               res.cookie("access_token", token, {
                 expires: new Date(Date.now() + 24 * 60 * 60 * 1000 * 180), // 180 days
@@ -119,9 +108,7 @@ router.post("/login", async (req, res) => {
                 sameSite: "None",
               });
 
-              // console.log(req.session);
-
-              return res.json({
+              res.send({
                 authenticated: true,
                 status: "Login Successful",
                 user: user,
@@ -156,7 +143,6 @@ router.get("/logout", (req, res) => {
   res.json({
     authenticated: false,
     status: "Logged out",
-    error: "",
   });
 });
 

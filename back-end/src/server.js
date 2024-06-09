@@ -1,9 +1,6 @@
 require("dotenv").config();
 
-// const products = require("./routes/products");
-// const users = require("./routes/users");
-
-// import all the API endpoints
+// ##### import all the API endpoints #####
 const users = require("./routes/users");
 const products = require("./routes/products");
 const usercart = require("./routes/usercart");
@@ -16,10 +13,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 
-import path from "path";
-
-// import Users from "./models/Users";
-// import Products from "./models/Products";
+// import path from "path";
 
 connection();
 
@@ -44,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "my-secret-key",
+    secret: "jwt-secret",
     resave: true,
     saveUninitialized: true,
     name: "secret.ckname",
@@ -57,13 +51,13 @@ app.use(
 );
 /* copied from react todo  app */
 
-app.use("/images", express.static(path.join(__dirname, "../assets")));
-app.use(
-  express.static(path.resolve(__dirname, "../dist"), {
-    maxAge: "1y",
-    etag: false,
-  })
-);
+// app.use("/images", express.static(path.join(__dirname, "../assets")));
+// app.use(
+//   express.static(path.resolve(__dirname, "../dist"), {
+//     maxAge: "1y",
+//     etag: false,
+//   })
+// );
 
 // include all the API endpoint groups
 app.use("/api/users", users);
@@ -71,12 +65,11 @@ app.use("/api/products", products);
 app.use("/api/cart", usercart);
 
 /* all routing */
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "../dist/index.html"));
+// });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../dist/index.html"));
-});
-
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8081;
 
 app.listen(port, () => {
   console.log("Server is Listening on PORT: " + port);
