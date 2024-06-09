@@ -1,12 +1,14 @@
 <template>
-    <div class='xxxxxx'>
-        <NavBar />
-        <router-view :user="user" class='pb-5 mt-5'></router-view>
+    <div>
+        <NavBar key="123456" :user="user" :loggedIn="isLoggedIn"/>
+        <router-view :user="user" class='pb-5 mt-5' @user-logged-in="getLoggedUserInfo">
+            
+        </router-view>
     </div>
 </template>
 
 <script>
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+// import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import NavBar from '@/components/NavBar.vue';
 
 export default {
@@ -15,23 +17,22 @@ export default {
         NavBar,
     },
     data: function () {
-        // console.log("data() App.vue");
         return {
-          user: null
+          user: null,
+          isLoggedIn: false,
         }
     },
     mounted: function () {
-        // console.log("mounted() App.vue");
         this.created();
     },
     methods: {
         created: function () {
-            // console.log("created() 1");
-            const auth = getAuth();
-            onAuthStateChanged(auth, user => {
-                this.user = user;
-                // console.log("created() onAuthStateChanged", user);
-            });
+            this.user = localStorage.getItem('username');
+            this.isLoggedIn = true; // dummy...need to correct
+        },
+        getLoggedUserInfo: function(data) {
+            this.user = data.user.username;
+            this.isLoggedIn = true;
         }
     }
 }

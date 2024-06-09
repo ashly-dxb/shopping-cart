@@ -31,7 +31,7 @@ export default {
         }
     },
     async beforeRouteEnter(to, from, next) {
-        console.log("beforeRouteEnter");
+        // console.log("beforeRouteEnter");
         try {
             const response = await axios.get(baseURL + '/products/list');
             next(vm => vm.setPost(response.data))
@@ -52,7 +52,7 @@ export default {
             this.loading = false;
         },
         setPost(products) {
-            console.log("setPost", products);
+            // console.log("setPost", products);
             this.products = products;
         },
         setError(error) {
