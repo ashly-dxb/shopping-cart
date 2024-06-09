@@ -45,7 +45,7 @@
 <script>
 // import axios from 'axios';
 import baseURL from "../components/Config";
-import { useRouter, useRoute } from 'vue-router'
+// import { useRouter, useRoute } from 'vue-router'
 
 export default {
     name: 'Login',
@@ -57,7 +57,7 @@ export default {
             email: 'ashlythomas@gmail.com',
             showErrors: false,
             errors: null,
-            router : useRouter()
+            // router : useRouter()
         }
     },
     mounted: function () {

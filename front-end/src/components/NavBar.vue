@@ -7,25 +7,25 @@
                 
         <ul class="hidden md:flex">
             <li v-if="loggedIn === true">Logged In</li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="isLogged === false">
+            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === false">
                 <router-link to="/Register" active-class="active-link">Register</router-link>
             </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="isLogged === false">
+            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === false">
                 <router-link to="/Login" active-class="active-link" >Login</router-link>
             </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="isLogged === true">
+            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
                 <router-link to="/" active-class="active-link">Home</router-link>
             </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="isLogged === true">
+            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
                 <router-link to="/products" active-class="active-link">Products</router-link>
             </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="isLogged === true">
+            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
                 <router-link to="/cart" active-class="active-link">Cart</router-link>
             </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="isLogged === true">
+            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
                 <router-link to="/airports" active-class="active-link">Airport</router-link>
             </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2"  v-if="isLogged === true">
+            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2"  v-if="loggedIn === true">
                 <button @click="signOut">Logout</button>
             </li>
         </ul>
@@ -67,7 +67,7 @@ import allLinks from '../components/menulinks';
 
 export default {
     name: 'NavBar',
-    props: ['user'],
+    props: ['user', 'loggedIn'],
     data() {
         return {
             logo,
@@ -92,6 +92,10 @@ export default {
             if(data.authenticated === false) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('username');
+
+                this.$emit("user-logged-out", data);
+
+                console.log("loging out............", data)
 
                 this.isLogged = this.checkIfIsLogged();
                 this.$router.push('/Login');

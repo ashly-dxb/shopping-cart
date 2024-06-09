@@ -106,7 +106,8 @@ export default {
                 axios.post(baseURL + "/users/register", data)
                     .then((response) => {
                         console.log("Registered successfully");
-                        router.push("/Login");
+                        // router.push("/Login");
+                        this.$router.push({path: '/Login'});
                     })
                     .catch((errors) => {
                         console.log("Error in registartion:", errors);
