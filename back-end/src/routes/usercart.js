@@ -28,7 +28,7 @@ router.get("/list", async (req, res) => {
 });
 
 // retrieve cart details by userID
-router.get("/details/:userId", async (req, res) => {
+router.get("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
 
   try {

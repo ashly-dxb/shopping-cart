@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
+  userId: {
+    type: Number,
+    required: [true, "Please provide User Id"],
+    maxlength: [10, "User Id cannot be more than 10 characters"],
+  },
   username: {
     type: String,
     required: [true, "Please provide username"],
