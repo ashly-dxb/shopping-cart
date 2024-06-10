@@ -25,6 +25,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:8080",
+      "https://ashly3.vercel.app",
       "https://shopping-cart-deployment.onrender.com",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
