@@ -3,7 +3,6 @@ import App from "./App.vue";
 import store from "./store";
 
 import * as VueRouter from "vue-router";
-// import mitt from "mitt";
 
 import "./main.css";
 
@@ -11,9 +10,9 @@ import Login from "./pages/Login.vue";
 // import Logout from "./pages/Logout.vue";
 import Airport from "./pages/Airport.vue";
 import HomePage from "./pages/HomePage.vue";
-import ProductsPage from "./pages/ProductsPage.vue";
-import ProductDetailPage from "./pages/ProductDetailPage.vue";
-import ShoppingCartPage from "./pages/ShoppingCartPage.vue";
+import ProductList from "./pages/ProductList.vue";
+import ProductDetails from "./pages/ProductDetails.vue";
+import ShoppingCart from "./pages/ShoppingCart.vue";
 import Register from "./pages/Register.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
 
@@ -49,16 +48,16 @@ var router = VueRouter.createRouter({
     },
     {
       path: "/cart",
-      component: ShoppingCartPage,
+      component: ShoppingCart,
       name: "CartPage",
     },
     {
       path: "/products",
-      component: ProductsPage,
+      component: ProductList,
     },
     {
       path: "/products/:productId",
-      component: ProductDetailPage,
+      component: ProductDetails,
     },
     {
       path: "/Login",

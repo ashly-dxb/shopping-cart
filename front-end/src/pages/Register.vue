@@ -10,7 +10,7 @@
                     type="text"
                     placeholder="Enter your name"
                     v-model="username"
-                    class="border-2 border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
+                    class="border-x border-y border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
                     />
                 <span v-if="this.errors.username" class="p-2 my-4 bg-red-300 text-red-700">
                     {{this.errors.username}}
@@ -20,7 +20,7 @@
                     type="email"
                     placeholder="Enter your email"
                     v-model="email"
-                    class="border-2 border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
+                    class="border-x border-y border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
                     />
                 <span v-if="this.errors.email" class="p-2 my-4 bg-red-300 text-red-700">
                     {{this.errors.email}}
@@ -30,7 +30,7 @@
                     type="password"
                     placeholder="Enter password"
                     v-model="password"
-                    class="border-2 border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
+                    class="border-x border-y border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
                     />
 
                 <span v-if="this.errors.password" class="p-2 my-4 bg-red-300 text-red-700">

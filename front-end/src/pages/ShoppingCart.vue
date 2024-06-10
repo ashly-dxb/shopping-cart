@@ -4,11 +4,14 @@
           <h3 class='text-green-700 text-xl font-bold'>Shopping Cart</h3>
         </div>
 
+        <div v-if="loading" class="loading">Loading...</div>
+        <div v-if="error" class="error">{{error}}</div>
+
         <div v-if="cartItems.length > 0">
             <CartItems :items="cartItems" @remove-from-cart="removeFromCart($event)" />
             <button class="checkout-button">Proceed to checkout</button>
         </div>
-        <div v-else>
+        <div v-else-if="loading == false">
             Your cart is empty!
         </div>
     </div>
@@ -20,21 +23,24 @@ import CartItems from '../components/CartItems.vue';
 import axios from 'axios';
 
 export default {
-    name: 'ShoppingCartPage',
-    props: ['user'],    
+    name: 'ShoppingCart',
+    props: ['userId'],    
     components: {
         CartItems,
     },
     data() {
         return {
-            cartItems: []
+            cartItems: [],
+            loading: false,
+            error: '',
         }
     },
     watch: {
-        async user(newUserValue) {
+        async userId(newUserValue) {
             console.log("newUserValue: ", newUserValue);
+
             if (newUserValue) {
-                const response2 = await axios.get(baseURL + `/api/cart/${newUserValue.uid}`);
+                const response2 = await axios.get(baseURL + `/cart/${newUserValue}`);
                 this.cartItems = response2.data;
             }
         }
@@ -44,17 +50,21 @@ export default {
     },
     methods: {
         created: async function () {
-            console.log("this.user : ", this.user);
+            console.log("this.userId : ", this.userId);
 
-            if(this.user) {
-                const response = await axios.get(baseURL + `/api/cart/${this.user.uid}`);
+            if(this.userId) {
+                this.loading = true;
+                const response = await axios.get(baseURL + `/cart/${this.userId}`);
                 this.cartItems = response.data;
+                this.loading = false;
             }
         },
         removeFromCart: async function (productId) {
-            if(this.user) {
-                const response = await axios.delete(baseURL + `/api/cart/${this.user.uid}/${productId}`);
+            if(this.userId) {
+                this.loading = true;
+                const response = await axios.delete(baseURL + `/cart/${this.userId}/${productId}`);
                 this.cartItems = response.data;
+                this.loading = false;
             }
         }
     },

@@ -1,7 +1,7 @@
 <template>
-    <div class="grid-wrap">
+    <div class="flex flex-wrap py-4 border-2 border-green-400">
         <div
-            class="product-item"
+            class="w-1/3 sm:w-3/3 flex-none px-4 mt-3 py-2 border-2 border-blue-400"
             v-for="product in products"
             :key="product.id"
         >
@@ -17,12 +17,9 @@
     </div>
 </template>
 
-
 <script>
-
 export default {
-    name: 'ProductList',
+    name: 'ProductCard',
     props: ['products'],
 }
-
 </script>

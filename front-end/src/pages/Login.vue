@@ -49,9 +49,6 @@ import baseURL from "../components/Config";
 
 export default {
     name: 'Login',
-    components: {
-        // ProductList,
-    },
     data() {
         return {
             email: 'ashlythomas@gmail.com',
@@ -103,6 +100,7 @@ export default {
                 .then((data) => {
                     localStorage.setItem('token', '123456789');
                     localStorage.setItem('username', data.user.username);
+                    localStorage.setItem('userId', data.user.userId);
                     this.$emit("user-logged-in", data);
 
                     if(this.$route.query.redirect) {

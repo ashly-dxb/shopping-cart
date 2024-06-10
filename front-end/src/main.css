@@ -93,7 +93,7 @@ h1 {
     margin: auto;
 }
 
-/* Product List page */
+/* Product List page : Product Card */
 .grid-wrap {
     display: flex;
     flex-wrap: wrap;

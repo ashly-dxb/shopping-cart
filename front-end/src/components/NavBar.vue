@@ -1,7 +1,7 @@
 <template>
     <div class=" flex justify-between items-center w-full py-4 text-white bg-black">
-        <div class="text-2xl font-signature ml-2">
-            <a href="#" class="no-underline text-white">My-App</a>
+        <div class="font-signature ml-2">
+            <a href="#" class="no-underline text-white">NextJS Cart</a>
             {{ user }}
         </div>
                 
@@ -47,13 +47,9 @@
             </svg>
         </div>
 
-
-        <ul class="flex flex-col justify-top items-center absolute top-0 left-0 px-2 w-full h-screen bg-gradient-to-b from-black to-gray-500" v-if="isOpen">
-            <li
-                class="flex flex-row pl-3 py-6 sm:mt-0 w-full shrink-0 hover:bg-gray-900"
-                v-for="(item, id) in allLinks">
-            
-                <router-link :to="item.link" @click="setIsOpen" active-class="active-link" class="text-3xl no-underline text-white hover:text-blue-100 w-full shrink-0">{{ item.text }}</router-link>
+        <ul class="flex flex-col justify-top items-center absolute top-0 left-0 px-2 w-full h-screen bg-gradient-to-b from-black to-gray-500 z-10" v-if="isOpen">
+            <li v-for="item in allLinks" class="flex flex-row pl-3 py-6 sm:mt-0 w-full shrink-0 hover:bg-gray-900">
+                <router-link :to="item.link" @click="setIsOpen" active-class="active-link" class="text-3xl no-underline text-white hover:text-blue-400 w-full shrink-0">{{ item.text }}</router-link>
             </li>
         </ul>
     </div>
@@ -63,7 +59,7 @@
 <script>
 import baseURL from "./Config";
 import logo from '@/assets/logo-hexagon.svg';
-import allLinks from '../components/menulinks';
+import links from '../components/menulinks';
 
 export default {
     name: 'NavBar',
@@ -72,10 +68,12 @@ export default {
         return {
             logo,
             isLogged: this.checkIfIsLogged(),
-            isOpen: false,            
+            isOpen: false,
+            allLinks: links,
         }
     },
-    mounted() {        
+    mounted() {
+        // console.log('Links:', this.allLinks);
     },
     methods: {
         signOut: async function() {
@@ -95,7 +93,7 @@ export default {
 
                 this.$emit("user-logged-out", data);
 
-                console.log("loging out............", data)
+                console.log("logging out:", data)
 
                 this.isLogged = this.checkIfIsLogged();
                 this.$router.push('/Login');
@@ -111,6 +109,8 @@ export default {
         },
         setIsOpen: function() {
             this.isOpen = !this.isOpen;
+
+            // console.log("isOpen: ", this.isOpen);
         }
     },
     computed: { 

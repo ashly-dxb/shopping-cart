@@ -1,36 +1,36 @@
-const user = JSON.parse(localStorage.getItem("user"));
-const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: { loggedIn: false }, user: null };
+const userId = JSON.parse(localStorage.getItem("userId"));
+const initialState = userId
+  ? { status: { loggedIn: true }, userId }
+  : { status: { loggedIn: false }, userId: null };
 
 export default {
   state: initialState,
   mutations: {
-    loginSuccess(state, user) {
+    loginSuccess(state, userId) {
       state.status.loggedIn = true;
-      state.user = user;
+      state.userId = userId;
     },
     loginFailure(state) {
       state.status.loggedIn = false;
-      state.user = null;
+      state.userId = null;
     },
     logout(state) {
       state.status.loggedIn = false;
-      state.user = null;
+      state.userId = null;
     },
   },
   actions: {
-    login({ commit }, user) {
-      return AuthService.login(user).then(
-        (user) => {
-          commit("loginSuccess", user);
+    login({ commit }, userId) {
+      return AuthService.login(userId).then(
+        (userId) => {
+          commit("loginSuccess", userId);
+          // commit('loginSuccess');
 
-          //   commit('loginSuccess');
-
-          return Promise.resolve(user);
+          return Promise.resolve(userId);
         },
         (error) => {
           commit("loginFailure");
+
           return Promise.reject(error);
         }
       );

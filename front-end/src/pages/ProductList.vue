@@ -7,21 +7,19 @@
         <div v-if="loading" class="loading">Loading...</div>
         <div v-if="error" class="error">{{error}}</div>
 
-        <ProductList :products="products" />
+        <ProductCard :products="products" />
     </div>
 </template>
 
 <script>
-import ProductList from '../components/ProductList.vue'
+import ProductCard from '../components/ProductCard.vue'
 import axios from 'axios';
 import baseURL from "../components/Config";
 
-// watch(() => route.params.id, fetchData, { immediate: true })
-
 export default {
-    name: 'ProductsPage',
+    name: 'ProductList',
     components: {
-        ProductList,
+        ProductCard,
     },
     data() {
         return {
@@ -45,10 +43,8 @@ export default {
     methods: {
         created: async function () {
             this.loading = true;
-
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
-
             this.loading = false;
         },
         setPost(products) {
