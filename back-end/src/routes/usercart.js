@@ -13,18 +13,6 @@ router.get("/list", async (req, res) => {
   } catch (error) {
     res.status(400).json({ success: false });
   }
-
-  /*
-  try {
-    console.log("Cart List START :::: ", UserCart);
-    const userCarts = await UserCart.find({});
-    console.log("Cart List :", userCarts);
-    res.json(userCarts);
-  } catch (error) {
-    console.log("Cart error: ", error);
-    res.status(400).json({ success: false });
-  }
-  */
 });
 
 // retrieve cart details by userID
@@ -42,8 +30,8 @@ router.get("/:userId", async (req, res) => {
 
 // Add item to specified user's cart
 router.post("/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const productId = req.body.id;
+  const userId = parseInt(req.params.userId);
+  const productId = parseInt(req.body.product_id);
 
   const existingUser = await UserCart.findOne({ id: userId });
   if (!existingUser) {

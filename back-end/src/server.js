@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: "jwt-secret",
+    secret: process.env.JWT_SECRET,
     resave: true,
     saveUninitialized: true,
     name: "secret.ckname",
