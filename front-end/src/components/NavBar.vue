@@ -1,9 +1,8 @@
 <template>
     <div class=" flex justify-between items-center w-full py-2 text-white bg-black">
         <div class="font-signature ml-2">
-            <a href="#" class="no-underline text-white">VueJS</a>
-            <div v-if="usedData !== null">{{usedData.username}}</div>
-            <div v-else>..</div>
+            <a href="#" class="no-underline text-white">Vue.js App</a>
+            <p v-if="this.$store.getters.loggedUserInfo">{{ this.$store.getters.loggedUserInfo.username }}</p>
         </div>
 
         <ul class="hidden md:flex">

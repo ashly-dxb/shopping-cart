@@ -5,7 +5,7 @@
         <div class="lg:w-2/6 float-right flex">
             <form @submit.prevent="login">
                 <div class="m-auto mb-3 mt-4 ml-2">
-                    <h2 class="text-green-700 text-2xl font-bold">Login</h2>
+                    <h2 class="text-green-700 text-xl font-bold">Login</h2>
                 </div>
 
                 <div class="m-auto mb-3 mt-4 ml-2">

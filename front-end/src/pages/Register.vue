@@ -3,7 +3,7 @@
     <div class="lg:w-2/6 flex">
         <form v-on:submit.prevent="register">
             <div class="m-auto mb-3 mt-4 ml-2">
-                <h2 class='text-green-700 text-2xl font-bold'>Register</h2>
+                <h2 class='text-green-700 text-xl font-bold'>Register</h2>
             </div>
 
             <div class="m-auto mb-3 mt-4 ml-2">

@@ -1,9 +1,7 @@
 <template>
 <div class="container">
-    <p>{{ $store.state.user.firstName }} {{ $store.state.user.lastName }}</p>
-    <p>{{ $store.getters.fullName }} </p>
-
-    <p>{{ $store.getters['user/fullName'] }}</p>
+    <p>{{ $store.state.user.firstName }} {{ $store.state.user.lastName }} 1</p>
+    <p>{{ this.$store.getters.fullName }} 2</p>
 
     <div class="wrapper">
         <div v-for="airport in airports" :key="airport.abbreviation">
@@ -67,5 +65,4 @@ p, h3 {
     max-width: 960px;
     margin: 0 auto;
 }
-
 </style>
