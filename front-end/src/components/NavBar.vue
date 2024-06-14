@@ -1,7 +1,7 @@
 <template>
     <div class=" flex justify-between items-center w-full py-2 text-white bg-black">
         <div class="font-signature ml-2">
-            <a href="#" class="no-underline text-white">NextJS</a>
+            <a href="#" class="no-underline text-white">VueJS</a>
             <div v-if="usedData !== null">{{usedData.username}}</div>
             <div v-else>..</div>
         </div>
@@ -54,6 +54,10 @@
                 <router-link :to="item.link" @click="setIsOpen" active-class="active-link" class="">
                     <i :class="['pi', item.icon]" style="font-size: 1.1rem"></i><span class="text-3xl text-white hover:text-blue-400 w-full shrink-0 ps-2">{{ item.text }}</span>
                 </router-link>
+            </li>
+
+            <li v-if="loggedIn === true" class="flex flex-row pl-3 py-6 sm:mt-0 w-full shrink-0 hover:bg-gray-900">
+                <div @click="signOut" class="logoutHover "><i class="pi pi-sign-out" style="font-size: 1rem"></i><span class="text-3xl text-white hover:text-blue-400 w-full shrink-0 ps-2">Logout</span></div>
             </li>
         </ul>
         

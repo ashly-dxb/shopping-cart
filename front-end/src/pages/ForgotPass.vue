@@ -79,21 +79,21 @@ export default {
 
                 axios.post(baseURL + "/users/forgot-password", data)
                     .then((response) => {
-                        console.log("forgot-password:::", response);
+                        // console.log("forgot-password:::", response);
 
                         if(response.data.success) {
-                            console.log("Sent mail successfully");
+                            // console.log("Sent mail successfully");
                             // this.$router.push({path: '/Login'});
                             this.successMessage = 'Email sent. Please follow the link in the email to reset password!';
                         }
                         else {
-                            console.log(response.data.message);
+                            // console.log(response.data.message);
                             this.showErrors = true;
                             this.serverError = response.data.message;
                         }
                     })
                     .catch((errors) => {
-                        console.log("Error in send mail:", errors);
+                        // console.log("Error in send mail:", errors);
                         this.showErrors = true;
                         this.serverError = 'Some error occured!';
                     })

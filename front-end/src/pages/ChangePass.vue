@@ -37,6 +37,10 @@
                     <button type="submit" class="p-2 m-2 ml-0">Update</button>
                 </div>
 
+                <div v-if="successMessage" class="p-2 my-2 border-x border-y border-solid border-green-300 text-green-700">
+                    {{successMessage}}
+                </div>
+
             </div>
         </form>
     </div>
@@ -54,7 +58,8 @@ export default {
         return {
             showErrors: false,
             serverError: '',
-            errors: {}
+            errors: {},
+            successMessage: '',
         }
     },
     methods: {
@@ -94,12 +99,8 @@ export default {
 
                 axios.post(baseURL + `/users/change-password/${userID}`, data)
                     .then((response) => {
-                        // console.log("change-password :::", response);
-
                         if(response.data.success) {
-                            // console.log("Password changed ");
                             this.successMessage = 'Password changed successfully!';
-
                             // this.$router.push({path: '/'});
                         }
                         else {
