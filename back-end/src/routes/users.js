@@ -27,6 +27,7 @@ router.get("/get-cookie", (req, res) => {
 });
 */
 
+/* Sign-up a new user account */
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -41,7 +42,10 @@ router.post("/register", async (req, res) => {
     const salt = await bcryptjs.genSalt(10);
     const hashedPassword = await bcryptjs.hash(password, salt);
 
+    var userId = Math.floor(1000 + Math.random() * 9999);
+
     const newUser = new Users({
+      userId,
       username,
       email,
       password: hashedPassword,
@@ -66,7 +70,7 @@ router.post("/login", async (req, res) => {
   if (!email) {
     return res.json({
       authenticated: false,
-      status: "email missing",
+      status: "Email missing",
       error: "Please enter your email",
     });
   }
@@ -74,7 +78,7 @@ router.post("/login", async (req, res) => {
   if (!password) {
     return res.json({
       authenticated: false,
-      status: "password missing",
+      status: "Password missing",
       error: "Please enter your password",
     });
   }
