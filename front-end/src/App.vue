@@ -1,7 +1,12 @@
 <template>
-    <div @user-logged-out="getLoggedOutUserInfo">
-        <NavBar key="123456" :userId="userId" :loggedIn="isLoggedIn"/>
-        <router-view :userId="userId" class='pb-5 mt-5' @user-logged-in="getLoggedUserInfo" >
+    <div >
+        <NavBar :userId="userId" :loggedIn="isLoggedIn"  @user-logged-out="getLoggedOutUserInfo" />
+        <router-view 
+            :userId="userId"
+            @user-logged-in="getLoggedInUserInfo" 
+           
+            class='pb-5 mt-5'
+            >
         </router-view>
     </div>
 </template>
@@ -26,16 +31,18 @@ export default {
     },
     methods: {
         created: function () {
-            this.userId = localStorage.getItem('userId');
-            this.isLoggedIn = localStorage.getItem('userId') ? true : false; // dummy...need to correct
         },
-        getLoggedUserInfo: function(data) {
+        
+        getLoggedInUserInfo: function(data) {
+            console.log("emitted getLoggedInUserInfo");
+
             this.userId = data.user.userId;
             this.isLoggedIn = true;
         },
-        getLoggedOutUserInfo: function(data) {
 
-            console.log("in getLoggedOutUserInfo");
+        getLoggedOutUserInfo: function() {
+            console.log("emitted getLoggedOutUserInfo");
+
             this.userId = '';
             this.isLoggedIn = false;
         }

@@ -7,8 +7,8 @@
         <div v-if="loading" class="loading">Loading...</div>
         <div v-if="error" class="error">{{error}}</div>
 
-        <div v-if="product" class="pb-4 mb-4">
-            <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap py-4 flex-grow">
+        <div v-if="product" class="">
+            <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap pb-4 flex-grow">
                 <div class="w-fixed w-full flex-grow-0 px-4"><img :src="getIMGPath(product.imageUrl)" class="img-wrap" /></div>
                 <div class="w-fixed w-full flex-grow-0 px-4 mt-7">{{ product.description }}</div>
             </div>
@@ -36,6 +36,9 @@ import NotFoundPage from './NotFoundPage.vue';
 import axios from 'axios';
 import baseURL from "../components/Config";
 
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 export default {
     name: 'ProductDetails',
     props: ['userId'],
@@ -52,8 +55,8 @@ export default {
     },
     computed: {
         itemIsInCart() {
-            console.log(this.cartItems, "itemIsInCart");
-            console.log(this.$route.params);
+            // console.log(this.cartItems, "itemIsInCart");
+            // console.log(this.$route.params);
             return this.cartItems.some(item => item.id === parseInt(this.$route.params.productId));
         }
     },
@@ -72,15 +75,6 @@ export default {
         created: async function () {
             this.loading = true;
 
-            // const auth = getAuth();
-            // if (isSignInWithEmailLink(auth, window.location.href)) {
-            //     const email = window.localStorage.getItem('emailForSignIn');
-            //     await signInWithEmailLink(auth, email, window.location.href);
-
-            //     alert('Successfully Signed In');
-            //     window.localStorage.removeItem('emailForSignIn');                
-            // }
-
             const response = await axios.get(baseURL + `/products/details/${this.$route.params.productId}`);
             this.product = response.data;
 
@@ -91,12 +85,32 @@ export default {
 
             this.loading = false;
         },
+        
         getIMGPath: function(imageUrl) {
             return imageUrl ? require("@/assets" + imageUrl) : "no-image";
         },
+
+        triggerToast() {
+          toast.success('Item added to cart', {
+                rtl: false,
+                position: "bottom-right",
+                timeout: 7000,
+                closeOnClick: true,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: false,
+                hideProgressBar: true,
+                closeButton: "button",
+           });
+        },
+
         addToCart: async function () {
-            const response = await axios.post(baseURL + `/cart/${this.userId}`, {id: this.$route.params.productId} );
+            const response = await axios.post(baseURL + `/cart/${this.userId}`, {product_id: this.$route.params.productId} );
             console.log('Item added to the cart!', response);
+
+            this.triggerToast();
         },
         signIn: async function () {
             // const auth = getAuth();

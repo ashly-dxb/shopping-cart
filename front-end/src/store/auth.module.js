@@ -1,25 +1,50 @@
+/*
 const userId = JSON.parse(localStorage.getItem("userId"));
+
 const initialState = userId
   ? { status: { loggedIn: true }, userId }
   : { status: { loggedIn: false }, userId: null };
 
+*/
+
 export default {
-  state: initialState,
+  // plugins: [createPersistedState({ storage: window.localStorage })],
+  // plugins: [vuexLocal.plugin], // experimental
+  state: {
+    userObj: null,
+    status: {
+      loggedIn: false,
+    },
+  },
+
   mutations: {
-    loginSuccess(state, userId) {
+    loginSuccess(state, userObj) {
       state.status.loggedIn = true;
-      state.userId = userId;
+      state.userObj = userObj;
+
+      console.log("loginSuccess # STORE STATE: ", state);
+    },
+    logoutSuccess(state) {
+      state.status.loggedIn = false;
+      state.userObj = null;
+
+      console.log("logoutSuccess # STORE STATE: ", state);
     },
     loginFailure(state) {
       state.status.loggedIn = false;
-      state.userId = null;
-    },
-    logout(state) {
-      state.status.loggedIn = false;
-      state.userId = null;
+      state.userObj = null;
     },
   },
+
   actions: {
+    loginDone(context, payload) {
+      // const userObj = context.state.userObj;
+      context.commit("loginSuccess", payload);
+    },
+    logoutDone(context) {
+      context.commit("logoutSuccess");
+    },
+    /*
     login({ commit }, userId) {
       return AuthService.login(userId).then(
         (userId) => {
@@ -35,9 +60,11 @@ export default {
         }
       );
     },
-    logout({ commit }) {
-      AuthService.logout();
-      commit("logout");
+    */
+  },
+  getters: {
+    loggedUserInfo: (state) => {
+      return state.userObj;
     },
   },
 };

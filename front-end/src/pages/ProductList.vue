@@ -1,13 +1,13 @@
 <template>
     <div class='max-w-3xl bg-white px-5 m-auto my-2 border-2 '>
-        <div class="m-auto mb-8 mt-4">
+        <div class="m-auto mb-3 mt-4">
           <h3 class='text-green-700 text-xl font-bold'>Product List</h3>
         </div>
 
         <div v-if="loading" class="loading">Loading...</div>
         <div v-if="error" class="error">{{error}}</div>
 
-        <ProductCard :products="products" />
+        <ProductCard :products="products" :userId="userId" />
     </div>
 </template>
 
@@ -24,6 +24,7 @@ export default {
     data() {
         return {
             products: [],
+            userId: null,
             loading: false,
             error: '',
         }
@@ -42,6 +43,8 @@ export default {
     },
     methods: {
         created: async function () {
+            this.userId = localStorage.getItem("userId");
+
             this.loading = true;
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;

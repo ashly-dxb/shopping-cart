@@ -1,43 +1,47 @@
 <template>
-    <div class="container">
-      <header class="jumbotron">
-        <h3>
-          <strong>{{currentUser.username}}</strong> Profile
-        </h3>
-      </header>
-      <p>
-        <strong>Token:</strong>
-        {{currentUser.accessToken.substring(0, 20)}} 
-        ... 
-        {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}
-      </p>
-      <p>
-        <strong>Id:</strong>
-        {{currentUser.id}}
-      </p>
-      <p>
-        <strong>Email:</strong>
-        {{currentUser.email}}
-      </p>
-      <strong>Authorities:</strong>
-      <ul>
-        <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
-      </ul>
+  <div class='bg-white px-5 my-2 border-2 '>
+    <div class="m-auto mb-3 mt-4 ml-2">
+      <h2 class='text-green-700 text-xl font-bold'>Profile</h2>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'Profile',
-    computed: {
-      currentUser() {
-        return this.$store.state.auth.user;
-      }
-    },
-    mounted() {
-      if (!this.currentUser) {
-        this.$router.push('/Login');
-      }
+
+    <div class="m-auto mb-3 mt-4 ml-2">
+      <div className="flex flex-row flex-wrap m-auto mr-3 mb-4 border-0 border-red-300">
+        <div className=" w-1/2 md:w-1/2 lg:w-1/3 mr-1 font-bold">User Id</div>
+        <div className=" w-1/2 md:w-1/2 lg:w-1/3 mr-1 " v-if="$store.state.auth.userObj !== null">{{ $store.state.auth.userObj.userId }}</div>
+      </div>
+
+      <div className="flex flex-row flex-wrap m-auto mr-3 mb-4 border-0 border-red-300">
+        <div className="w-1/2 md:w-1/2 lg:w-1/3 mr-1 font-bold">User name</div>
+        <div className="w-1/2 md:w-1/2 lg:w-1/3 mr-1 " v-if="$store.state.auth.userObj !== null">{{ $store.state.auth.userObj.username }}</div>
+      </div>
+
+      <div className="flex flex-row flex-wrap m-auto mr-3 mb-4 border-0 border-red-300">
+        <div className="w-1/2 md:w-1/2 lg:w-1/3 mr-1 font-bold">Email</div>
+        <div className="w-1/2 md:w-1/2 lg:w-1/3 mr-1 " v-if="$store.state.auth.userObj !== null">{{ $store.state.auth.userObj.email }}</div>
+      </div>
+
+      <div className="flex flex-row flex-wrap m-auto mr-3 mb-4 border-0 border-red-300">
+        <div className="w-1/2 md:w-1/2 lg:w-1/3 mr-1 font-bold">Token</div>
+        <div className="w-1/2 md:w-1/2 lg:w-1/3 mr-1 " v-if="$store.state.auth.userObj !== null">{{$store.state.auth.userObj.password.substring(0, 20)}}</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Profile',
+  computed: {
+    currentUser() {
+      console.log("currentUser:::", this.$store.state.auth.userObj);
+      return this.$store.state.auth.userObj;
     }
-  };
-  </script>
+  },
+  mounted() {
+    console.log("mounted...");
+    if(!this.currentUser) {
+      this.$router.push('/Login');
+    }
+  }
+};
+</script>

@@ -1,48 +1,59 @@
 <template>
-    <div class="max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-2">
+<div class="bg-white px-5 my-2 border-2">
+    <div class="lg:w-2/6 flex">
         <form v-on:submit.prevent="register">
-            <div class="m-auto mb-3 mt-4">
-                <h2 class='text-green-700 text-xl font-bold'>Register</h2>
+            <div class="m-auto mb-3 mt-4 ml-2">
+                <h2 class='text-green-700 text-2xl font-bold'>Register</h2>
             </div>
 
-            <div class="m-auto mb-3 mt-4">
+            <div class="m-auto mb-3 mt-4 ml-2">
                 <input
                     type="text"
                     placeholder="Enter your name"
                     v-model="username"
-                    class="border-x border-y border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
+                    class="border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
                     />
-                <span v-if="this.errors.username" class="p-2 my-4 bg-red-300 text-red-700">
+                <div v-if="this.errors.username" class="p-2 bg-red-200 text-red-700">
                     {{this.errors.username}}
-                </span>
+                </div>
 
                 <input
                     type="email"
                     placeholder="Enter your email"
                     v-model="email"
-                    class="border-x border-y border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
+                    class="border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
                     />
-                <span v-if="this.errors.email" class="p-2 my-4 bg-red-300 text-red-700">
+                <div v-if="this.errors.email" class="p-2 bg-red-200 text-red-700">
                     {{this.errors.email}}
-                </span>
+                </div>
                     
                 <input
                     type="password"
                     placeholder="Enter password"
                     v-model="password"
-                    class="border-x border-y border-solid border-gray-400 p-2 m-2 md:text-xl w-full hover:border-green-500 focus:outline-blue-500"
+                    class="border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
                     />
 
-                <span v-if="this.errors.password" class="p-2 my-4 bg-red-300 text-red-700">
+                <div v-if="this.errors.password" class="p-2 bg-red-200 text-red-700">
                     {{this.errors.password}}
-                </span>
+                </div>
 
-                <div class="p-2">
-                    <button type="submit" class="login-button">Register</button>
+                <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
+                    {{serverError}}
+                </div>
+
+                <button type="submit" class="p-2 m-2 ml-0">Register</button>
+
+                <div class="border-t-2 p-3 my-5 clearfix">
+                    <div class="float-left">Already have an account?</div>
+                    <div class="float-right">
+                        <router-link to="/Login" class="text-blue-800">Login</router-link>
+                    </div>
                 </div>
             </div>
-        </form> 
+        </form>
     </div>
+</div>
 </template>
 
 <script>
@@ -56,6 +67,7 @@ export default {
     data() {
         return {
             showErrors: false,
+            serverError: '',
             errors: {}
         }
     },
@@ -68,6 +80,9 @@ export default {
         register(e) {
             e.preventDefault();
 
+            this.showErrors = false;
+            this.serverError = '';
+
             let username = this.username;
             let email = this.email;
             let password = this.password;
@@ -78,17 +93,17 @@ export default {
             
             if(!username) {
                 this.showErrors = true;
-                this.errors.username = "Username is mandatory";
+                this.errors.username = "Name is required";
                 invalidForm = true;
             }
             if(!email) {
                 this.showErrors = true;
-                this.errors.email = "Email is mandatory";
+                this.errors.email = "Email is required";
                 invalidForm = true;
             }
             if(!password) {
                 this.showErrors = true;
-                this.errors.password = "Password is mandatory";
+                this.errors.password = "Password is required";
                 invalidForm = true;
             }
 
@@ -105,12 +120,22 @@ export default {
 
                 axios.post(baseURL + "/users/register", data)
                     .then((response) => {
-                        console.log("Registered successfully");
-                        // router.push("/Login");
-                        this.$router.push({path: '/Login'});
+                        console.log("ZZZ", response);
+
+                        if(response.data.success) {
+                            console.log("Registered successfully");
+                            this.$router.push({path: '/Login'});
+                        }
+                        else {
+                            console.log(response.data.message);
+                            this.showErrors = true;
+                            this.serverError = response.data.message;
+                        }
                     })
                     .catch((errors) => {
                         console.log("Error in registartion:", errors);
+                        this.showErrors = true;
+                        this.serverError = 'Some error occured!';
                     })
             }
 

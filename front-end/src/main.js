@@ -6,18 +6,23 @@ import * as VueRouter from "vue-router";
 
 import "./main.css";
 
+import Register from "./pages/Register.vue";
 import Login from "./pages/Login.vue";
-// import Logout from "./pages/Logout.vue";
-import Airport from "./pages/Airport.vue";
-import HomePage from "./pages/HomePage.vue";
-import ProductList from "./pages/ProductList.vue";
+import ForgotPass from "./pages/ForgotPass.vue";
+import ResetPass from "./pages/ResetPass.vue";
+import ChangePass from "./pages/ChangePass.vue";
+
+import Home from "./pages/Home.vue";
+// import ProductList from "./pages/ProductList.vue";
 import ProductDetails from "./pages/ProductDetails.vue";
 import ShoppingCart from "./pages/ShoppingCart.vue";
-import Register from "./pages/Register.vue";
+import Profile from "./pages/Profile.vue";
+import Airport from "./pages/Airport.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
 
-import { initializeApp } from "firebase/app";
+// import { initializeApp } from "firebase/app";
 
+/*
 const firebaseConfig = {
   apiKey: "AIzaSyCRdGsXsNMVUsyswHv7reBDYgf_3GYKTNE",
   authDomain: "vue-node-mongo-shopping.firebaseapp.com",
@@ -28,6 +33,7 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
+*/
 
 // const emitter = mitt();
 
@@ -38,7 +44,7 @@ var router = VueRouter.createRouter({
   routes: [
     {
       path: "/",
-      component: HomePage,
+      component: Home,
       name: "HomePage",
     },
     {
@@ -53,7 +59,7 @@ var router = VueRouter.createRouter({
     },
     {
       path: "/products",
-      component: ProductList,
+      component: () => import("./pages/ProductList.vue"),
     },
     {
       path: "/products/:productId",
@@ -67,10 +73,23 @@ var router = VueRouter.createRouter({
       path: "/Register",
       component: Register,
     },
-    // {
-    //   path: "/Logout",
-    //   component: Logout,
-    // },
+    {
+      path: "/ForgotPassword",
+      component: ForgotPass,
+    },
+    {
+      path: "/ResetPassword/:id/:token",
+      component: ResetPass,
+    },
+    {
+      path: "/ChangePassword",
+      component: ChangePass,
+    },
+    {
+      path: "/Profile",
+      component: Profile,
+      name: "ProfilePage",
+    },
     {
       path: "/:pathMatch(.*)*",
       component: NotFoundPage,
@@ -79,14 +98,13 @@ var router = VueRouter.createRouter({
 });
 
 const myApp = createApp(App).use(router).use(store).mount("#app");
-// myApp.config.globalProperties.emitter = emitter;
 
 /* Authorization checks */
 const isLoggedIn = () => {
   return localStorage.getItem("token");
 };
 
-const protectedRoutes = ["HomePage", "CartPage", "AirportPage"];
+const protectedRoutes = ["HomePage", "ProfilePage", "CartPage", "AirportPage"];
 
 router.beforeEach((to, from, next) => {
   // console.log("to.name: ", to.name);

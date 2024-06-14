@@ -1,32 +1,28 @@
 <template>
-    <div class=" flex justify-between items-center w-full py-4 text-white bg-black">
+    <div class=" flex justify-between items-center w-full py-2 text-white bg-black">
         <div class="font-signature ml-2">
-            <a href="#" class="no-underline text-white">NextJS Cart</a>
-            {{ user }}
+            <a href="#" class="no-underline text-white">NextJS</a>
+            <div v-if="usedData !== null">{{usedData.username}}xxx</div>
+            <div v-else>yyy</div>
         </div>
-                
+
         <ul class="hidden md:flex">
-            <li v-if="loggedIn === true">Logged In</li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === false">
-                <router-link to="/Register" active-class="active-link">Register</router-link>
+            <!-- <li v-if="loggedIn === true">Logged In</li> -->
+
+            <li v-if="loggedIn === true" v-for="item in primaryLinks" class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">
+                <router-link v-if="item.type === 'LOGGED_IN'" :to="item.link" active-class="active-link">
+                    <i :class="['pi', item.icon]" style="font-size: 1.1rem"></i><span class="ps-2">{{ item.text }}</span>
+                </router-link>
             </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === false">
-                <router-link to="/Login" active-class="active-link" >Login</router-link>
+
+            <li v-else  v-for="item in secondaryLinks" class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">
+                <router-link :to="item.link" active-class="active-link">
+                    <i :class="['pi', item.icon]" style="font-size: 1.1rem"></i><span class="ps-2">{{ item.text }}</span>
+                </router-link>
             </li>
+
             <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
-                <router-link to="/" active-class="active-link">Home</router-link>
-            </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
-                <router-link to="/products" active-class="active-link">Products</router-link>
-            </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
-                <router-link to="/cart" active-class="active-link">Cart</router-link>
-            </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
-                <router-link to="/airports" active-class="active-link">Airport</router-link>
-            </li>
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2"  v-if="loggedIn === true">
-                <button @click="signOut">Logout</button>
+                <div @click="signOut" class="logoutHover"><i class="pi pi-sign-out" style="font-size: 1rem"></i><span class="ps-2">Logout</span></div>
             </li>
         </ul>
 
@@ -59,21 +55,44 @@
 <script>
 import baseURL from "./Config";
 import logo from '@/assets/logo-hexagon.svg';
-import links from '../components/menulinks';
+import mainLinks, {otherLinks}  from '../components/menulinks';
+import 'primeicons/primeicons.css';
+
+import {mapState, mapGetters} from 'vuex';
 
 export default {
     name: 'NavBar',
-    props: ['user', 'loggedIn'],
+    // props: ['user', 'loggedIn'],
+    props: ['loggedIn'],
+    computed: {
+        // console.log('in computed');
+        ...mapState({
+            user: (state) => state.userObj
+        }),
+
+        ...mapGetters({
+            loggedUserData: 'loggedUserInfo'
+        }),
+
+        truncatedFullname: function() {
+            return this.user.substring(0, 12);
+        },
+        // usedData: this.loggedUserData
+    },
     data() {
         return {
             logo,
             isLogged: this.checkIfIsLogged(),
             isOpen: false,
-            allLinks: links,
+            primaryLinks: mainLinks,
+            secondaryLinks: otherLinks,
+            usedData: null,
         }
     },
     mounted() {
-        // console.log('Links:', this.allLinks);
+        console.log("NAV mapGetters", this.loggedUserData);
+        console.log("NAV mapState", this.user);
+        this.usedData = this.loggedUserData;
     },
     methods: {
         signOut: async function() {
@@ -81,7 +100,7 @@ export default {
                     method: 'GET',
                     credentials: 'include', /* very important for the cookies to be set from the server*/
                     headers: {
-                    'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',
                     },
                 });
 
@@ -90,16 +109,22 @@ export default {
             if(data.authenticated === false) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('username');
+                localStorage.removeItem('userId');
 
-                this.$emit("user-logged-out", data);
+                console.log("Logging out:", data);
 
-                console.log("logging out:", data)
+                this.$emit("user-logged-out");
+                // this.$store.commit("logoutSuccess"); // store mutation
+                this.$store.dispatch("logoutDone"); // store action
+
+                console.log("Logging out: 222");
 
                 this.isLogged = this.checkIfIsLogged();
                 this.$router.push('/Login');
             }
         },
-        checkIfIsLogged () {
+
+        checkIfIsLogged: function() {
             let token = localStorage.getItem('token');
             if (token) {
                 return true;
@@ -107,16 +132,12 @@ export default {
                 return false;
             }
         },
+
         setIsOpen: function() {
             this.isOpen = !this.isOpen;
-
             // console.log("isOpen: ", this.isOpen);
         }
     },
-    computed: { 
-        truncatedFullname: function() {
-            return this.user.substring(0, 12);
-        }
-    } 
+    
 }
 </script>

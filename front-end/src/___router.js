@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const router = new VueRouter([
   {
     path: "/",
-    component: HomePage,
+    component: Home,
   },
   {
     path: "/Login",

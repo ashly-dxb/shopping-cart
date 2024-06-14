@@ -1,40 +1,46 @@
 <template>
-    <div class="flex bg-white px-5 my-2 border-2">
+    <div class="bg-white px-5 my-2 border-2 flex">
         <div class="lg:w-4/6 float-left">&nbsp;</div>
 
         <div class="lg:w-2/6 float-right flex">
             <form @submit.prevent="login">
-                <div class="my-2 ">
-                    <h2 class="text-green-700 md:text-2xl font-bold">Login</h2>
+                <div class="m-auto mb-3 mt-4 ml-2">
+                    <h2 class="text-green-700 text-2xl font-bold">Login</h2>
                 </div>
 
-                <div class="m-auto mb-3 mt-4">
+                <div class="m-auto mb-3 mt-4 ml-2">
                     <input
                         type="email"
                         placeholder="Email"
                         v-model="email"
-                        v-validate="'required'"
+                        v-validate="required"
                         class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
                         />
                     <input
                         type="password"
                         placeholder="Password"
                         v-model="password"
-                        v-validate="'required'"
+                        v-validate="required"
                         class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
                         />
 
-                    <div v-if="showErrors" class="p-2 my-2 bg-red-300 text-red-600">
+                    <div v-if="showErrors" class="px-2 my-2 border-x border-y border-solid border-red-500 text-red-700">
                         {{errors}}
                     </div>
 
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         class="border-x border-y border-solid border-gray-400 p-2 my-2 md:text-xl w-full">
                         Login
                     </button>
 
-                    
+                    <div class="border-t-2 p-3 my-5 clearfix">
+                        <div class="float-left">No account? <router-link to="/Register" class="text-blue-800">Sign-up</router-link></div>
+                        <div class="float-right">
+                            <router-link to="/ForgotPassword" class="text-blue-800">Forgot password?</router-link>
+                        </div>
+                    </div>
+
                 </div>
             </form>
 
@@ -52,6 +58,7 @@ export default {
     data() {
         return {
             email: 'ashlythomas@gmail.com',
+            password: 'abcd1234',
             showErrors: false,
             errors: null,
             // router : useRouter()
@@ -71,12 +78,12 @@ export default {
 
             if(!email) {
                 this.showErrors = true;
-                this.errors = "Email is mandatory";
+                this.errors = "Email is required";
                 return false;
             }
             if(!password) {
                 this.showErrors = true;
-                this.errors = "Password is mandatory";
+                this.errors = "Password is required";
                 return false;
             }
 
@@ -98,20 +105,33 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    localStorage.setItem('token', '123456789');
-                    localStorage.setItem('username', data.user.username);
-                    localStorage.setItem('userId', data.user.userId);
-                    this.$emit("user-logged-in", data);
 
-                    if(this.$route.query.redirect) {
-                        this.$router.push(this.$route.query.redirect);
+                    if(data.authenticated) {
+                        localStorage.setItem('token', '123456789');
+                        localStorage.setItem('username', data.user.username);
+                        localStorage.setItem('userId', data.user.userId);
+
+                        this.$emit("user-logged-in", data);
+                        // this.$store.commit("loginSuccess", data.user); // store mutation
+                        this.$store.dispatch("loginDone", data.user); // store action
+
+                        if(this.$route.query.redirect) {
+                            this.$router.push(this.$route.query.redirect);
+                        }
+                        else {
+                            this.$router.push({path: '/products'});
+                        }
                     }
                     else {
-                        this.$router.push({path: '/products'});
+                        // console.log(data.error);
+                        this.showErrors = true;
+                        this.errors = data.error;
                     }
                 })
                 .catch(function(error) {
                     console.log(error);
+                    this.showErrors = true;
+                    this.errors = 'Some error occured!';
                 });
             }
 

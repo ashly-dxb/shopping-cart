@@ -22,9 +22,12 @@ import baseURL from '@/components/Config';
 import CartItems from '../components/CartItems.vue';
 import axios from 'axios';
 
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 export default {
     name: 'ShoppingCart',
-    props: ['userId'],    
+    props: ['userId'],
     components: {
         CartItems,
     },
@@ -35,19 +38,25 @@ export default {
             error: '',
         }
     },
+    
     watch: {
         async userId(newUserValue) {
             console.log("newUserValue: ", newUserValue);
 
             if (newUserValue) {
+                console.log("newUserValue 222: ", newUserValue);
                 const response2 = await axios.get(baseURL + `/cart/${newUserValue}`);
                 this.cartItems = response2.data;
             }
         }
     },
+
     mounted: function () {
+
+        console.log("Props::", this.userId);
         this.created();
     },
+
     methods: {
         created: async function () {
             console.log("this.userId : ", this.userId);
@@ -65,8 +74,24 @@ export default {
                 const response = await axios.delete(baseURL + `/cart/${this.userId}/${productId}`);
                 this.cartItems = response.data;
                 this.loading = false;
+                this.triggerToast();
             }
-        }
+        },
+        triggerToast() {
+          toast.success('Item removed from the cart!', {
+                rtl: false,
+                position: "bottom-right",
+                timeout: 5000,
+                closeOnClick: false,
+                pauseOnFocusLoss: true,
+                pauseOnHover: true,
+                draggable: true,
+                draggablePercent: 0.6,
+                showCloseButtonOnHover: true,
+                // hideProgressBar: true,
+                closeButton: "button",
+           });
+        },
     },
 }
 </script>

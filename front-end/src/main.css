@@ -29,21 +29,25 @@
 
 .active-link {
     color: #fff;
-    background-color: #adabab;
+    background-color: #a47cda;
     padding: 4px 8px;
-    border-radius: 12px;
+    border-radius: 8px;
     border: 1px solid gray;
+}
+
+.logoutHover {
+    cursor: pointer;
+    color: green;
 }
 
 
 button {
     background-color: black;
-    padding: 7px 10px 7px;
-    border: none;
-    /* border-radius: 12px; */
     color: white;
     font-weight: bold;
     outline: 0;
+    border: none;
+    padding: 7px 10px 7px;
     cursor: pointer;
 }
 
