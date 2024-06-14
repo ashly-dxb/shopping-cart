@@ -1,6 +1,6 @@
 <template>
 <div class="bg-white px-5 my-2 border-2">
-    <div class="lg:w-2/6 flex">
+    <div class="w-full lg:w-2/6 flex">
         <form v-on:submit.prevent="updatePassword">
             <div class="m-auto mb-3 mt-4 ml-2">
                 <h2 class='text-green-700 text-2xl font-bold'>Choose New Password</h2>
@@ -14,6 +14,10 @@
                     class="border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
                     />
 
+                <span v-if="this.errors.new_password" class="my-4 p-2 bg-red-200 text-red-700">
+                    {{this.errors.new_password}}
+                </span>
+
                 <input
                     type="password"
                     placeholder="Re-enter Password"
@@ -21,11 +25,17 @@
                     class="border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
                     />
 
+                <span v-if="this.errors.confirm_password" class="my-4 p-2 bg-red-200 text-red-700">
+                    {{this.errors.confirm_password}}
+                </span>
+
                 <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
                     {{serverError}}
                 </div>
 
-                <button type="submit" class="p-2 m-2 ml-0">Update</button>
+                <div>
+                    <button type="submit" class="p-2 m-2 ml-0">Update</button>
+                </div>
                 
             </div>
         </form>

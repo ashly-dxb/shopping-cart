@@ -3,7 +3,7 @@
         <div class="font-signature ml-2">
             <a href="#" class="no-underline text-white">NextJS</a>
             <div v-if="usedData !== null">{{usedData.username}}</div>
-            <div v-else>yyy</div>
+            <div v-else>..</div>
         </div>
 
         <ul class="hidden md:flex">
@@ -103,7 +103,7 @@ export default {
         console.log("NAV mapState", this.user);
         this.usedData = this.loggedUserData;
     },
-    
+
     methods: {
         signOut: async function() {
             const response = await fetch(baseURL + "/users/logout", {

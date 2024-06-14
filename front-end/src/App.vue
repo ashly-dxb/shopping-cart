@@ -34,14 +34,14 @@ export default {
         },
         
         getLoggedInUserInfo: function(data) {
-            console.log("emitted getLoggedInUserInfo");
+            // console.log("emitted getLoggedInUserInfo");
 
             this.userId = data.user.userId;
             this.isLoggedIn = true;
         },
 
         getLoggedOutUserInfo: function() {
-            console.log("emitted getLoggedOutUserInfo");
+            // console.log("emitted getLoggedOutUserInfo");
 
             this.userId = '';
             this.isLoggedIn = false;

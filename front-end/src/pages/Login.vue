@@ -129,7 +129,7 @@ export default {
                     }
                 })
                 .catch(function(error) {
-                    console.log(error);
+                    // console.log(error);
                     this.showErrors = true;
                     this.errors = 'Some error occured!';
                 });

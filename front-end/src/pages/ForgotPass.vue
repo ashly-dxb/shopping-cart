@@ -1,6 +1,6 @@
 <template>
 <div class="bg-white px-5 my-2 border-2">
-    <div class="lg:w-2/6 flex">
+    <div class="w-full lg:w-2/6 flex">
         <form v-on:submit.prevent="sendLink">
             <div class="m-auto mb-3 mt-4 ml-2">
                 <h2 class='text-green-700 text-2xl font-bold'>Forgot Password</h2>
@@ -14,11 +14,17 @@
                     class="border-x border-y border-solid border-gray-400 p-2 mt-2 w-full hover:border-green-500 focus:outline-blue-500"
                     />
 
-                <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
-                    {{serverError}}
-                </div>
+                <span v-if="this.errors.email" class="my-4 p-2 bg-red-200 text-red-700">
+                    {{this.errors.email}}
+                </span>
 
-                <button type="submit" class="p-2 m-2 ml-0">Send Password Reset Link</button>
+                <span v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
+                    {{serverError}}
+                </span>
+
+                <div>
+                    <button type="submit" class="p-2 m-2 ml-0">Send Password Reset Link</button>
+                </div>
 
                 <div v-if="successMessage" class="p-2 my-2 border-x border-y border-solid border-green-300 text-green-700">
                     {{successMessage}}
