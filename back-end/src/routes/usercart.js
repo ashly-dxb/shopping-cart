@@ -7,9 +7,8 @@ const router = express.Router();
 // retrieve cart list
 router.get("/list", async (req, res) => {
   try {
-    const products = await Products.find({});
-
-    res.json(products);
+    const userCart = await UserCart.find({});
+    res.json(userCart);
   } catch (error) {
     res.status(400).json({ success: false });
   }
@@ -33,21 +32,31 @@ router.post("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
   const productId = parseInt(req.body.product_id);
 
-  const existingUser = await UserCart.findOne({ id: userId });
-  if (!existingUser) {
-    await UserCart.insertOne({ id: userId, cartItems: [] });
+  const existingCart = await UserCart.findOne({ id: userId });
+
+  if (existingCart) {
+    await UserCart.updateOne(
+      { id: userId },
+      {
+        $addToSet: { cartItems: parseInt(productId) },
+      }
+    );
+  } else {
+    try {
+      const newUserCart = new UserCart({
+        id: userId,
+        cartItems: [],
+      });
+
+      const savedUserCart = await newUserCart.save();
+    } catch (error) {
+      return res.status(400).send({ success: false, message: "Insert error" });
+    }
   }
 
-  await UserCart.updateOne(
-    { id: userId },
-    {
-      $addToSet: { cartItems: parseInt(productId) },
-    }
-  );
+  const userCart = await UserCart.findOne({ id: userId });
 
-  const user = await UserCart.findOne({ id: userId });
-
-  const populatedCart = await populateCartIds(user?.cartItems || []);
+  const populatedCart = await populateCartIds(userCart?.cartItems || []);
   res.json(populatedCart);
 });
 
