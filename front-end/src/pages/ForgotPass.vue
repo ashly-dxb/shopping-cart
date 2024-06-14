@@ -87,7 +87,7 @@ export default {
                         }
                     })
                     .catch((errors) => {
-                        console.log("Error in registartion:", errors);
+                        console.log("Error in send mail:", errors);
                         this.showErrors = true;
                         this.serverError = 'Some error occured!';
                     })

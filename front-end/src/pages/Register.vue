@@ -133,9 +133,9 @@ export default {
                         }
                     })
                     .catch((errors) => {
-                        console.log("Error in registartion:", errors);
+                        console.log("Error in registering user:", errors);
                         this.showErrors = true;
-                        this.serverError = 'Some error occured!';
+                        this.serverError = 'An error occured!';
                     })
             }
 

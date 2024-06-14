@@ -29,6 +29,12 @@ const mainLinks = [
     type: "LOGGED_IN",
     icon: "pi-user",
   },
+  {
+    link: "/ChangePassword",
+    text: "Change Password",
+    type: "LOGGED_IN",
+    icon: "pi-user",
+  },
 ];
 
 const otherLinks = [
