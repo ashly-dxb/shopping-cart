@@ -27,6 +27,19 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+// retrieve cart items as an array by userID
+router.get("/itemlist/:userId", async (req, res) => {
+  const userId = parseInt(req.params.userId);
+
+  try {
+    const user = await UserCart.findOne({ id: userId });
+    const cartItems = user?.cartItems || [];
+    res.json(cartItems);
+  } catch (error) {
+    res.status(400).send({ success: false });
+  }
+});
+
 // Add item to specified user's cart
 router.post("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
