@@ -6,6 +6,11 @@ import * as VueRouter from "vue-router";
 
 import "./main.css";
 
+// import PrimeVue from "primevue/config";
+// import Badge from "primevue/badge";
+// import Button from "primevue/button";
+// import "primevue/resources/themes/aura-light-green/theme.css";
+
 import Register from "./pages/Register.vue";
 import Login from "./pages/Login.vue";
 import ForgotPass from "./pages/ForgotPass.vue";
@@ -19,23 +24,6 @@ import ShoppingCart from "./pages/ShoppingCart.vue";
 import Profile from "./pages/Profile.vue";
 import Airport from "./pages/Airport.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
-
-// import { initializeApp } from "firebase/app";
-
-/*
-const firebaseConfig = {
-  apiKey: "AIzaSyCRdGsXsNMVUsyswHv7reBDYgf_3GYKTNE",
-  authDomain: "vue-node-mongo-shopping.firebaseapp.com",
-  projectId: "vue-node-mongo-shopping",
-  storageBucket: "vue-node-mongo-shopping.appspot.com",
-  messagingSenderId: "228650435567",
-  appId: "1:228650435567:web:ee9e8fc2fcb7a3e6ccec1a",
-};
-
-initializeApp(firebaseConfig);
-*/
-
-// const emitter = mitt();
 
 var router = VueRouter.createRouter({
   linkActiveClass: "border-indigo-500",
@@ -60,6 +48,7 @@ var router = VueRouter.createRouter({
     {
       path: "/products",
       component: () => import("./pages/ProductList.vue"),
+      name: "ProductPage",
     },
     {
       path: "/products/:productId",
@@ -68,6 +57,7 @@ var router = VueRouter.createRouter({
     {
       path: "/Login",
       component: Login,
+      name: "LoginPage",
     },
     {
       path: "/Register",
@@ -98,6 +88,9 @@ var router = VueRouter.createRouter({
 });
 
 const myApp = createApp(App).use(router).use(store).mount("#app");
+
+// .use(BootstrapVue)
+// .use(IconsPlugin)
 
 /* Authorization checks */
 const isLoggedIn = () => {

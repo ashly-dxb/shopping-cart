@@ -81,7 +81,7 @@ export default {
           toast.success('Item removed from the cart!', {
                 rtl: false,
                 position: "bottom-right",
-                timeout: 5000,
+                timeout: 4000,
                 closeOnClick: false,
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,

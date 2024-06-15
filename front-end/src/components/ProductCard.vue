@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row flex-wrap gap-x-2 gap-y-2 py-2 border-0">
-        <div class="sm:w-3/4 md:w-48 lg:w-56 sm:flex-wrap md:flex-wrap px-4 py-2 border-x border-y border-gray-400 rounded-xl hover:bg-gray-200 hover:border-blue-400" v-for="product in products" :key="product.id" >
-            <img :src="require(`@/assets${product.imageUrl}`)" class="xxxx" />
+        <div :data-label="itemAddedToCart(product.id) ? 'In cart' : ''" v-for="product in products" :key="product.id" class="individual-card sm:w-3/4 md:w-48 lg:w-56 sm:flex-wrap md:flex-wrap px-4 py-2 border-x border-y border-gray-400 rounded-xl hover:bg-gray-200 hover:border-blue-400" >
+            <img :src="require(`@/assets${product.imageUrl}`)" />
 
             <h3 class="product-name">{{ product.name }}</h3>
             <h3 class="product-price">AED {{ product.price }}</h3>
@@ -24,49 +24,69 @@ import baseURL from "../components/Config";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
+
 export default {
     name: 'ProductCard',
-    props: ['products', 'userId'],
+    
+    props: ['products', 'userId', 'cartItemsList'],
     data() {
         return {
-            cartItems: [],
+            // cartItems: [],
         }
     },
-    computed: {
-        async created() {
-            if(this.userId) {
-                const response2 = await axios.get(baseURL + `/cart/${this.userId}`);
-                this.cartItems = response2.data;
-            }
-        },
-        itemIsInCart() {
-            console.log("xxx :::", this.$route.params.productId);
-            // return this.cartItems.some(item => item.id === parseInt(this.$route.params.productId));
-            return false;
-        }
-    },
+
     methods: {
+        itemAddedToCart (productID) {
+            // console.log(productID);
+            return (this.cartItemsList.indexOf(productID) > -1) ? true : false;
+        },
+
         async addToCart(productID) {
             const response = await axios.post(baseURL + `/cart/${this.userId}`, {product_id: productID} );
             console.log('Item added to the cart!', response);
 
             this.triggerToast();
         },
+
         triggerToast() {
           toast.success('Item added to cart', {
                 rtl: false,
                 position: "bottom-right",
-                timeout: 7000,
+                timeout: 4000,
                 closeOnClick: true,
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
                 draggable: true,
                 draggablePercent: 0.6,
                 showCloseButtonOnHover: false,
-                hideProgressBar: true,
+                // hideProgressBar: true,
                 closeButton: "button",
            });
         },
     }
 }
 </script>
+
+
+<style scoped>
+.individual-card {
+    /* color: green; */
+}
+
+.individual-card::after {
+  position: relative;
+  
+  top: -260px;
+  right: 18px;
+  
+  background: #2739aa;
+  border-radius: 1px;
+  /* box-shadow: 5px 7px 7px rgb(58, 58, 156); */
+
+  color: white;
+  text-align: center;
+  content: attr(data-label);
+
+  /* padding: 2px 1px; */
+}
+</style>

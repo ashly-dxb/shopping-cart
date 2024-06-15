@@ -22,6 +22,10 @@
                 <button class="add-to-cart" v-if="userId && !itemIsInCart" @click="addToCart">Add to cart</button>
                 <button class="grey-button" v-if="userId && itemIsInCart">Item is in cart</button>
                 <button class="sign-in" v-if="!userId" @click="signIn">Sign in to add to cart</button>
+
+                <button @click="goBack">
+                    <i :class="['pi', 'pi-back']" style="font-size: 1.1rem"></i><span class="ps-2">Back</span>
+                </button>
             </div>
         </div>
 
@@ -39,11 +43,14 @@ import baseURL from "../components/Config";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
+// import MdiArrowLeftIcon from 'vue-material-design-icons/MDIArrowLeft.vue';
+
 export default {
     name: 'ProductDetails',
     props: ['userId'],
     components: {
         NotFoundPage,
+        // MdiArrowLeftIcon
     },
     data() {
         return {
@@ -72,6 +79,9 @@ export default {
         this.created();
     },
     methods: {
+        goBack: function() {
+            this.$router.go(-1);
+        },
         created: async function () {
             this.loading = true;
 
@@ -94,14 +104,14 @@ export default {
           toast.success('Item added to cart', {
                 rtl: false,
                 position: "bottom-right",
-                timeout: 7000,
+                timeout: 4000,
                 closeOnClick: true,
                 pauseOnFocusLoss: true,
                 pauseOnHover: true,
                 draggable: true,
                 draggablePercent: 0.6,
-                showCloseButtonOnHover: false,
-                hideProgressBar: true,
+                showCloseButtonOnHover: true,
+                // hideProgressBar: true,
                 closeButton: "button",
            });
         },
@@ -112,17 +122,9 @@ export default {
 
             this.triggerToast();
         },
-        signIn: async function () {
-            // const auth = getAuth();
-            // const email = prompt('Enter your email to sign-in');
-            // const actionCodeSettings = {
-            //     url: `https://shopping-cart-deployment.onrender.com/products/${this.$route.params.productId}`,
-            //     handleCodeInApp: true
-            // }
-            // await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-            // window.localStorage.setItem('emailForSignIn', email);
 
-            alert('Login link has been sent to your email. Please follow the link in it.');
+        signIn: async function () {
+            this.$router.push({path: '/Login'});    
         }
     },
 }

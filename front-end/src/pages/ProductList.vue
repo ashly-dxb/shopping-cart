@@ -7,7 +7,7 @@
         <div v-if="loading" class="loading">Loading...</div>
         <div v-if="error" class="error">{{error}}</div>
 
-        <ProductCard :products="products" :userId="userId" />
+        <ProductCard :products="products" :cartItemsList="cartItemsList" :userId="userId" />
     </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
             userId: null,
             loading: false,
             error: '',
+            cartItemsList: [],
         }
     },
     async beforeRouteEnter(to, from, next) {
@@ -48,6 +49,12 @@ export default {
             this.loading = true;
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
+
+            const response2 = await axios.get(baseURL + `/cart/itemlist/${this.userId}`);
+            this.cartItemsList = response2.data;
+
+            console.log("CART::", this.cartItemsList);
+
             this.loading = false;
         },
         setPost(products) {

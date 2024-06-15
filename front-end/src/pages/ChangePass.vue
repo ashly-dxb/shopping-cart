@@ -14,7 +14,7 @@
                     class="border-x border-y border-solid border-gray-400 p-2 mt-2 w-full hover:border-green-500 focus:outline-blue-500"
                     />
 
-                <span v-if="this.errors.new_password" class="my-4 p-2 bg-red-200 text-red-700">
+                <span v-if="this.errors.new_password" class="my-4 p-2 text-red-700">
                     {{this.errors.new_password}}
                 </span>
 
@@ -25,7 +25,7 @@
                     class="border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
                     />
                 
-                <span v-if="this.errors.confirm_password" class="my-4 p-2 bg-red-200 text-red-700">
+                <span v-if="this.errors.confirm_password" class="my-4 p-2 text-red-700">
                     {{this.errors.confirm_password}}
                 </span>
 
@@ -83,6 +83,11 @@ export default {
             if(!confirm_password) {
                 this.showErrors = true;
                 this.errors.confirm_password = "Re-enter new password";
+                invalidForm = true;
+            }
+            if(!invalidForm && new_password !== confirm_password) {
+                this.showErrors = true;
+                this.errors.confirm_password = "New password and Re-entered password donot match";
                 invalidForm = true;
             }
 
