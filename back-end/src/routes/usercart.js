@@ -59,15 +59,15 @@ router.post("/:userId", async (req, res) => {
       { $match: { "cartItems.id": productId } },
     ]);
 
-    // console.log("existingCart check", existingProduct);
+    console.log("existingCart check", existingProduct);
 
-    if (existingProduct) {
+    if (existingProduct.length > 0) {
       try {
         await UserCart.updateOne(
           { id: userId, "cartItems.id": productId },
           { $inc: { "cartItems.$.quantity": 1 } }
         );
-        // console.log("existingProduct updating");
+        console.log("existingProduct updating");
       } catch (error) {
         return res
           .status(400)
@@ -77,10 +77,10 @@ router.post("/:userId", async (req, res) => {
       try {
         await UserCart.updateOne(
           { id: userId },
-          {
-            $addToSet: { cartItems: { id: productId, quantity: 1 } },
-          }
+          { $addToSet: { cartItems: { id: productId, quantity: 1 } } }
         );
+
+        console.log("newProduct adding");
       } catch (error) {
         return res
           .status(400)
