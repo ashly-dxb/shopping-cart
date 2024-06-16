@@ -8,7 +8,7 @@
 
             <span class="text-end">
                 <router-link :to="'/products/' + product.id" color="link">
-                    View Details >>
+                    Details >>>
                 </router-link>
             </span>
 
@@ -66,7 +66,6 @@ export default {
     }
 }
 </script>
-
 
 <style scoped>
 .individual-card {

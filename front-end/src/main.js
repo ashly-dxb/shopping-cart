@@ -89,9 +89,6 @@ var router = VueRouter.createRouter({
 
 const myApp = createApp(App).use(router).use(store).mount("#app");
 
-// .use(BootstrapVue)
-// .use(IconsPlugin)
-
 /* Authorization checks */
 const isLoggedIn = () => {
   return localStorage.getItem("token");
@@ -100,14 +97,16 @@ const isLoggedIn = () => {
 const protectedRoutes = ["HomePage", "ProfilePage", "CartPage", "AirportPage"];
 
 router.beforeEach((to, from, next) => {
-  // console.log("to.name: ", to.name);
+  // console.log("to.name: ", to.name, to.fullPath, from);
   const isProtected = protectedRoutes.includes(to.name);
   if (isProtected && !isLoggedIn()) {
+    // console.log("beforeEach 11");
     next({
       path: "/Login",
       query: { redirect: to.fullPath },
     });
   } else {
+    // console.log("beforeEach 33");
     next();
   }
 });

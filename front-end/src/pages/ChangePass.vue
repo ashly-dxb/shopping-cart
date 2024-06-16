@@ -1,50 +1,50 @@
 <template>
-<div class="bg-white px-5 my-2 border-2">
-    <div class="w-full lg:w-2/6 flex">
-        <form v-on:submit.prevent="updatePassword">
-            <div class="m-auto mb-3 mt-4 ml-2">
-                <h2 class='text-green-700 text-xl font-bold'>Change Password</h2>
-            </div>
-
-            <div class="m-auto mb-3 mt-4 ml-2">
-                <input
-                    type="password"
-                    placeholder="Enter New Password"
-                    v-model="new_password"
-                    class="border-x border-y border-solid border-gray-400 p-2 mt-2 w-full hover:border-green-500 focus:outline-blue-500"
-                    />
-
-                <span v-if="this.errors.new_password" class="my-4 p-2 text-red-700">
-                    {{this.errors.new_password}}
-                </span>
-
-                <input
-                    type="password"
-                    placeholder="Re-enter Password"
-                    v-model="confirm_password"
-                    class="border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
-                    />
-                
-                <span v-if="this.errors.confirm_password" class="my-4 p-2 text-red-700">
-                    {{this.errors.confirm_password}}
-                </span>
-
-                <span v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
-                    {{serverError}}
-                </span>
-
-                <div>
-                    <button type="submit" class="p-2 m-2 ml-0">Update</button>
+    <div class='max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-0'>
+        <div class="w-full flex border-0">
+            <form v-on:submit.prevent="updatePassword">
+                <div class="m-auto mb-3 mt-4 ml-2">
+                    <h2 class='text-green-700 text-xl font-bold'>Change Password</h2>
                 </div>
 
-                <div v-if="successMessage" class="p-2 my-2 border-x border-y border-solid border-green-300 text-green-700">
-                    {{successMessage}}
-                </div>
+                <div class="m-auto mb-3 mt-4 ml-2  border-0">
+                    <input
+                        type="password"
+                        placeholder="Enter New Password"
+                        v-model="new_password"
+                        class="border-x border-y border-solid border-gray-400 p-2 mt-2 w-full hover:border-green-500 focus:outline-blue-500"
+                        />
 
-            </div>
-        </form>
+                    <span v-if="this.errors.new_password" class="my-4 p-2 text-red-700">
+                        {{this.errors.new_password}}
+                    </span>
+
+                    <input
+                        type="password"
+                        placeholder="Re-enter Password"
+                        v-model="confirm_password"
+                        class="border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
+                        />
+                    
+                    <span v-if="this.errors.confirm_password" class="my-4 p-2 text-red-700">
+                        {{this.errors.confirm_password}}
+                    </span>
+
+                    <span v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
+                        {{serverError}}
+                    </span>
+
+                    <div>
+                        <button type="submit" class="p-2 m-2 ml-0">Update</button>
+                    </div>
+
+                    <div v-if="successMessage" class="p-2 my-2 border-x border-y border-solid border-green-300 text-green-700">
+                        {{successMessage}}
+                    </div>
+
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 </template>
 
 <script>

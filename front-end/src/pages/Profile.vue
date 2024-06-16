@@ -1,10 +1,10 @@
 <template>
-  <div class='bg-white px-5 my-2 border-2 '>
-    <div class="m-auto mb-3 mt-4 ml-2">
+  <div class='max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-0'>
+    <div class="w-full m-auto mb-3 mt-4 ml-2">
       <h2 class='text-green-700 text-xl font-bold'>Profile</h2>
     </div>
 
-    <div class="m-auto mb-3 mt-4 ml-2">
+    <div class="w-full m-auto mb-3 mt-4 ml-2 border-0 border-green-300">
       <div className="flex flex-row flex-wrap m-auto mr-3 mb-4 border-0 border-red-300">
         <div className=" w-1/2 md:w-1/2 lg:w-1/3 mr-1 font-bold">User Id</div>
         <div className=" w-1/2 md:w-1/2 lg:w-1/3 mr-1 " v-if="$store.state.auth.userObj !== null">{{ $store.state.auth.userObj.userId }}</div>

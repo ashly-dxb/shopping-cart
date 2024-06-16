@@ -1,8 +1,5 @@
 <template>
 <div class="container">
-    <p>{{ $store.state.user.firstName }} {{ $store.state.user.lastName }} 1</p>
-    <p>{{ this.$store.getters.fullName }} 2</p>
-
     <div class="wrapper">
         <div v-for="airport in airports" :key="airport.abbreviation">
             <airport-card :airport="airport" @click="$store.dispatch('addToFavorites', airport)" />
