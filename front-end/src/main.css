@@ -116,7 +116,38 @@ h1 {
     margin: auto;
 }
 
+.qty-container {
+    border: 1px solid red;
 
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: flex-start;
+    gap: 2px;
+}
+
+.qty-item {
+    border: 1px solid orange;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 31%;
+}
+
+.qtyButtons {
+    /* width: 30px; */
+    height: 30px;
+    border: 1px solid blue;
+    padding: 4px 2px;
+    background-color: rgb(216, 210, 210);
+    color: black;
+    text-align: center;
+    cursor: pointer;
+}
+
+.qtyDisplay {
+
+}
 
 /* Product List page : Product Card */
 .grid-wrap {

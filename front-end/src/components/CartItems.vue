@@ -8,7 +8,11 @@
         </div>
 
         <div class="details-wrap">
-            <h3 class="text-right">Qty: {{ product.quantity }}</h3>
+            <div class="text-right qty-container">
+                <div @click="$emit('decrease-qty', product.id)" class="qty-item qtyButtons">-</div>
+                <input type="text" class="qty-item qtyDisplay" :value="product.quantity" />
+                <div @click="$emit('increase-qty', product.id)" class="qty-item qtyButtons">+</div>
+            </div>
         </div>
 
         <div class="details-wrap">

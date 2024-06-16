@@ -8,7 +8,10 @@
         <div v-if="error" class="error">{{error}}</div>
 
         <div v-if="cartItems.length > 0">
-            <CartItems :items="cartItems" @remove-from-cart="removeFromCart($event)" />
+            <CartItems :items="cartItems" 
+                @remove-from-cart="removeFromCart($event)"  
+                @decrease-qty="decreaseQty($event)" 
+                @increase-qty="increaseQty($event)" />
             <div v-if="itemCount > 0" class="info m-4 mb-3 text-right font-bold text-xl">
                 Cart Total: AED {{totalAmount}}
             </div>
@@ -87,6 +90,7 @@ export default {
                 this.loading = false;
             }
         },
+
         removeFromCart: async function (productId) {
             if(this.userId) {
                 this.loading = true;
@@ -99,6 +103,35 @@ export default {
                 this.triggerToast();
             }
         },
+
+        decreaseQty: async function (productId) {
+            if(this.userId) {
+                this.loading = true;
+
+                const response = await axios.delete(baseURL + `/cart/${this.userId}/${productId}`);
+                this.cartItems = response.data;
+
+                this.calculateCartTotal();
+
+                this.loading = false;
+                // this.triggerToast();
+            }
+        },
+
+        increaseQty: async function (productId) {
+            if(this.userId) {
+                this.loading = true;
+
+                const response = await axios.post(baseURL + `/cart/${this.userId}`, {product_id: productId} );
+                this.cartItems = response.data;
+
+                this.calculateCartTotal();
+
+                this.loading = false;
+                // this.triggerToast();
+            }
+        },
+
         triggerToast() {
           toast.success('Item removed from the cart!', {
                 rtl: false,
