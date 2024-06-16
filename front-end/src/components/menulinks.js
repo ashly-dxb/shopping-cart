@@ -33,7 +33,7 @@ const mainLinks = [
     link: "/ChangePassword",
     text: "Change Password",
     type: "LOGGED_IN",
-    icon: "pi-user",
+    icon: "pi-key",
   },
 ];
 
