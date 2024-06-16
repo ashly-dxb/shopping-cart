@@ -19,28 +19,33 @@ router.get("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
 
   try {
-    const user = await UserCart.findOne({ id: userId });
-    const populatedCart = await populateCartIds(user?.cartItems || []);
+    const userCart = await UserCart.findOne({ id: userId });
+
+    const cartItems = userCart?.cartItems || [];
+    const populatedCart = await populateCartIds(cartItems);
+
     res.json(populatedCart);
   } catch (error) {
     res.status(400).send({ success: false });
   }
 });
 
-// retrieve cart items as an array by userID
+// retrieve cart products as an array by userID
 router.get("/itemlist/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
 
   try {
     const user = await UserCart.findOne({ id: userId });
     const cartItems = user?.cartItems || [];
-    res.json(cartItems);
+
+    let productIDs = cartItems.map((item) => item.id);
+    res.json(productIDs);
   } catch (error) {
     res.status(400).send({ success: false });
   }
 });
 
-// Add item to specified user's cart
+// Add specified item to specified user's cart
 router.post("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
   const productId = parseInt(req.body.product_id);
@@ -48,20 +53,49 @@ router.post("/:userId", async (req, res) => {
   const existingCart = await UserCart.findOne({ id: userId });
 
   if (existingCart) {
-    await UserCart.updateOne(
-      { id: userId },
-      {
-        $addToSet: { cartItems: parseInt(productId) },
+    const existingProduct = await UserCart.aggregate([
+      { $match: { id: userId } },
+      { $unwind: "$cartItems" },
+      { $match: { "cartItems.id": productId } },
+    ]);
+
+    // console.log("existingCart check", existingProduct);
+
+    if (existingProduct) {
+      try {
+        await UserCart.updateOne(
+          { id: userId, "cartItems.id": productId },
+          { $inc: { "cartItems.$.quantity": 1 } }
+        );
+        // console.log("existingProduct updating");
+      } catch (error) {
+        return res
+          .status(400)
+          .send({ success: false, message: "Update error 1" });
       }
-    );
+    } else {
+      try {
+        await UserCart.updateOne(
+          { id: userId },
+          {
+            $addToSet: { cartItems: { id: productId, quantity: 1 } },
+          }
+        );
+      } catch (error) {
+        return res
+          .status(400)
+          .send({ success: false, message: "Update error 2" });
+      }
+    }
   } else {
     try {
       const newUserCart = new UserCart({
         id: userId,
-        cartItems: [],
+        cartItems: [{ id: parseInt(productId), quantity: 1 }],
       });
 
       const savedUserCart = await newUserCart.save();
+      console.log(savedUserCart);
     } catch (error) {
       return res.status(400).send({ success: false, message: "Insert error" });
     }
@@ -69,7 +103,10 @@ router.post("/:userId", async (req, res) => {
 
   const userCart = await UserCart.findOne({ id: userId });
 
-  const populatedCart = await populateCartIds(userCart?.cartItems || []);
+  const cartItems = userCart?.cartItems || [];
+  // const productIDs = cartItems.map((item) => item.id);
+
+  const populatedCart = await populateCartIds(cartItems);
   res.json(populatedCart);
 });
 
@@ -81,17 +118,37 @@ router.delete("/:userId/:productId", async (req, res) => {
   const result = await UserCart.updateOne(
     { id: userId },
     {
-      $pull: { cartItems: parseInt(productId) },
-    }
+      $pull: { cartItems: { id: parseInt(productId) } },
+    },
+    { new: true }
   );
 
-  const user = await UserCart.findOne({ id: userId });
-  const populatedCart = await populateCartIds(user?.cartItems || []);
+  // const user = await UserCart.findOne({ id: userId });
+  const userCart = await UserCart.findOne({ id: userId });
+
+  const cartItems = userCart?.cartItems || [];
+  // const productIDs = cartItems.map((item) => item.id);
+
+  const populatedCart = await populateCartIds(cartItems);
   res.json(populatedCart);
 });
 
-async function populateCartIds(ids) {
-  return Promise.all(ids.map((id) => Products.findOne({ id })));
+// generic function for fetching each product details in the cart
+async function populateCartIds(cartItems) {
+  const quantities = cartItems.map((item) => item.quantity);
+  const productIDs = cartItems.map((item) => item.id);
+  // console.log("productIDs:", productIDs);
+  // console.log("quantities:", quantities);
+
+  var arrayResult = Promise.all(
+    productIDs.map(async (id, index) => {
+      const product = await Products.findOne({ id }).lean().exec(); // lean() to make the result object a JS object
+      const updatedProduct = { ...product, quantity: quantities[index] }; //push quantities to the product data
+      return updatedProduct;
+    })
+  );
+
+  return arrayResult;
 }
 
 module.exports = router;
