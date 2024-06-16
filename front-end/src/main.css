@@ -91,14 +91,14 @@ h1 {
     display: flex;
     /* padding: 4px; */
     /* width: 100%; */
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 
 .product-image {
     /* flex: 1; */
-    height: 70px;
+    width: 100px;
     /* max-width: 100px; */
-    border: 1px solid cyan;
+    /* border: 1px solid cyan; */
 
     display: flex;
     flex-direction: column;
@@ -107,30 +107,18 @@ h1 {
 }
 
 .details-wrap {
-    padding: 0 2px;
+    padding: 0;
     /* flex: 2; */
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
 
     display: flex;
     flex-direction: column;
-    position: relative;
-    width: 31%;
-}
-
-.qty-wrap {
-    padding: 0 16px;
-    /* flex: 3; */
-    border: 1px solid blue;
-}
-
-.remove-button {
-    /* flex: 1; */
-    margin: auto;
-    cursor: pointer;
+    /* position: relative; */
+    /* width: 31%; */
 }
 
 .qty-container {
-    border: 1px solid red;
+    /* border: 1px solid red; */
 
     display: flex;
     /* flex-wrap: wrap; */
@@ -139,7 +127,7 @@ h1 {
 }
 
 .qty-item {
-    border: 1px solid orange;
+    /* border: 1px solid orange; */
 
     display: flex;
     flex-direction: column;
@@ -149,9 +137,10 @@ h1 {
 
 .qtyButtons {
     /* width: 30px; */
-    height: 30px;
-    border: 1px solid blue;
-    padding: 4px 2px;
+    min-width: 20px;
+    /* height: 30px; */
+    /* border: 1px solid blue; */
+    /* padding: 2px 2px; */
     background-color: rgb(216, 210, 210);
     color: black;
     text-align: center;
@@ -159,7 +148,17 @@ h1 {
 }
 
 .qtyDisplay {
+    min-width: 20px;
+    /* padding-left: 3px; */
+    text-align: center;
+    border: 1px solid gray;
+}
 
+.remove-button {
+    /* flex: 1; */
+    /* margin: auto; */
+    cursor: pointer;
+    /* border: 1px solid blue; */
 }
 
 /* Product List page : Product Card */

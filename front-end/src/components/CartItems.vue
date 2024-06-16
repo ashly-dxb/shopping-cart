@@ -1,16 +1,15 @@
 <template>
     <div v-for="product in items" class="product-container">
-        <img :src="require(`@/assets${product.imageUrl}`)" class="product-image" />
-
         <div class="details-wrap">
             <h3>{{ product.name }}</h3>
             <h3>AED {{ product.price }}</h3>
+            <img :src="require(`@/assets${product.imageUrl}`)" class="product-image" />
         </div>
 
         <div class="details-wrap">
-            <div class="text-right qty-container">
+            <div class=" qty-container">
                 <div @click="$emit('decrease-qty', product.id)" class="qty-item qtyButtons">-</div>
-                <input type="text" class="qty-item qtyDisplay" :value="product.quantity" />
+                <input type="text" :value="product.quantity" class="qty-item qtyDisplay" />
                 <div @click="$emit('increase-qty', product.id)" class="qty-item qtyButtons">+</div>
             </div>
         </div>
