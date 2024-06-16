@@ -27,7 +27,7 @@
 
         <div
             @click="setIsOpen"
-            class="cursor-pointer z-10 text-gray-500 md:hidden"
+            class="cursor-pointer z-20 text-gray-500 md:hidden"
         >
             <svg class="h-10 w-10 fill-current" viewBox="0 0 24 24">                   
                 <path v-if="isOpen"
@@ -56,7 +56,7 @@
             </li>
 
             <li v-if="loggedIn === true" class="flex flex-row pl-3 py-6 sm:mt-0 w-full shrink-0 hover:bg-gray-900">
-                <div @click="signOut" class="logoutHover "><i class="pi pi-sign-out" style="font-size: 1rem"></i><span class="text-3xl text-white hover:text-blue-400 w-full shrink-0 ps-2">Logout</span></div>
+                <div @click="signOut(); setIsOpen();" class="logoutHover"><i class="pi pi-sign-out" style="font-size: 1rem"></i><span class="text-3xl text-white hover:text-blue-400 w-full shrink-0 ps-2">Logout</span></div>
             </li>
         </ul>
         
