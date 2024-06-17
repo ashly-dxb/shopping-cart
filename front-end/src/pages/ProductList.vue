@@ -52,9 +52,14 @@ export default {
         created: async function () {
             this.userId = localStorage.getItem("userId");
 
-            // this.loading = true;
-
-            let loader = this.$loading.show({});
+            let loader = this.$loading.show({
+                loader: 'bars',
+                width: 36,
+                height: 36,
+                backgroundColor: 'rgb(40, 190, 40)',
+                color: 'rgb(180, 110, 160)',
+                opacity: 0.5,
+            });
 
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
@@ -62,11 +67,7 @@ export default {
             const response2 = await axios.get(baseURL + `/cart/itemlist/${this.userId}`);
             this.cartItemsList = response2.data;
 
-            console.log("CART::", this.cartItemsList);
-
             loader.hide();
-
-            // this.loading = false;
         },
         setPost(products) {
             // console.log("setPost", products);

@@ -53,7 +53,7 @@ export default {
 
             fullPage: true,
             visible: false,
-            loader: 'dots',
+            loader: 'bars',
         }
     },  
     
@@ -76,7 +76,14 @@ export default {
         created: async function () {
             if(this.userId) {
                 // this.loading = true;
-                let loader = this.$loading.show({});
+                let loader = this.$loading.show({
+                    loader: 'dots',
+                    width: 64,
+                    height: 64,
+                    backgroundColor: 'rgb(40, 30, 180)',
+                    color: 'rgb(250, 40, 30)',
+                    opacity: 0.5,
+                });
 
                 const response = await axios.get(baseURL + `/cart/${this.userId}`);
                 this.cartItems = response.data;
