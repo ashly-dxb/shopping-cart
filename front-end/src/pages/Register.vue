@@ -52,6 +52,8 @@
                 </div>
             </div>
         </form>
+
+        <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
     </div>
 </div>
 </template>
@@ -64,11 +66,16 @@ export default {
     name: 'Register',
     components: {
     },
+
     data() {
         return {
             showErrors: false,
             serverError: '',
-            errors: {}
+            errors: {},
+
+            fullPage: true,
+            visible: false,
+            loader: 'dots',
         }
     },
     methods: {
@@ -118,6 +125,8 @@ export default {
                     password: password
                 };
 
+                let loader = this.$loading.show({});
+
                 axios.post(baseURL + "/users/register", data)
                     .then((response) => {
                         console.log("ZZZ", response);
@@ -131,11 +140,15 @@ export default {
                             this.showErrors = true;
                             this.serverError = response.data.message;
                         }
+
+                        loader.hide();
                     })
                     .catch((errors) => {
-                        console.log("Error in registering user:", errors);
+                        // console.log("Error in registering user:", errors);
                         this.showErrors = true;
                         this.serverError = 'An error occured!';
+
+                        loader.hide();
                     })
             }
 

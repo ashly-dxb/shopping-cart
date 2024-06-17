@@ -11,6 +11,9 @@ import "./main.css";
 // import Button from "primevue/button";
 // import "primevue/resources/themes/aura-light-green/theme.css";
 
+import { LoadingPlugin } from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
+
 import Register from "./pages/Register.vue";
 import Login from "./pages/Login.vue";
 import ForgotPass from "./pages/ForgotPass.vue";
@@ -87,7 +90,11 @@ var router = VueRouter.createRouter({
   ],
 });
 
-const myApp = createApp(App).use(router).use(store).mount("#app");
+const myApp = createApp(App)
+  .use(router)
+  .use(store)
+  .use(LoadingPlugin)
+  .mount("#app");
 
 /* Authorization checks */
 const isLoggedIn = () => {

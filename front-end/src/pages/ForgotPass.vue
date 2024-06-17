@@ -32,6 +32,8 @@
 
             </div>
         </form>
+
+        <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
     </div>
 </div>
 </template>
@@ -48,6 +50,10 @@ export default {
             serverError: '',
             errors: {},
             successMessage: '',
+
+            fullPage: true,
+            visible: false,
+            loader: 'dots',
         }
     },
     methods: {
@@ -77,26 +83,32 @@ export default {
                     email: email,
                 };
 
-                axios.post(baseURL + "/users/forgot-password", data)
-                    .then((response) => {
-                        // console.log("forgot-password:::", response);
+                let loader = this.$loading.show({});
 
-                        if(response.data.success) {
-                            // console.log("Sent mail successfully");
-                            // this.$router.push({path: '/Login'});
-                            this.successMessage = 'Email sent. Please follow the link in the email to reset password!';
-                        }
-                        else {
-                            // console.log(response.data.message);
-                            this.showErrors = true;
-                            this.serverError = response.data.message;
-                        }
-                    })
-                    .catch((errors) => {
-                        // console.log("Error in send mail:", errors);
+                axios.post(baseURL + "/users/forgot-password", data)
+                .then((response) => {
+                    // console.log("forgot-password:::", response);
+
+                    if(response.data.success) {
+                        // console.log("Sent mail successfully");
+                        // this.$router.push({path: '/Login'});
+                        this.successMessage = 'Email sent. Please follow the link in the email to reset password!';
+                    }
+                    else {
+                        // console.log(response.data.message);
                         this.showErrors = true;
-                        this.serverError = 'Some error occured!';
-                    })
+                        this.serverError = response.data.message;
+                    }
+
+                    loader.hide();
+                })
+                .catch((errors) => {
+                    // console.log("Error in send mail:", errors);
+                    this.showErrors = true;
+                    this.serverError = 'Some error occured!';
+
+                    loader.hide();
+                })
             }
 
             doSendLink();

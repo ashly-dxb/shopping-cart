@@ -9,7 +9,7 @@
         <div class="details-wrap">
             <div class=" qty-container">
                 <div @click="$emit('decrease-qty', product.id)" class="qty-item qtyButtons">-</div>
-                <input type="text" :value="product.quantity" class="qty-item qtyDisplay" />
+                <input type="text" :value="product.quantity" class="qty-item qtyDisplay" readonly />
                 <div @click="$emit('increase-qty', product.id)" class="qty-item qtyButtons">+</div>
             </div>
         </div>

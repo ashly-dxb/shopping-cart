@@ -44,24 +44,36 @@
                 </div>
             </form>
 
+            <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
+
         </div>
     </div>
 </template>
 
 <script>
-// import axios from 'axios';
 import baseURL from "../components/Config";
-// import { useRouter, useRoute } from 'vue-router'
+
+// import VueLoading from 'vue-loading-overlay';
+// import 'vue-loading-overlay/dist/css/index.css';
 
 export default {
     name: 'Login',
+
+    components: {
+        // Loading: VueLoading.Component
+    },
+
     data() {
         return {
             email: 'ashlythomas@gmail.com',
             password: 'abcd1234',
             showErrors: false,
             errors: null,
-            // router : useRouter()
+            // router : useRouter(),
+
+            fullPage: true,
+            visible: false,
+            loader: 'dots',
         }
     },
     mounted: function () {
@@ -88,6 +100,9 @@ export default {
             }
 
             let doLogin = async() => {
+
+                let loader = this.$loading.show({});
+
                 let data = {
                     email: email,
                     password: password
@@ -105,6 +120,8 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
+
+                    // setTimeout(() => loader.hide(), 3 * 1000);
 
                     if(data.authenticated) {
                         localStorage.setItem('token', '123456789');
@@ -127,8 +144,12 @@ export default {
                         this.showErrors = true;
                         this.errors = data.error;
                     }
+                    
+                    loader.hide();
                 })
                 .catch(function(error) {
+                    loader.hide();
+
                     // console.log(error);
                     this.showErrors = true;
                     this.errors = 'Some error occured!';

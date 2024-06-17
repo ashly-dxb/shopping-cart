@@ -8,6 +8,8 @@
         <div v-if="error" class="error">{{error}}</div>
 
         <ProductCard :products="products" :cartItemsList="cartItemsList" :userId="userId" />
+
+        <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
     </div>
 </template>
 
@@ -25,9 +27,13 @@ export default {
         return {
             products: [],
             userId: null,
-            loading: false,
+            // loading: false,
             error: '',
             cartItemsList: [],
+
+            fullPage: true,
+            visible: false,
+            loader: 'dots',
         }
     },
     async beforeRouteEnter(to, from, next) {
@@ -46,7 +52,10 @@ export default {
         created: async function () {
             this.userId = localStorage.getItem("userId");
 
-            this.loading = true;
+            // this.loading = true;
+
+            let loader = this.$loading.show({});
+
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
 
@@ -55,7 +64,9 @@ export default {
 
             console.log("CART::", this.cartItemsList);
 
-            this.loading = false;
+            loader.hide();
+
+            // this.loading = false;
         },
         setPost(products) {
             // console.log("setPost", products);

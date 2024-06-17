@@ -4,7 +4,7 @@
           <h3 class='text-green-700 text-xl font-bold'>Shopping Cart</h3>
         </div>
 
-        <div v-if="loading" class="loading">Loading...</div>
+        <!-- <div v-if="loading" class="loading">Loading...</div>-->
         <div v-if="error" class="error">{{error}}</div>
 
         <div v-if="cartItems.length > 0">
@@ -15,12 +15,15 @@
             <div v-if="itemCount > 0" class="info m-4 mb-3 text-right font-bold text-xl">
                 Cart Total: AED {{totalAmount}}
             </div>
-            <button class="checkout-button">Proceed to checkout</button>
+            <button class="checkout-button">Checkout</button>
         </div>
 
         <div v-else-if="loading == false">
             Your cart is empty!
         </div>
+
+        <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
+
     </div>
 </template>
 
@@ -37,6 +40,7 @@ export default {
     props: ['userId'],
     components: {
         CartItems,
+        // Loading: VueLoading.Component
     },
 
     data() {
@@ -46,31 +50,20 @@ export default {
             error: '',
             itemCount: 5,
             totalAmount: 100,
+
+            fullPage: true,
+            visible: false,
+            loader: 'dots',
         }
-    },
+    },  
     
-    watch: {
-        /*
-        async userId(newUserValue) {
-            console.log("newUserValue: ", newUserValue);
-
-            if (newUserValue) {
-                // console.log("newUserValue 222: ", newUserValue);
-                const response2 = await axios.get(baseURL + `/cart/${newUserValue}`);
-                this.cartItems = response2.data;
-                // console.log(response2.data);
-            }
-        }
-        */
-    },
-
     mounted: function () {
         this.created();
     },
 
-    methods: {
+    methods: {        
         calculateCartTotal: function () {
-            console.log("CART cartItems:", this.cartItems);
+            // console.log("CART cartItems:", this.cartItems);
 
             var amount = 0;
             this.cartItems.forEach(item => {
@@ -78,57 +71,71 @@ export default {
             });
 
             this.totalAmount = amount;
-            // console.log("CART totalAmount:", this.totalAmount);
         },
+
         created: async function () {
             if(this.userId) {
-                this.loading = true;
+                // this.loading = true;
+                let loader = this.$loading.show({});
+
                 const response = await axios.get(baseURL + `/cart/${this.userId}`);
                 this.cartItems = response.data;
-                // console.log("ITEMS:", response.data);
                 this.calculateCartTotal();
-                this.loading = false;
+
+                loader.hide();
+                // this.loading = false;
             }
         },
 
         removeFromCart: async function (productId) {
             if(this.userId) {
-                this.loading = true;
+                // this.loading = true;
+
+                let loader = this.$loading.show({});
+
                 const response = await axios.delete(baseURL + `/cart/${this.userId}/${productId}`);
                 this.cartItems = response.data;
 
                 this.calculateCartTotal();
 
-                this.loading = false;
+                loader.hide();
+
+                // this.loading = false;
                 this.triggerToast();
             }
         },
 
         decreaseQty: async function (productId) {
             if(this.userId) {
-                this.loading = true;
+                // this.loading = true;
+
+                let loader = this.$loading.show({});
 
                 const response = await axios.delete(baseURL + `/cart/${this.userId}/${productId}`);
                 this.cartItems = response.data;
 
                 this.calculateCartTotal();
 
-                this.loading = false;
-                // this.triggerToast();
+                loader.hide();
+
+                // this.loading = false;
             }
         },
 
         increaseQty: async function (productId) {
             if(this.userId) {
-                this.loading = true;
+                // this.loading = true;
+
+                let loader = this.$loading.show({});
 
                 const response = await axios.post(baseURL + `/cart/${this.userId}`, {product_id: productId} );
                 this.cartItems = response.data;
 
                 this.calculateCartTotal();
 
-                this.loading = false;
-                // this.triggerToast();
+                loader.hide();
+
+                // this.loading = false;                
             }
         },
 
