@@ -53,9 +53,6 @@
 <script>
 import baseURL from "../components/Config";
 
-// import VueLoading from 'vue-loading-overlay';
-// import 'vue-loading-overlay/dist/css/index.css';
-
 export default {
     name: 'Login',
 
@@ -69,7 +66,6 @@ export default {
             password: 'abcd1234',
             showErrors: false,
             errors: null,
-            // router : useRouter(),
 
             fullPage: true,
             visible: false,
@@ -101,7 +97,14 @@ export default {
 
             let doLogin = async() => {
 
-                let loader = this.$loading.show({});
+                let loader = this.$loading.show({
+                    loader: 'dots',
+                    width: 50,
+                    height: 50,
+                    // backgroundColor: 'rgb(40, 190, 40)',
+                    // color: 'rgb(180, 110, 160)',
+                    opacity: 0.5,
+                });
 
                 let data = {
                     email: email,
@@ -120,9 +123,6 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-
-                    // setTimeout(() => loader.hide(), 3 * 1000);
-
                     if(data.authenticated) {
                         localStorage.setItem('token', '123456789');
                         localStorage.setItem('username', data.user.username);

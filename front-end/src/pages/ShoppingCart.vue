@@ -80,8 +80,8 @@ export default {
                     loader: 'dots',
                     width: 64,
                     height: 64,
-                    backgroundColor: 'rgb(40, 30, 180)',
-                    color: 'rgb(250, 40, 30)',
+                    // backgroundColor: 'rgb(40, 30, 180)',
+                    // color: 'rgb(250, 40, 30)',
                     opacity: 0.5,
                 });
 

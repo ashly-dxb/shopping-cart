@@ -54,10 +54,10 @@ export default {
 
             let loader = this.$loading.show({
                 loader: 'bars',
-                width: 36,
-                height: 36,
-                backgroundColor: 'rgb(40, 190, 40)',
-                color: 'rgb(180, 110, 160)',
+                width: 50,
+                height: 50,
+                // backgroundColor: 'rgb(40, 190, 40)',
+                // color: 'rgb(180, 110, 160)',
                 opacity: 0.5,
             });
 

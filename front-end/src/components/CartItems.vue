@@ -1,9 +1,13 @@
 <template>
     <div v-for="product in items" class="product-container">
         <div class="details-wrap">
-            <img :src="require(`@/assets${product.imageUrl}`)" class="product-image" />
-            <h3>{{ product.name }}</h3>
-            <h3>AED {{ product.price }}</h3>
+            <div class="left-container">
+                <img :src="require(`@/assets${product.imageUrl}`)" class="product-image" />
+            </div>
+            <div class="left-container">
+                <h3>{{ product.name }}</h3>
+                <h3>AED {{ product.price }}</h3>
+            </div>
         </div>
 
         <div class="details-wrap">
