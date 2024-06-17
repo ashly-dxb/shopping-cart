@@ -99,23 +99,20 @@ h1 {
 
 .details-wrap {
     padding: 0 4px;
-    /* flex: 2; */
     display: flex;
-    flex-wrap: wrap;
-    /* flex-direction: column; */
-    /* position: relative; */
+    flex-wrap: wrap;    
     width: 31%;
-
     margin: auto 0;
+    /* border: 1px solid red; */
 }
 
 .left-container{
-    /* display: flex; */
-    flex-grow: 1;
-    /* flex-direction: column; */
-    /* position: relative; */
-    /* width: 50%; */
-    border: 1px solid red;
+    flex-basis: 70px;
+    /* border: 1px solid purple; */
+}
+.right-container{
+    flex-basis: 120px;
+    /* border: 1px solid violet; */
 }
 
 .qty-container {

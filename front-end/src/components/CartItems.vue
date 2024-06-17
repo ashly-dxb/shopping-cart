@@ -4,7 +4,7 @@
             <div class="left-container">
                 <img :src="require(`@/assets${product.imageUrl}`)" class="product-image" />
             </div>
-            <div class="left-container">
+            <div class="right-container">
                 <h3>{{ product.name }}</h3>
                 <h3>AED {{ product.price }}</h3>
             </div>
