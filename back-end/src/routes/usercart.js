@@ -59,7 +59,7 @@ router.post("/:userId", async (req, res) => {
       { $match: { "cartItems.id": productId } },
     ]);
 
-    console.log("existingCart check", existingProduct);
+    // console.log("existingCart check", existingProduct);
 
     if (existingProduct.length > 0) {
       try {
@@ -67,7 +67,7 @@ router.post("/:userId", async (req, res) => {
           { id: userId, "cartItems.id": productId },
           { $inc: { "cartItems.$.quantity": 1 } }
         );
-        console.log("existingProduct updating");
+        // console.log("existingProduct updating");
       } catch (error) {
         return res
           .status(400)
@@ -95,7 +95,7 @@ router.post("/:userId", async (req, res) => {
       });
 
       const savedUserCart = await newUserCart.save();
-      console.log(savedUserCart);
+      // console.log(savedUserCart);
     } catch (error) {
       return res.status(400).send({ success: false, message: "Insert error" });
     }
@@ -106,6 +106,66 @@ router.post("/:userId", async (req, res) => {
   const cartItems = userCart?.cartItems || [];
   // const productIDs = cartItems.map((item) => item.id);
 
+  const populatedCart = await populateCartIds(cartItems);
+  res.json(populatedCart);
+});
+
+// Add specified item to specified user's cart
+router.post("/:userId/changeqty", async (req, res) => {
+  const userId = parseInt(req.params.userId);
+  const productId = parseInt(req.body.product_id);
+  const changeType = req.body.change_type; // DECREASE_QTY/INCREASE_QTY
+
+  const existingCart = await UserCart.findOne({ id: userId });
+
+  if (existingCart) {
+    const existingProduct = await UserCart.aggregate([
+      { $match: { id: userId } },
+      { $unwind: "$cartItems" },
+      { $match: { "cartItems.id": productId } },
+    ]);
+
+    const increaseQty = changeType == "INCREASE_QTY" ? 1 : -1; // increase or decrease 1 qty
+
+    console.log("qty check", existingProduct[0].cartItems.quantity);
+    console.log("qty check 2", existingProduct[0].cartItems.quantity === 1);
+
+    if (
+      existingProduct[0].cartItems.quantity === 1 &&
+      changeType == "DECREASE_QTY"
+    ) {
+      return res
+        .status(400)
+        .send({ success: false, message: "Minimum qty reached" });
+    }
+
+    console.log("changeType:", increaseQty, changeType);
+
+    if (existingProduct.length > 0) {
+      try {
+        await UserCart.updateOne(
+          { id: userId, "cartItems.id": productId },
+          { $inc: { "cartItems.$.quantity": increaseQty } }
+        );
+        // console.log("existingProduct updating");
+      } catch (error) {
+        return res
+          .status(400)
+          .send({ success: false, message: "Failed to update qty" });
+      }
+    } else {
+      return res
+        .status(400)
+        .send({ success: false, message: "Product not found in cart" });
+    }
+  } else {
+    return res
+      .status(400)
+      .send({ success: false, message: "User Cart not found" });
+  }
+
+  const userCart = await UserCart.findOne({ id: userId });
+  const cartItems = userCart?.cartItems || [];
   const populatedCart = await populateCartIds(cartItems);
   res.json(populatedCart);
 });
