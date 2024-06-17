@@ -80,7 +80,7 @@ router.post("/:userId", async (req, res) => {
           { $addToSet: { cartItems: { id: productId, quantity: 1 } } }
         );
 
-        console.log("newProduct adding");
+        // console.log("newProduct adding");
       } catch (error) {
         return res
           .status(400)
@@ -127,8 +127,8 @@ router.post("/:userId/changeqty", async (req, res) => {
 
     const increaseQty = changeType == "INCREASE_QTY" ? 1 : -1; // increase or decrease 1 qty
 
-    console.log("qty check", existingProduct[0].cartItems.quantity);
-    console.log("qty check 2", existingProduct[0].cartItems.quantity === 1);
+    // console.log("qty check", existingProduct[0].cartItems.quantity);
+    // console.log("qty check 2", existingProduct[0].cartItems.quantity === 1);
 
     if (
       existingProduct[0].cartItems.quantity === 1 &&
@@ -139,7 +139,7 @@ router.post("/:userId/changeqty", async (req, res) => {
         .send({ success: false, message: "Minimum qty reached" });
     }
 
-    console.log("changeType:", increaseQty, changeType);
+    // console.log("changeType:", increaseQty, changeType);
 
     if (existingProduct.length > 0) {
       try {
