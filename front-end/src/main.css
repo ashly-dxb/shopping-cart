@@ -75,7 +75,10 @@ h1 {
     width: 100%;
 }
 
-/* Shopping Cart: CartItems page */
+
+
+
+/* ***************** CartItems Display ***************** */
 .product-container {    
     display: flex;
     
@@ -155,8 +158,30 @@ h1 {
 }
 
 
+/* ***************** shopping cart main ***************** */
+.mainPanel {
+    padding: 0 4px;
+    display: flex;
+    flex-wrap: wrap;    
+    margin: 8px 2px;
+    /* margin: auto 0; */
+    /* border: 1px solid red; */
+}
 
-/* Product List page : Product Card */
+.left-pane{
+    flex-basis: 45%;
+    /* border: 1px solid purple; */
+    padding: 3px 4px;
+}
+
+.right-pane{
+    flex-basis: 50%;
+    /* border: 1px solid violet; */
+    padding: 3px 4px;
+}
+
+
+/* ************* Product List page : Product Card ************ */
 .grid-wrap {
     display: flex;
     flex-wrap: wrap;

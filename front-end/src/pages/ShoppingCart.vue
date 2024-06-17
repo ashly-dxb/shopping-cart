@@ -4,7 +4,6 @@
           <h3 class='text-green-700 text-xl font-bold'>Shopping Cart</h3>
         </div>
 
-        <!-- <div v-if="loading" class="loading">Loading...</div>-->
         <div v-if="error" class="error">{{error}}</div>
 
         <div v-if="cartItems.length > 0">
@@ -12,8 +11,16 @@
                 @remove-from-cart="removeFromCart($event)"  
                 @decrease-qty="decreaseQty($event)" 
                 @increase-qty="increaseQty($event)" />
-            <div v-if="itemCount > 0" class="info m-4 mb-3 text-right font-bold text-xl">
-                Cart Total: AED {{totalAmount}}
+
+            <div v-if="itemCount > 0" class="mainPanel">
+                <div class="left-pane">
+                    <router-link to="/products">
+                        <i class="pi pi-shopping-bag" style="font-size: 1.1rem"></i><span class="text-l w-full shrink-0 ps-2">Continue Shopping</span>
+                    </router-link>
+                </div>
+                <div class="right-pane font-bold">
+                    Total: AED {{totalAmount}}
+                </div>
             </div>
             <button class="checkout-button">Checkout</button>
         </div>

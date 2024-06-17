@@ -24,7 +24,7 @@
 
         <div class="remove-button" @click="$emit('remove-from-cart', product.id)">
             <i class="pi pi-trash" style="font-size: 1.1rem"></i>
-        </div>    
+        </div>
     </div>
 </template>
 
