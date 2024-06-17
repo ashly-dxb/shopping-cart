@@ -24,6 +24,10 @@ import Home from "./pages/Home.vue";
 // import ProductList from "./pages/ProductList.vue";
 import ProductDetails from "./pages/ProductDetails.vue";
 import ShoppingCart from "./pages/ShoppingCart.vue";
+import Checkout from "./pages/Checkout.vue";
+import CheckoutSuccess from "./pages/CheckoutSuccess.vue";
+import CheckoutCancel from "./pages/CheckoutCancel.vue";
+
 import Profile from "./pages/Profile.vue";
 import Airport from "./pages/Airport.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
@@ -47,6 +51,21 @@ var router = VueRouter.createRouter({
       path: "/cart",
       component: ShoppingCart,
       name: "CartPage",
+    },
+    {
+      path: "/checkout",
+      component: Checkout,
+      name: "CheckoutPage",
+    },
+    {
+      path: "/checkout-success",
+      component: CheckoutSuccess,
+      name: "CheckoutSuccessPage",
+    },
+    {
+      path: "/checkout-cancel",
+      component: CheckoutCancel,
+      name: "CheckoutCancelPage",
     },
     {
       path: "/products",

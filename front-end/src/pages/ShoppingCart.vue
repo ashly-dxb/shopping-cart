@@ -22,7 +22,7 @@
                     Total: AED {{totalAmount}}
                 </div>
             </div>
-            <button class="checkout-button">Checkout</button>
+            <button class="checkout-button" @click="redirectToCheckout">Checkout</button>
         </div>
 
         <div v-else-if="loading == false">
@@ -76,6 +76,10 @@ export default {
             });
 
             this.totalAmount = amount;
+        },
+
+        redirectToCheckout(){
+            this.$router.push({path: '/checkout'});
         },
 
         created: async function () {
