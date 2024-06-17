@@ -63,8 +63,6 @@ export default {
 
     methods: {        
         calculateCartTotal: function () {
-            // console.log("CART cartItems:", this.cartItems);
-
             var amount = 0;
             this.cartItems.forEach(item => {
                 amount += item.quantity * item.price;                
@@ -75,7 +73,6 @@ export default {
 
         created: async function () {
             if(this.userId) {
-                // this.loading = true;
                 let loader = this.$loading.show({
                     loader: 'dots',
                     width: 64,
@@ -85,64 +82,71 @@ export default {
                     opacity: 0.5,
                 });
 
-                const response = await axios.get(baseURL + `/cart/${this.userId}`);
-                this.cartItems = response.data;
-                this.calculateCartTotal();
+                axios.get(baseURL + `/cart/${this.userId}`)
+                .then((response) => {
+                    this.cartItems = response.data;
+                    this.calculateCartTotal();
 
-                loader.hide();
-                // this.loading = false;
+                    loader.hide();
+                })
+                .catch((errors) => {
+                    loader.hide();
+                });                
             }
         },
 
         removeFromCart: async function (productId) {
             if(this.userId) {
-                // this.loading = true;
-
                 let loader = this.$loading.show({});
 
-                const response = await axios.delete(baseURL + `/cart/${this.userId}/${productId}`);
-                this.cartItems = response.data;
+                axios.delete(baseURL + `/cart/${this.userId}/${productId}`)
+                .then((response) => {
+                    this.cartItems = response.data;
+                    this.calculateCartTotal();
 
-                this.calculateCartTotal();
-
-                loader.hide();
-
-                // this.loading = false;
-                this.triggerToast();
+                    loader.hide();
+                    this.triggerToast();
+                })
+                .catch((errors) => {
+                    loader.hide();
+                });
+                
             }
         },
 
         decreaseQty: async function (productId) {
             if(this.userId) {
-                // this.loading = true;
-
                 let loader = this.$loading.show({});
 
-                const response = await axios.delete(baseURL + `/cart/${this.userId}/${productId}`);
-                this.cartItems = response.data;
+                const change_type = 'DECREASE_QTY';
 
-                this.calculateCartTotal();
-
-                loader.hide();
-
-                // this.loading = false;
+                axios.post(baseURL + `/cart/${this.userId}/changeqty`, {product_id: productId, change_type} )
+                .then((response) => {
+                    this.cartItems = response.data;
+                    this.calculateCartTotal();
+                    loader.hide();
+                })
+                .catch((errors) => {
+                    loader.hide();
+                });
             }
         },
 
         increaseQty: async function (productId) {
             if(this.userId) {
-                // this.loading = true;
-
                 let loader = this.$loading.show({});
 
-                const response = await axios.post(baseURL + `/cart/${this.userId}`, {product_id: productId} );
-                this.cartItems = response.data;
+                const change_type = 'INCREASE_QTY';
 
-                this.calculateCartTotal();
-
-                loader.hide();
-
-                // this.loading = false;                
+                axios.post(baseURL + `/cart/${this.userId}/changeqty`, {product_id: productId, change_type} )
+                .then((response) => {
+                    this.cartItems = response.data;
+                    this.calculateCartTotal();
+                    loader.hide();
+                })
+                .catch((errors) => {
+                    loader.hide();
+                });                
             }
         },
 
