@@ -7,22 +7,33 @@
         <div v-if="error" class="error">{{error}}</div>
 
         <div v-if="cartItems.length > 0">
+
+            <div class="flex w-full p-2 mb-3 font-bold bg-gray-400 text-white">
+                <div class="details-wrap">Item</div>
+                <div class="details-wrap">Qty</div>
+                <div class="details-wrap">Sub Total</div>
+            </div>
+
             <CartItems :items="cartItems" 
                 @remove-from-cart="removeFromCart($event)"  
                 @decrease-qty="decreaseQty($event)" 
                 @increase-qty="increaseQty($event)" />
 
-            <div v-if="itemCount > 0" class="mainPanel">
+            <div v-if="cartItems.length > 0" class="mainPanel">
                 <div class="left-pane">
                     <router-link to="/products">
                         <i class="pi pi-shopping-bag" style="font-size: 1.1rem"></i><span class="text-l w-full shrink-0 ps-2">Continue Shopping</span>
                     </router-link>
                 </div>
                 <div class="right-pane font-bold">
-                    Total: AED {{totalAmount}}
+                    Total: AED {{cartTotalAmount}}
                 </div>
             </div>
-            <button class="checkout-button" @click="redirectToCheckout">Checkout</button>
+
+            <div class="flex w-full p-2 border-0">
+                <button class="checkout-button flex-column  m-3" @click="redirectToCheckout">Checkout 1</button>
+                <button class="checkout-button flex-column  m-3 text-blue-300" @click="redirectToCheckout2">Checkout 2</button>
+            </div>
         </div>
 
         <div v-else-if="loading == false">
@@ -55,8 +66,8 @@ export default {
             cartItems: [],
             loading: false,
             error: '',
-            itemCount: 5,
-            totalAmount: 100,
+            // itemCount: 0,
+            cartTotalAmount: 0,
 
             fullPage: true,
             visible: false,
@@ -75,11 +86,16 @@ export default {
                 amount += item.quantity * item.price;                
             });
 
-            this.totalAmount = amount;
+            this.cartTotalAmount = amount;
         },
 
         redirectToCheckout(){
             this.$router.push({path: '/checkout'});
+        },
+     
+        redirectToCheckout2(){
+            this.$router.push({path: '/stripe-checkout', query: { amount: this.cartTotalAmount }});
+            // this.$router.push({name: 'StripeCheckoutPage', params: { amount: '5678' }});
         },
 
         created: async function () {

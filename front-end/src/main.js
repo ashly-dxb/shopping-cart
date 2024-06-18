@@ -24,6 +24,8 @@ import Home from "./pages/Home.vue";
 // import ProductList from "./pages/ProductList.vue";
 import ProductDetails from "./pages/ProductDetails.vue";
 import ShoppingCart from "./pages/ShoppingCart.vue";
+import StripeCheckout from "./pages/StripeCheckout.vue";
+
 import Checkout from "./pages/Checkout.vue";
 import CheckoutSuccess from "./pages/CheckoutSuccess.vue";
 import CheckoutCancel from "./pages/CheckoutCancel.vue";
@@ -52,6 +54,13 @@ var router = VueRouter.createRouter({
       component: ShoppingCart,
       name: "CartPage",
     },
+
+    {
+      path: "/stripe-checkout",
+      component: StripeCheckout,
+      name: "StripeCheckoutPage",
+    },
+
     {
       path: "/checkout",
       component: Checkout,

@@ -47,8 +47,8 @@ export default {
                     quantity: 3
                 },
             ],
-            successURL: 'http://localhost:8080/checkout-success',
-            cancelURL: 'http://localhost:8080/checkout-cancel',
+            successURL: `${window.location.origin}/checkout-success`,
+            cancelURL: `${window.location.origin}/checkout-cancel`,
         };
     },
 
