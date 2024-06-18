@@ -19,8 +19,10 @@ import { computed } from 'vue';
 export default {
   name: 'CheckoutSuccess',
   props: ['userId'],
+
   data() {
         return {
+            data: null,
             userId: null,
         }
   },
@@ -39,15 +41,22 @@ export default {
   methods: {
       clearCart: function() {
           if(this.userId) {
+
+                console.log("this.userId", this.userId);
+
+
               let loader = this.$loading.show({});
 
-              axios.delete(baseURL + `/cart/clear/${this.userId}`)
+              axios.delete(baseURL + `/cart/${this.userId}`)
               .then((response) => {
-                  this.cartItems = response.data;
+                  this.data = response.data;
+
+                  console.log("SERVER RESP:", response.data);
 
                   loader.hide();
               })
               .catch((errors) => {
+                console.log("SERVER errors:", errors);
                   loader.hide();
               });
               

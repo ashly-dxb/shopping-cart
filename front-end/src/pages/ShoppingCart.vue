@@ -36,8 +36,14 @@
             </div>
         </div>
 
-        <div v-else-if="loading == false">
-            Your cart is empty!
+        <div v-else-if="loading == false" class="flex w-full p-2 border-0">
+            <div class="left-pane">Your cart is empty!</div>
+
+            <div class="right-pane">
+                <router-link to="/products">
+                    <i class="pi pi-shopping-bag" style="font-size: 1.1rem"></i><span class="text-l w-full shrink-0 ps-2">Continue Shopping</span>
+                </router-link>
+            </div>
         </div>
 
         <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />

@@ -23,9 +23,11 @@
                 <button class="grey-button" v-if="userId && itemIsInCart">Item is in cart</button>
                 <button class="sign-in" v-if="!userId" @click="signIn">Sign in to add to cart</button>
 
-                <button @click="goBack">
-                    <i :class="['pi', 'pi-back']" style="font-size: 1.1rem"></i><span class="ps-2">Back</span>
-                </button>
+                <div class="text-right">
+                    <button @click="goBack" class="mt-5">
+                        <i class="pi pi-back" style="font-size: 1.1rem"></i><span class="ps-2">Back</span>
+                    </button>
+                </div>
             </div>
         </div>
 

@@ -64,8 +64,11 @@ export default {
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
 
-            const response2 = await axios.get(baseURL + `/cart/itemlist/${this.userId}`);
-            this.cartItemsList = response2.data;
+            if(this.userId)
+            {
+                const response2 = await axios.get(baseURL + `/cart/itemlist/${this.userId}`);
+                this.cartItemsList = response2.data;
+            }
 
             loader.hide();
         },
