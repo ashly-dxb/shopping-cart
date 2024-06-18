@@ -18,7 +18,7 @@ router.get("/list", async (req, res) => {
 
 /* ************************************************************************** */
 router.get("/details/:productId", async (req, res) => {
-  const productId = req.params.productId;
+  const productId = parseInt(req.params.productId);
 
   try {
     const product = await Products.findOne({ id: productId });

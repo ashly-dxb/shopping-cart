@@ -281,7 +281,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
 /* ************************************************************************** */
 // Change password form submit
 router.post("/change-password/:id", async (req, res) => {
-  const userID = req.params.id;
+  const userID = parseInt(req.params.id);
   const { password } = req.body;
 
   const user = await Users.findOne({ userId: userID });

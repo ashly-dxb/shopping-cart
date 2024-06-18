@@ -178,8 +178,8 @@ router.post("/:userId/changeqty", async (req, res) => {
 /* ************************************************************************** */
 // Delete specified item from specified user's cart
 router.delete("/:userId/:productId", async (req, res) => {
-  const userId = req.params.userId;
-  const productId = req.params.productId;
+  const userId = parseInt(req.params.userId);
+  const productId = parseInt(req.params.productId);
 
   const result = await UserCart.updateOne(
     { id: userId },
@@ -202,7 +202,7 @@ router.delete("/:userId/:productId", async (req, res) => {
 /* ************************************************************************** */
 // Delete specified user's cart completely
 router.delete("/clear/:userId", async (req, res) => {
-  const userId = req.params.userId;
+  const userId = parseInt(req.params.userId);
   const result = await UserCart.deleteOne({ id: userId });
 
   if (result.deletedCount === 1) {
