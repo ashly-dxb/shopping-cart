@@ -3,6 +3,7 @@ const Products = require("../models/Products");
 const express = require("express");
 const router = express.Router();
 
+/* ************************************************************************** */
 router.get("/list", async (req, res) => {
   // await Products.updateMany({}, [{ $set: { price: { $toInt: "$price" } } }]);
   // console.log("UPADTE DONE!!!");
@@ -15,6 +16,7 @@ router.get("/list", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 router.get("/details/:productId", async (req, res) => {
   const productId = req.params.productId;
 

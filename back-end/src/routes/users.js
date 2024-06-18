@@ -11,6 +11,7 @@ const jwt = require("jsonwebtoken");
 
 import sendEmail from "../mailLib";
 
+/* ************************************************************************** */
 /*
 router.get("/set-cookie", (req, res) => {
   res.cookie("user_test", "AshlyTest", { maxAge: 900000, httpOnly: true });
@@ -27,6 +28,7 @@ router.get("/get-cookie", (req, res) => {
 });
 */
 
+/* ************************************************************************** */
 /* Sign-up a new user account */
 router.post("/register", async (req, res) => {
   try {
@@ -63,6 +65,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 // login to the application
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -139,6 +142,7 @@ router.post("/login", async (req, res) => {
     .catch((err) => console.log(err));
 });
 
+/* ************************************************************************** */
 // Logout from the application
 router.get("/logout", (req, res) => {
   // console.log(req.session);
@@ -152,6 +156,7 @@ router.get("/logout", (req, res) => {
   });
 });
 
+/* ************************************************************************** */
 // List of users
 router.get("/list", async (req, res) => {
   try {
@@ -162,6 +167,7 @@ router.get("/list", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 // forgot password email
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
@@ -207,6 +213,7 @@ router.post("/forgot-password", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 // reset password form
 router.get("/reset-password/:id/:token", async (req, res) => {
   const { id, token } = req.params;
@@ -234,6 +241,7 @@ router.get("/reset-password/:id/:token", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 // reset password form submit
 router.post("/reset-password/:id/:token", async (req, res) => {
   const { id, token } = req.params;
@@ -270,6 +278,7 @@ router.post("/reset-password/:id/:token", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 // Change password form submit
 router.post("/change-password/:id", async (req, res) => {
   const userID = req.params.id;

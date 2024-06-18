@@ -4,6 +4,7 @@ const Products = require("../models/Products");
 const express = require("express");
 const router = express.Router();
 
+/* ************************************************************************** */
 // retrieve cart list
 router.get("/list", async (req, res) => {
   try {
@@ -14,6 +15,7 @@ router.get("/list", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 // retrieve cart details by userID
 router.get("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
@@ -30,6 +32,7 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 // retrieve cart products as an array by userID
 router.get("/itemlist/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
@@ -45,6 +48,7 @@ router.get("/itemlist/:userId", async (req, res) => {
   }
 });
 
+/* ************************************************************************** */
 // Add specified item to specified user's cart
 router.post("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
@@ -110,6 +114,7 @@ router.post("/:userId", async (req, res) => {
   res.json(populatedCart);
 });
 
+/* ************************************************************************** */
 // Add specified item to specified user's cart
 router.post("/:userId/changeqty", async (req, res) => {
   const userId = parseInt(req.params.userId);
@@ -170,6 +175,7 @@ router.post("/:userId/changeqty", async (req, res) => {
   res.json(populatedCart);
 });
 
+/* ************************************************************************** */
 // Delete specified item from specified user's cart
 router.delete("/:userId/:productId", async (req, res) => {
   const userId = req.params.userId;
@@ -193,6 +199,20 @@ router.delete("/:userId/:productId", async (req, res) => {
   res.json(populatedCart);
 });
 
+/* ************************************************************************** */
+// Delete specified user's cart completely
+router.delete("/clear/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const result = await UserCart.deleteOne({ id: userId });
+
+  if (result.deletedCount === 1) {
+    res.json({ success: true });
+  } else {
+    res.json({ success: false });
+  }
+});
+
+/* ************************************************************************** */
 // generic function for fetching each product details in the cart
 async function populateCartIds(cartItems) {
   const quantities = cartItems.map((item) => item.quantity);
