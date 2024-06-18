@@ -12,13 +12,28 @@
 <script>
 import baseURL from '@/components/Config';
 import axios from 'axios';
+import { mapGetters} from 'vuex';
+import { computed } from 'vue';
+
 
 export default {
   name: 'CheckoutSuccess',
   props: ['userId'],
+  data() {
+        return {
+            userId: null,
+        }
+  },
+  computed: {
+    ...mapGetters({
+        loggedUserData: 'loggedUserInfo'
+    }),
+  },
 
   mounted: function() {
-    this.clearCart();
+    this.userId = this.loggedUserData.userId;
+
+    this.clearCart();    
   },
 
   methods: {

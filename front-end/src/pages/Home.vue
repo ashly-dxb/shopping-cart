@@ -6,34 +6,27 @@
             </div>
 
             <div class="m-auto mb-3 mt-4 ml-2  border-0">
-                Welcome to home page!
+                Welcome! {{ usedData ? usedData.userId : '..' }}
             </div>
-            <!--
-            <div>{{ //$store.state.counter }}</div>
-            <button type="button" class="" @click="$store.commit('decreaseCounter')">-</button>
-            <button type="button" class="" @click="$store.commit('increaseCounter')">+</button>
-            -->
+
         </div>
     </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import {mapState, mapGetters} from 'vuex';
 
 export default {
-    name: 'Home',
-    methods: {
-        
-    },
+    name: 'Home',    
     data() {
         return {
             error: '',
             usedData: null,
+            user: 'xxx',
         }
     },
     computed: {
-        // console.log('in computed');
         ...mapState({
             user: (state) => state.userObj
         }),
@@ -43,7 +36,7 @@ export default {
         }),
     },
     mounted() {
-        console.log("HOME GETTER", this.loggedUserData);
+        // console.log("HOME GETTER", this.loggedUserData);
         this.usedData = this.loggedUserData;
     },
 }

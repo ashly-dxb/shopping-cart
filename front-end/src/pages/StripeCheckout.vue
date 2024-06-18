@@ -47,7 +47,7 @@
                     type="submit"
                     class="p-2 m-2"
                     >
-                    {{ loading ? "Loading..." : "Pay Now" }}
+                    {{ loadingStatus ? "Loading..." : "Pay Now" }}
                 </button>
             </div>
             </form>
@@ -59,7 +59,7 @@
 
 <script>
 import { loadStripe } from "@stripe/stripe-js";
-import { ref} from "vue";
+import { ref, computed } from "vue";
 
 const cardElementStyle = {
                 style: {
@@ -84,15 +84,15 @@ const cardElementStyle = {
                 }
             };
 
+            
 export default {
     data: function() {
         return {
             stripe : null,
             elements : null,
-            loading : ref(true),
+            loadingStatus : ref(true),
 
             serverError: '',
-
             paymentAmount: 0,
 
             fullPage: true,
@@ -105,6 +105,9 @@ export default {
     },
     methods: {
         created: function () {
+            // this.loadingStatus = false;
+            console.log("loadingStatus 1:", this.loadingStatus);
+
             this.paymentAmount = this.$route.query.amount;
             console.log("paymentAmount:", this.paymentAmount);
 
@@ -120,30 +123,24 @@ export default {
             const element = this.elements.create(ELEMENT_TYPE, cardElementStyle);
             element.mount("#element_strip");
 
-            this.loading = false;
-
-            console.log("loading:", this.loading);
+            this.loadingStatus = false;
+            console.log("loadingStatus 2:", this.loadingStatus);
         },
 
         handleSubmit: async function(event) {
-            if (this.loading) 
+            if (this.loadingStatus) 
                 return;
 
-            this.loading = true;
+            this.loadingStatus = true;
 
             let loader = this.$loading.show({
                     loader: 'dots',
                     width: 64,
                     height: 64,
-                    // backgroundColor: 'rgb(40, 30, 180)',
-                    // color: 'rgb(250, 40, 30)',
                     opacity: 0.5,
                 });
 
-            const { name, email } = Object.fromEntries( new FormData(event.target) );
-            console.log(name, email);
-            console.log("AMOUNT :", this.paymentAmount);
-    
+            const { name, email } = Object.fromEntries( new FormData(event.target) );   
             const billingDetails = {
                                         name,
                                         email,
@@ -177,7 +174,7 @@ export default {
                 if(paymentMethodReq.error) {
                     this.serverError = paymentMethodReq.error.message;                    
                     loader.hide();
-                    this.loading = false;
+                    this.loadingStatus = false;
                     return false;
                 }
         
@@ -189,12 +186,12 @@ export default {
 
                 loader.hide();
 
-                this.loading = false;
+                this.loadingStatus = false;
                 this.$router.push("/checkout-success");
             }
             catch (error) {
                 console.log("Error ::", error);
-                this.loading = false;
+                this.loadingStatus = false;
 
                 loader.hide();
             }
