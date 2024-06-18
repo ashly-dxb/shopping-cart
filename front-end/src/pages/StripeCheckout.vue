@@ -4,7 +4,7 @@
           <h3 class='text-green-700 text-xl font-bold'>Custom Checkout</h3>
         </div>
 
-        <div class="w-full md:w-2/3 m-auto mb-3 mt-4 ml-2 border-0 border-green-300">
+        <div class="w-full md:w-2/3 m-auto mb-3 mt-4 border-0 border-green-300">
 
             <div class="formElement my-3">
                 <label class="bg-blue-600 text-white text-xl p-3">Total Amount: AED {{ paymentAmount }}</label>
@@ -45,7 +45,7 @@
             <div class="formElement my-3">
                 <button
                     type="submit"
-                    class="p-2 m-2"
+                    class="p-2 my-2"
                     >
                     {{ loadingStatus ? "Loading..." : "Pay Now" }}
                 </button>
@@ -60,6 +60,8 @@
 <script>
 import { loadStripe } from "@stripe/stripe-js";
 import { ref, computed } from "vue";
+import baseURL from "../components/Config";
+
 
 const cardElementStyle = {
                 style: {
@@ -152,7 +154,7 @@ export default {
             const cardElement = this.elements.getElement("card");
     
             try {
-                const response = await fetch("http://localhost:8081/api/stripe/payment_intent", {
+                const response = await fetch(baseURL + "/stripe/payment_intent", {
                                             method: "POST",
                                             headers: {
                                                 "Content-Type": "application/json"
