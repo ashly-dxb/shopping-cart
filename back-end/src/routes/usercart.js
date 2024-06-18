@@ -63,15 +63,12 @@ router.post("/:userId", async (req, res) => {
       { $match: { "cartItems.id": productId } },
     ]);
 
-    // console.log("existingCart check", existingProduct);
-
     if (existingProduct.length > 0) {
       try {
         await UserCart.updateOne(
           { id: userId, "cartItems.id": productId },
           { $inc: { "cartItems.$.quantity": 1 } }
         );
-        // console.log("existingProduct updating");
       } catch (error) {
         return res
           .status(400)
@@ -108,8 +105,6 @@ router.post("/:userId", async (req, res) => {
   const userCart = await UserCart.findOne({ id: userId });
 
   const cartItems = userCart?.cartItems || [];
-  // const productIDs = cartItems.map((item) => item.id);
-
   const populatedCart = await populateCartIds(cartItems);
   res.json(populatedCart);
 });
@@ -131,9 +126,6 @@ router.post("/:userId/changeqty", async (req, res) => {
     ]);
 
     const increaseQty = changeType == "INCREASE_QTY" ? 1 : -1; // increase or decrease 1 qty
-
-    // console.log("qty check", existingProduct[0].cartItems.quantity);
-    // console.log("qty check 2", existingProduct[0].cartItems.quantity === 1);
 
     if (
       existingProduct[0].cartItems.quantity === 1 &&
@@ -189,26 +181,28 @@ router.delete("/:userId/:productId", async (req, res) => {
     { new: true }
   );
 
-  // const user = await UserCart.findOne({ id: userId });
   const userCart = await UserCart.findOne({ id: userId });
 
   const cartItems = userCart?.cartItems || [];
-  // const productIDs = cartItems.map((item) => item.id);
-
   const populatedCart = await populateCartIds(cartItems);
   res.json(populatedCart);
 });
 
 /* ************************************************************************** */
 // Delete specified user's cart completely
-router.delete("/clear/:userId", async (req, res) => {
+router.delete("/:userId", async (req, res) => {
+  console.log("start: ", req.params.userId);
+
   const userId = parseInt(req.params.userId);
+
+  console.log("userId: ", userId);
+
   const result = await UserCart.deleteOne({ id: userId });
 
   if (result.deletedCount === 1) {
     res.json({ success: true });
   } else {
-    res.json({ success: false });
+    res.status(400).json({ success: false });
   }
 });
 
@@ -217,8 +211,6 @@ router.delete("/clear/:userId", async (req, res) => {
 async function populateCartIds(cartItems) {
   const quantities = cartItems.map((item) => item.quantity);
   const productIDs = cartItems.map((item) => item.id);
-  // console.log("productIDs:", productIDs);
-  // console.log("quantities:", quantities);
 
   var arrayResult = Promise.all(
     productIDs.map(async (id, index) => {
