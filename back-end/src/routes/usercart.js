@@ -80,8 +80,6 @@ router.post("/:userId", async (req, res) => {
           { id: userId },
           { $addToSet: { cartItems: { id: productId, quantity: 1 } } }
         );
-
-        // console.log("newProduct adding");
       } catch (error) {
         return res
           .status(400)
@@ -96,7 +94,6 @@ router.post("/:userId", async (req, res) => {
       });
 
       const savedUserCart = await newUserCart.save();
-      // console.log(savedUserCart);
     } catch (error) {
       return res.status(400).send({ success: false, message: "Insert error" });
     }
@@ -136,15 +133,12 @@ router.post("/:userId/changeqty", async (req, res) => {
         .send({ success: false, message: "Minimum qty reached" });
     }
 
-    // console.log("changeType:", increaseQty, changeType);
-
     if (existingProduct.length > 0) {
       try {
         await UserCart.updateOne(
           { id: userId, "cartItems.id": productId },
           { $inc: { "cartItems.$.quantity": increaseQty } }
         );
-        // console.log("existingProduct updating");
       } catch (error) {
         return res
           .status(400)
@@ -191,11 +185,7 @@ router.delete("/:userId/:productId", async (req, res) => {
 /* ************************************************************************** */
 // Delete specified user's cart completely
 router.delete("/:userId", async (req, res) => {
-  console.log("start: ", req.params.userId);
-
   const userId = parseInt(req.params.userId);
-
-  console.log("userId: ", userId);
 
   const result = await UserCart.deleteOne({ id: userId });
 

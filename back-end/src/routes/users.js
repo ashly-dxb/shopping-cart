@@ -12,21 +12,18 @@ const jwt = require("jsonwebtoken");
 import sendEmail from "../mailLib";
 
 /* ************************************************************************** */
-/*
-router.get("/set-cookie", (req, res) => {
-  res.cookie("user_test", "AshlyTest", { maxAge: 900000, httpOnly: true });
-  res.send("Cookie success");
-});
+// List of users
+router.get("/list", async (req, res) => {
+  // var mysort = { username: 1 };
+  var mysort = { userId: 1 };
 
-router.get("/get-cookie", (req, res) => {
-  let userCookie = req.cookies.user_test;
-  if (userCookie) {
-    res.send(`Cookie value: ${userCookie}`);
-  } else {
-    res.send("No cookie found");
+  try {
+    const users = await Users.find({}).sort(mysort);
+    res.json({ success: true, users });
+  } catch (error) {
+    res.status(400).json({ success: false });
   }
 });
-*/
 
 /* ************************************************************************** */
 /* Sign-up a new user account */
@@ -154,17 +151,6 @@ router.get("/logout", (req, res) => {
     authenticated: false,
     status: "Logged out",
   });
-});
-
-/* ************************************************************************** */
-// List of users
-router.get("/list", async (req, res) => {
-  try {
-    const users = await Users.find({});
-    res.json({ success: true, users });
-  } catch (error) {
-    res.status(400).json({ success: false });
-  }
 });
 
 /* ************************************************************************** */
