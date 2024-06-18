@@ -1,5 +1,4 @@
 import Stripe from "stripe";
-
 const express = require("express");
 const router = express.Router();
 
@@ -8,7 +7,7 @@ const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY));
 /* ************************************************************************** */
 /* To fetch the secret before a payment */
 router.post("/payment_intent", async (req, res) => {
-  const { amount } = req.body; // Should calculate server side
+  const { amount } = req.body; // Should calculate in server side
 
   try {
     const paymentIntent = await stripe.paymentIntents.create({
@@ -18,7 +17,7 @@ router.post("/payment_intent", async (req, res) => {
 
     res.status(200).send({ secret: paymentIntent.client_secret });
   } catch (error) {
-    console.log("error", error);
+    // console.log("error", error);
     res.status(500).send("error" + error);
   }
 });
