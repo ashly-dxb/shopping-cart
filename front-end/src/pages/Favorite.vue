@@ -1,15 +1,15 @@
 <template>
 <div class="container">
     <div class="wrapper">
-        <div v-for="airport in airports" :key="airport.abbreviation">
-            <airport-card :airport="airport" @click="$store.dispatch('addToFavorites', airport)" />
+        <div v-for="eachItem in allItems" :key="eachItem.abbreviation">
+            <favorite-card :item="eachItem" @click="$store.dispatch('addToFavorites', eachItem)" />
         </div>
     </div>
 
-    <h2 v-if="$store.state.airports.favorites.length" class="favoriteHeader">Favorites</h2>
+    <h2 v-if="$store.state.allItems.favorites.length" class="favoriteHeader">Favorites</h2>
     <div class="wrapper">
-        <div v-for="airport in $store.state.airports.favorites" :key="airport.abbreviation">
-            <airport-card :airport="airport" @click="$store.dispatch('removeFromFavorites', airport)"/>
+        <div v-for="eachItem in $store.state.allItems.favorites" :key="eachItem.abbreviation">
+            <favorite-card :item="eachItem" @click="$store.dispatch('removeFromFavorites', eachItem)"/>
         </div>
     </div>
 </div>
@@ -17,16 +17,16 @@
   
 <script>
 import { ref } from 'vue';
-import allAirports from '@/data/airports';
-import AirportCard from '@/components/AirportCard.vue';
+import itemList from '@/data/items';
+import FavoriteCard from '@/components/FavoriteCard.vue';
 
 export default {
     components: {
-        AirportCard
+        FavoriteCard
     },
     setup() {
-        const airports = ref(allAirports);
-        return { airports };
+        const allItems = ref(itemList);
+        return { allItems };
     }
 }
 </script>
@@ -63,3 +63,4 @@ p, h3 {
     margin: 0 auto;
 }
 </style>
+@/data/items

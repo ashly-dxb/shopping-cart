@@ -31,7 +31,7 @@ import CheckoutSuccess from "./pages/CheckoutSuccess.vue";
 import CheckoutCancel from "./pages/CheckoutCancel.vue";
 
 import Profile from "./pages/Profile.vue";
-import Airport from "./pages/Airport.vue";
+import Favorite from "./pages/Favorite.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
 
 var router = VueRouter.createRouter({
@@ -45,9 +45,9 @@ var router = VueRouter.createRouter({
       name: "HomePage",
     },
     {
-      path: "/airports",
-      component: Airport,
-      name: "AirportPage",
+      path: "/favorites",
+      component: Favorite,
+      name: "FavoritePage",
     },
     {
       path: "/cart",

@@ -1,15 +1,15 @@
 <template>
-    <div class="airport">
-        <p>{{ airport.abbreviation }}</p>
-        <p>{{ airport.name }}</p>
-        <p>{{ airport.city }}, {{ airport.state }}</p>
+    <div class="item">
+        <p>{{ item.abbreviation }}</p>
+        <p>{{ item.name }}</p>
+        <p>{{ item.city }}</p>
     </div>
 </template>
   
 <script>
 export default {
     props: {
-        airport: {
+        item: {
             type: Object,
             required: true
         }
@@ -18,7 +18,7 @@ export default {
 </script>
   
 <style scoped>
-.airport {
+.item {
     border: 1px solid gray;
     border-radius: .7rem;
     padding: .3rem;
@@ -27,13 +27,17 @@ export default {
     cursor: pointer;
 }
 
-.airport p:first-child {
+.item:hover {
+    background-color: orange;
+}
+
+.item p:first-child {
     /* font-weight: bold; */
     font-size: 1rem;
     margin: .3rem 0;
 }
 
-.airport p:last-child {
+.item p:last-child {
     /* font-style: italic; */
     font-size: .6rem;
 }

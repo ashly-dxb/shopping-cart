@@ -10,7 +10,7 @@ export default createStore({
   modules: {
     auth: AuthModule,
     user: UserModule,
-    airports: AirportsModule,
+    allItems: AirportsModule,
   },
   plugins: [],
 });

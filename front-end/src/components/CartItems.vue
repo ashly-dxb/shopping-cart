@@ -22,7 +22,7 @@
             <h3 class="text-right">AED {{ product.price * product.quantity }}</h3>
         </div>
 
-        <div class="remove-button" @click="$emit('remove-from-cart', product.id)">
+        <div class="remove-button" title="Remove" @click="$emit('remove-from-cart', product.id)">
             <i class="pi pi-trash" style="font-size: 1.1rem"></i>
         </div>
     </div>

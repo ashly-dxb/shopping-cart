@@ -62,8 +62,8 @@ export default {
 
     data() {
         return {
-            email: 'ashlythomas@gmail.com',
-            password: 'abcd1234',
+            email: 'test@gmail.com',
+            password: '',
             showErrors: false,
             errors: null,
 

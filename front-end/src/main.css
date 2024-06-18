@@ -153,9 +153,14 @@ h1 {
     /* flex: 1; */
     margin: auto;
     cursor: pointer;
-    /* border: 1px solid blue; */
+    /* border: 1px solid gray; */
 }
 
+.remove-button:hover {
+    background-color: rgb(223, 14, 42);
+    border: 2px solid rgb(66, 3, 3);
+    padding: 5px;
+}
 
 /* ***************** shopping cart main ***************** */
 .mainPanel {

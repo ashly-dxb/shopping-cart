@@ -67,7 +67,7 @@
 <script>
 import baseURL from "./Config";
 import logo from '@/assets/logo-hexagon.svg';
-import mainLinks, {otherLinks}  from '../components/menulinks';
+import mainLinks, {otherLinks}  from './NavBarLinks';
 import 'primeicons/primeicons.css';
 
 import {mapState, mapGetters} from 'vuex';
@@ -124,13 +124,9 @@ export default {
                 localStorage.removeItem('username');
                 localStorage.removeItem('userId');
 
-                console.log("Logging out:", data);
-
                 this.$emit("user-logged-out");
                 // this.$store.commit("logoutSuccess"); // store mutation
                 this.$store.dispatch("logoutDone"); // store action
-
-                console.log("Logging out: 222");
 
                 this.isLogged = this.checkIfIsLogged();
                 this.$router.push('/Login');
@@ -148,7 +144,6 @@ export default {
 
         setIsOpen: function() {
             this.isOpen = !this.isOpen;
-            // console.log("isOpen: ", this.isOpen);
         }
     },
     

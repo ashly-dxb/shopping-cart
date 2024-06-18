@@ -15,7 +15,7 @@ export default {
       const favorites = context.state.favorites;
 
       const index = favorites.findIndex(
-        (airport) => airport.abbreviation === payload.abbreviation
+        (item) => item.abbreviation === payload.abbreviation
       );
 
       // add to favourites, if not existing in favourites
@@ -27,7 +27,7 @@ export default {
     removeFromFavorites(context, payload) {
       const favorites = context.state.favorites;
       const modifiedFavorites = favorites.filter(
-        (airport) => airport.abbreviation !== payload.abbreviation
+        (item) => item.abbreviation !== payload.abbreviation
       );
 
       context.commit("REMOVE_FAVORITES", modifiedFavorites);
