@@ -58,10 +58,12 @@
 </template>
 
 <script>
+import baseURL from '@/components/Config';
+import axios from 'axios';
+
 import { loadStripe } from "@stripe/stripe-js";
 import { ref, computed } from "vue";
-import baseURL from "../components/Config";
-
+import { mapGetters} from 'vuex';
 
 const cardElementStyle = {
                 style: {
@@ -96,27 +98,34 @@ export default {
 
             serverError: '',
             paymentAmount: 0,
+            orderData: null,
+            userId:null,
 
             fullPage: true,
             visible: false,
             loader: 'bars',
         }
     },
-    mounted: function () {
-        this.created();
+
+    computed: {
+        ...mapGetters({
+            loggedUserData: 'loggedUserInfo'
+        }),
     },
+    
+    mounted: function () {
+        this.userId = this.loggedUserData.userId;
+        this.created();        
+    },
+
     methods: {
-        created: function () {
-            // this.loadingStatus = false;
-            console.log("loadingStatus 1:", this.loadingStatus);
-
+        created: function() {
+            console.log("loadingStatus:", this.loadingStatus);
             this.paymentAmount = this.$route.query.amount;
-            console.log("paymentAmount:", this.paymentAmount);
-
             this.onMounted();
         },
 
-        onMounted: async function () {
+        onMounted: async function() {
             this.stripe = await loadStripe(process.env.VUE_APP_STRIPE_PK);
 
             const ELEMENT_TYPE = "card";
@@ -126,10 +135,24 @@ export default {
             element.mount("#element_strip");
 
             this.loadingStatus = false;
-            console.log("loadingStatus 2:", this.loadingStatus);
+        },
+
+        addOrder: function() {
+            axios.post(baseURL + `/orders/create`, {
+                userId: this.userId,
+                orderAmount: this.paymentAmount
+            })
+            .then((response) => {
+                this.orderData = response.data.savedOrder;
+                console.log("response.data ::", response.data);
+            })
+            .catch((errors) => {
+                console.log("errors ::", errors);
+            });
         },
 
         handleSubmit: async function(event) {
+            console.log("In progress:", this.loadingStatus);
             if (this.loadingStatus) 
                 return;
 
@@ -163,7 +186,6 @@ export default {
                                         });
 
                 const { secret } = await response.json();
-                // console.log("secret::: ", secret);
         
                 const paymentMethodReq = await this.stripe.createPaymentMethod({
                     type: "card",
@@ -171,10 +193,8 @@ export default {
                     billing_details: billingDetails
                 });
         
-                console.log("createPaymentMethod status:", paymentMethodReq);
-
-                if(paymentMethodReq.error) {
-                    this.serverError = paymentMethodReq.error.message;                    
+                if(paymentMethodReq.error) { // error handling
+                    this.serverError = paymentMethodReq.error.message;
                     loader.hide();
                     this.loadingStatus = false;
                     return false;
@@ -186,22 +206,34 @@ export default {
 
                 console.log("confirmCardPayment status:", status);
 
-                loader.hide();
+                /*
+                if(status.error) { // error handling ...check this....
+                    this.serverError = status.error.message;                    
+                    loader.hide();
+                    this.loadingStatus = false;
+                    return false;
+                }
+                */
+
+                this.addOrder(); // save order details in the database, after a successful payment
+                //this.orderData.orderId
+
+                this.$store.dispatch("checkoutComplete", this.orderData); // store action
+
+                loader.hide(); 
 
                 this.loadingStatus = false;
                 this.$router.push("/checkout-success");
             }
             catch (error) {
                 console.log("Error ::", error);
-                this.loadingStatus = false;
 
+                this.loadingStatus = false;
                 loader.hide();
             }
-        }
-    }
-    
+        },
+    }    
 }
-
 </script>
   
 <style scoped>

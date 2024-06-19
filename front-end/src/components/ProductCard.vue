@@ -26,8 +26,7 @@ import "vue3-toastify/dist/index.css";
 
 
 export default {
-    name: 'ProductCard',
-    
+    name: 'ProductCard',    
     props: ['products', 'userId', 'cartItemsList'],
     data() {
         return {

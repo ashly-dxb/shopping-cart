@@ -4,7 +4,6 @@
           <h3 class='text-green-700 text-xl font-bold'>Product Details</h3>
         </div>
 
-        <div v-if="loading" class="loading">Loading...</div>
         <div v-if="error" class="error">{{error}}</div>
 
         <div v-if="product" class="">
@@ -34,6 +33,8 @@
         <div v-else>
             <NotFoundPage />
         </div>
+
+        <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
     </div>
 </template>
 
@@ -60,12 +61,14 @@ export default {
             cartItems: [],
             loading: false,
             error: '',
+
+            fullPage: true,
+            visible: false,
+            loader: 'dots',
         }
     },
     computed: {
         itemIsInCart() {
-            // console.log(this.cartItems, "itemIsInCart");
-            // console.log(this.$route.params);
             return this.cartItems.some(item => item.id === parseInt(this.$route.params.productId));
         }
     },
@@ -85,17 +88,31 @@ export default {
             this.$router.go(-1);
         },
         created: async function () {
-            this.loading = true;
+            // this.loading = true;
 
-            const response = await axios.get(baseURL + `/products/details/${this.$route.params.productId}`);
-            this.product = response.data;
+            let loader = this.$loading.show({
+                    loader: 'dots',
+                    width: 50,
+                    height: 50,
+                    opacity: 0.5,
+                });
+
+            axios.get(baseURL + `/products/details/${this.$route.params.productId}`)
+            .then((response) => {
+                this.product = response.data;
+                loader.hide();
+            })
+            .catch((errors) => {
+                loader.hide();
+            });
 
             if(this.userId) {
                 const response2 = await axios.get(baseURL + `/cart/${this.userId}`);
                 this.cartItems = response2.data;
             }
 
-            this.loading = false;
+            // this.loading = false;
+            loader.hide();
         },
         
         getIMGPath: function(imageUrl) {

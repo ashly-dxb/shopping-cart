@@ -18,6 +18,12 @@ const mainLinks = [
     icon: "pi-shopping-cart",
   },
   {
+    link: "/orders",
+    text: "My Orders",
+    type: "LOGGED_IN",
+    icon: "pi-order",
+  },
+  {
     link: "/favorites",
     text: "Favorites",
     type: "LOGGED_IN",

@@ -30,6 +30,7 @@ import Checkout from "./pages/Checkout.vue";
 import CheckoutSuccess from "./pages/CheckoutSuccess.vue";
 import CheckoutCancel from "./pages/CheckoutCancel.vue";
 
+import MyOrders from "./pages/MyOrders.vue";
 import Profile from "./pages/Profile.vue";
 import Favorite from "./pages/Favorite.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
@@ -110,6 +111,11 @@ var router = VueRouter.createRouter({
       path: "/Profile",
       component: Profile,
       name: "ProfilePage",
+    },
+    {
+      path: "/orders",
+      component: MyOrders,
+      name: "MyOrdersPage",
     },
     {
       path: "/:pathMatch(.*)*",

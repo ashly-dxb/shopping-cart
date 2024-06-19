@@ -63,7 +63,7 @@ export default {
     data() {
         return {
             email: 'test@gmail.com',
-            password: '',
+            password: 'abcd12345',
             showErrors: false,
             errors: null,
 
@@ -101,8 +101,6 @@ export default {
                     loader: 'dots',
                     width: 50,
                     height: 50,
-                    // backgroundColor: 'rgb(40, 190, 40)',
-                    // color: 'rgb(180, 110, 160)',
                     opacity: 0.5,
                 });
 
@@ -133,7 +131,7 @@ export default {
                         this.$store.dispatch("loginDone", data.user); // store action
 
                         if(this.$route.query.redirect) {
-                            this.$router.push(this.$route.query.redirect);
+                            this.$router.push({path: this.$route.query.redirect});
                         }
                         else {
                             this.$router.push({path: '/products'});
