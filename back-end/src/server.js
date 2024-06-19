@@ -5,6 +5,7 @@ const users = require("./routes/users");
 const products = require("./routes/products");
 const usercart = require("./routes/usercart");
 const stripe = require("./routes/stripe");
+const orders = require("./routes/orders");
 
 const connection = require("./dbconnection");
 
@@ -66,6 +67,7 @@ app.use("/api/users", users);
 app.use("/api/products", products);
 app.use("/api/cart", usercart);
 app.use("/api/stripe", stripe);
+app.use("/api/orders", orders);
 
 /* all routing */
 // app.get("*", (req, res) => {

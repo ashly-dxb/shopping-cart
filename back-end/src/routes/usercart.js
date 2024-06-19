@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 
 /* ************************************************************************** */
-// retrieve cart list
+// Retrieve all avalable carts
 router.get("/list", async (req, res) => {
   try {
     const userCart = await UserCart.find({});
@@ -16,7 +16,7 @@ router.get("/list", async (req, res) => {
 });
 
 /* ************************************************************************** */
-// retrieve cart details by userID
+// Retrieve cart details by userID
 router.get("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
 
@@ -33,15 +33,15 @@ router.get("/:userId", async (req, res) => {
 });
 
 /* ************************************************************************** */
-// retrieve cart products as an array by userID
+// Retrieve cart products as an array by userID
 router.get("/itemlist/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
 
   try {
     const user = await UserCart.findOne({ id: userId });
-    const cartItems = user?.cartItems || [];
 
-    let productIDs = cartItems.map((item) => item.id);
+    const cartItems = user?.cartItems || [];
+    const productIDs = cartItems.map((item) => item.id);
     res.json(productIDs);
   } catch (error) {
     res.status(400).send({ success: false });
@@ -49,7 +49,7 @@ router.get("/itemlist/:userId", async (req, res) => {
 });
 
 /* ************************************************************************** */
-// Add specified item to specified user's cart
+// Add a specific item to a specified user's cart
 router.post("/:userId", async (req, res) => {
   const userId = parseInt(req.params.userId);
   const productId = parseInt(req.body.product_id);
@@ -107,7 +107,7 @@ router.post("/:userId", async (req, res) => {
 });
 
 /* ************************************************************************** */
-// Add specified item to specified user's cart
+// Increase or decrease qty of a specific item available in a specified user's cart
 router.post("/:userId/changeqty", async (req, res) => {
   const userId = parseInt(req.params.userId);
   const productId = parseInt(req.body.product_id);
@@ -197,7 +197,7 @@ router.delete("/:userId", async (req, res) => {
 });
 
 /* ************************************************************************** */
-// generic function for fetching each product details in the cart
+// generic function for fetching details of each products in the cart
 async function populateCartIds(cartItems) {
   const quantities = cartItems.map((item) => item.quantity);
   const productIDs = cartItems.map((item) => item.id);
