@@ -1,52 +1,59 @@
 <template>
-    <div class="bg-white px-5 my-2 border-2 flex">
+    <div class="bg-white px-5 my-2 flex border-0 border-green-300">
         <div class="lg:w-4/6 float-left">&nbsp;</div>
 
-        <div class="lg:w-2/6 float-right flex">
-            <form @submit.prevent="login">
-                <div class="m-auto mb-3 mt-4 ml-2">
-                    <h2 class="text-green-700 text-xl font-bold">Login</h2>
-                </div>
+        <div class="lg:w-2/6 float-right flex border-0 border-yellow-300">
 
-                <div class="m-auto mb-3 mt-4 ml-2">
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        v-model="email"
-                        v-validate="required"
-                        class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
-                        />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        v-model="password"
-                        v-validate="required"
-                        class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
-                        />
-
-                    <div v-if="showErrors" class="px-2 my-2 border-x border-y border-solid border-red-500 text-red-700">
-                        {{errors}}
-                    </div>
-
-                    <button
-                        type="submit"
-                        class="border-x border-y border-solid border-gray-400 p-2 my-2 md:text-xl w-full">
-                        Login
-                    </button>
-
-                    <div class="border-t-2 p-3 my-5 clearfix">
-                        <div class="float-left">No account? <router-link to="/Register" class="text-blue-800">Sign-up</router-link></div>
-                        <div class="float-right">
-                            <router-link to="/ForgotPassword" class="text-blue-800">Forgot password?</router-link>
+            <div className="m-4 w-full  border-0 border-red-300">
+                <div className="bg-gray-700 rounded-lg shadow p-4 border-0 border-orange-300">
+                    <p className="text-white">
+                        <form @submit.prevent="login">
+                        <div class="m-auto mb-3 mt-4 ml-2">
+                            <h2 class="text-white text-xl font-semibold">Login</h2>
                         </div>
-                    </div>
 
+                        <div class="m-auto mb-3 mt-4 ml-2">
+                            <input
+                                type="email"
+                                placeholder="Email"
+                                v-model="email"
+                                v-validate="required"
+                                class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
+                                />
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                v-model="password"
+                                v-validate="required"
+                                class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
+                                />
+
+                            <div v-if="showErrors" class="px-2 my-2 border-x border-y border-solid border-red-500 text-red-700">
+                                {{errors}}
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="border-x border-y border-solid border-gray-400 p-2 my-2 md:text-xl w-full">
+                                Login
+                            </button>
+
+                            <div class="border-t-2 p-3 my-5 clearfix">
+                                <div class="float-left">No account? <router-link to="/Register" class="text-white">Sign-up</router-link></div>
+                                <div class="float-right">
+                                    <router-link to="/ForgotPassword" class="text-white">Forgot password?</router-link>
+                                </div>
+                            </div>
+
+                        </div>
+                        </form>
+                    </p>
                 </div>
-            </form>
-
-            <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
+            </div>
 
         </div>
+
+        <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
     </div>
 </template>
 
