@@ -27,9 +27,9 @@ export default {
         }
     },
     computed: {
-        ...mapState({
-            user: (state) => state.userObj
-        }),
+        // ...mapState({
+        //     user: (state) => state.userObj
+        // }),
 
         ...mapGetters({
             loggedUserData: 'loggedUserInfo'

@@ -4,7 +4,9 @@
           <h3 class='text-green-700 text-xl font-bold'>Checkout success</h3>
         </div>
 
-        <h2>Thank you for your purchase!</h2>
+        <h2 class="p-2 border-2 border-green-700 text-black">Thank you for your purchase!</h2>
+        
+        <h2 class="p-2 bg-green-700 text-white">Order Number: {{ orderId }}</h2>
 
         <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
     </div>
@@ -24,21 +26,26 @@ export default {
         return {
             data: null,
             userId: null,
+            orderId: null,
 
             fullPage: true,
             visible: false,
             loader: 'bars',
         }
   },
+
   computed: {
     ...mapGetters({
-        loggedUserData: 'loggedUserInfo'
+        loggedUserData: 'loggedUserInfo',
+        lastOrderData: 'lastOrderInfo'
     }),
   },
 
   mounted: function() {
+    // console.log("this.lastOrderData::", this.lastOrderData);
     this.userId = this.loggedUserData.userId;
-    this.clearCart();    
+    this.orderId = this.lastOrderData.orderId;
+    this.clearCart();
   },
 
   methods: {

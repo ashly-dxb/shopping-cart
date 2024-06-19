@@ -120,7 +120,7 @@ export default {
 
     methods: {
         created: function() {
-            console.log("loadingStatus:", this.loadingStatus);
+            // console.log("loadingStatus:", this.loadingStatus);
             this.paymentAmount = this.$route.query.amount;
             this.onMounted();
         },
@@ -137,22 +137,24 @@ export default {
             this.loadingStatus = false;
         },
 
-        addOrder: function() {
-            axios.post(baseURL + `/orders/create`, {
+        addOrder: async function() {
+            const response = await axios.post(baseURL + `/orders/create`, {
                 userId: this.userId,
                 orderAmount: this.paymentAmount
             })
-            .then((response) => {
-                this.orderData = response.data.savedOrder;
-                console.log("response.data ::", response.data);
-            })
-            .catch((errors) => {
-                console.log("errors ::", errors);
-            });
+            return response;
+
+            // .then((response) => {
+                
+            //     console.log("response.data ::", response.data);
+            // })
+            // .catch((errors) => {
+            //     console.log("errors ::", errors);
+            // });
         },
 
         handleSubmit: async function(event) {
-            console.log("In progress:", this.loadingStatus);
+            // console.log("In progress:", this.loadingStatus);
             if (this.loadingStatus) 
                 return;
 
@@ -177,6 +179,8 @@ export default {
             const cardElement = this.elements.getElement("card");
     
             try {
+                this.$store.dispatch("checkoutStart"); // store action
+
                 const response = await fetch(baseURL + "/stripe/payment_intent", {
                                             method: "POST",
                                             headers: {
@@ -204,7 +208,7 @@ export default {
                     payment_method: paymentMethodReq.paymentMethod.id
                 });
 
-                console.log("confirmCardPayment status:", status);
+                // console.log("confirmCardPayment status:", status);
 
                 /*
                 if(status.error) { // error handling ...check this....
@@ -214,9 +218,8 @@ export default {
                     return false;
                 }
                 */
-
-                this.addOrder(); // save order details in the database, after a successful payment
-                //this.orderData.orderId
+                const resp = await this.addOrder(); // save order details in the database, after a successful payment
+                this.orderData = resp.data.savedOrder;
 
                 this.$store.dispatch("checkoutComplete", this.orderData); // store action
 
