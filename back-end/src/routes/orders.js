@@ -8,18 +8,28 @@ const router = express.Router();
 router.post("/create", async (req, res) => {
   var orderId = Math.floor(100000 + Math.random() * 99999);
 
-  var userId = parseFloat(req.body.userId);
+  var userId = parseInt(req.body.userId);
   var orderAmount = parseFloat(req.body.orderAmount);
+  var orderItems = req.body.orderItems;
+
+  var insertItems = [];
+
+  if (orderItems) {
+    orderItems.forEach(function (item) {
+      insertItems.push({
+        itemId: parseInt(item.id),
+        itemName: item.name,
+        itemPrice: parseFloat(item.price),
+        itemQty: parseInt(item.quantity),
+      });
+    });
+  }
 
   const newOrder = new Orders({
     orderId,
     orderAmount,
     userId,
-    /*
-    orderItems: [
-      { itemId: parseInt(productId), itemQty: 1, itemPrice: 111234 },
-    ],
-    */
+    orderItems: insertItems,
   });
 
   try {
