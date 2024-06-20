@@ -1,5 +1,5 @@
 <template>
-<div class="bg-white px-5 my-2 border-2">
+<div class="bg-white px-5 my-2 border-0">
     <div class="w-full lg:w-2/5 flex">
         <form v-on:submit.prevent="sendLink">
             <div class="m-auto mb-3 mt-4 ml-2">
@@ -14,15 +14,15 @@
                     class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
                     />
 
-                <div v-if="this.errors.email" class="p-1 my-2 border-x border-y border-solid border-red-300 text-red-700">
+                <div v-if="this.errors.email" class="my-1 border-x border-y border-solid border-red-300 text-red-700">
                     {{this.errors.email}}
                 </div>
 
-                <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
+                <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-700">
                     {{serverError}}
                 </div>
 
-                <div>
+                <div class="w-full">
                     <button type="submit" class="p-2 m-2 ml-0">Send Password Reset Link</button>
                 </div>
 

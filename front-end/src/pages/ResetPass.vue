@@ -29,7 +29,7 @@
                         {{this.errors.confirm_password}}
                     </span>
 
-                    <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
+                    <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-700">
                         {{serverError}}
                     </div>
 

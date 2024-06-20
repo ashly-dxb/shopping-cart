@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ProductCard from '../components/ProductCard.vue'
+import ProductCard from '../components/ProductCard.vue';
 import axios from 'axios';
 import baseURL from "../components/Config";
 

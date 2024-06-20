@@ -1,18 +1,18 @@
 <template>
     <div class="bg-white px-5 my-2 flex border-0 border-green-300">
-        <div class="lg:w-4/6 float-left">&nbsp;</div>
+        <div class="w-0 lg:w-2/3 float-left">&nbsp;</div>
 
-        <div class="lg:w-2/6 float-right flex border-0 border-yellow-300">
+        <div class="w-full lg:w-1/3 float-right flex border-0 border-yellow-300">
 
-            <div className="m-4 w-full  border-0 border-red-300">
-                <div className="bg-gray-700 rounded-lg shadow p-4 border-0 border-orange-300">
-                    <p className="text-white">
+            <div class="w-full border-0 border-red-300">
+                <div class="bg-gray-600 rounded-lg shadow p-2 border-0 border-orange-300">
+                    <p class="text-white">
                         <form @submit.prevent="login">
-                        <div class="m-auto mb-3 mt-4 ml-2">
+                        <div class="m-auto mb-3 mt-4 ">
                             <h2 class="text-white text-xl font-semibold">Login</h2>
                         </div>
 
-                        <div class="m-auto mb-3 mt-4 ml-2">
+                        <div class="m-auto mb-3 mt-4 ">
                             <input
                                 type="email"
                                 placeholder="Email"

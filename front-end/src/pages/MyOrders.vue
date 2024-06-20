@@ -5,7 +5,7 @@
         </div>
 
         <div class="w-full flex m-auto border-0">
-          <div class="flex-column w-1/3 border-0 border-green-400">
+          <div class="flex-column w-1/3 border-0 border-green-400 max-h-80 overflow-y-auto">
             <div v-for="eachOrder in myOrders" :key="eachOrder.orderId" class="pt-2">
               <div @click="loadDetails(eachOrder)" :class="['bg-gray-300 cursor-pointer', eachOrder.orderId == selectedID ? 'activeItem' : '']">
                 {{ eachOrder.orderId }} / {{ new Date(eachOrder.orderDate).toISOString().slice(0, 10) }} 
@@ -92,6 +92,5 @@ export default {
     color: white;
     border-radius: 12px;
     padding: 3px;
-
 }
 </style>

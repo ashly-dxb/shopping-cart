@@ -38,7 +38,7 @@
                 <div id="element_strip" class="mb-4 w-full border-0 border-red-300"></div>
             </div>
 
-            <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-600">
+            <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-700">
                 {{serverError}}
             </div>
 
