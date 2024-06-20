@@ -81,8 +81,27 @@ router.get("/user/:userId", async (req, res) => {
   var mySort = { orderDate: -1 };
 
   try {
-    const orders = await Orders.find({ userId: userId }).sort(mySort);
-    // console.log("ALL ORDERS", orders);
+    // const orders = await Orders.find({ userId: userId }).sort(mySort);
+    const orders = await Orders.aggregate([
+      {
+        $match: {
+          userId: userId,
+        },
+      },
+      {
+        $set: {
+          orderAmount: {
+            $toDouble: "$orderAmount",
+          },
+        },
+      },
+      {
+        $sort: { orderDate: -1 },
+      },
+
+      { $limit: 10 },
+    ]);
+
     res.json({ success: true, orders });
   } catch (error) {
     res.status(400).json({ success: false });
