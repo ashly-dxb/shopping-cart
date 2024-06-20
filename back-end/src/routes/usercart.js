@@ -7,8 +7,10 @@ const router = express.Router();
 /* ************************************************************************** */
 // Retrieve all avalable carts
 router.get("/list", async (req, res) => {
+  var mySort = { id: 1 };
+
   try {
-    const userCart = await UserCart.find({});
+    const userCart = await UserCart.find({}).sort(mySort);
     res.json(userCart);
   } catch (error) {
     res.status(400).json({ success: false });

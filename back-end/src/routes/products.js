@@ -8,8 +8,10 @@ router.get("/list", async (req, res) => {
   // await Products.updateMany({}, [{ $set: { price: { $toInt: "$price" } } }]);
   // console.log("UPADTE DONE!!!");
 
+  var mySort = { id: 1 };
+
   try {
-    const products = await Products.find({});
+    const products = await Products.find({}).sort(mySort);
     res.json(products);
   } catch (error) {
     res.status(400).json({ success: false });

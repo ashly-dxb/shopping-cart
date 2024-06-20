@@ -14,11 +14,10 @@ import sendEmail from "../mailLib";
 /* ************************************************************************** */
 // List of users
 router.get("/list", async (req, res) => {
-  // var mysort = { username: 1 };
-  var mysort = { userId: 1 };
+  var mySort = { createdDate: -1 };
 
   try {
-    const users = await Users.find({}).sort(mysort);
+    const users = await Users.find({}).sort(mySort);
     res.json({ success: true, users });
   } catch (error) {
     res.status(400).json({ success: false });
