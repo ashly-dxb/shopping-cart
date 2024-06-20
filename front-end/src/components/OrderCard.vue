@@ -17,6 +17,14 @@
             <div class="flex-column w-1/2">Order Amount</div>
             <div class="flex-column w-1/2">{{ order.orderAmount }}</div>
         </div>
+
+        <div class="w-full flex  border-b-2">
+            <ul>
+                <li v-for="item in order.orderItems" :key="item._id">
+                    Name: {{ item.itemName }} / Price: {{ item.itemPrice }} / Qty: {{ item.itemQty }}
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -24,5 +32,9 @@
 export default {
     name: 'OrderCard',
     props: ['order'],
+    
+    mounted: function () {
+        // console.log("my ord data", this.orderData)
+    }
 }
 </script>

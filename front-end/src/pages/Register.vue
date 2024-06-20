@@ -129,14 +129,10 @@ export default {
 
                 axios.post(baseURL + "/users/register", data)
                     .then((response) => {
-                        console.log("ZZZ", response);
-
                         if(response.data.success) {
-                            console.log("Registered successfully");
                             this.$router.push({path: '/Login'});
                         }
                         else {
-                            console.log(response.data.message);
                             this.showErrors = true;
                             this.serverError = response.data.message;
                         }
@@ -144,7 +140,6 @@ export default {
                         loader.hide();
                     })
                     .catch((errors) => {
-                        // console.log("Error in registering user:", errors);
                         this.showErrors = true;
                         this.serverError = 'An error occured!';
 

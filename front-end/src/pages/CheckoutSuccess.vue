@@ -8,6 +8,12 @@
         
         <h2 class="p-2 bg-green-700 text-white">Order Number: {{ orderId }}</h2>
 
+        <ul>
+            <li v-for="item in orderItems" :key="item._id">
+                ID: {{ item.id }} --- Price: {{ item.price }} --- Qty: {{ item.quantity }}
+            </li>
+        </ul>
+
         <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
     </div>
 </template>
@@ -27,6 +33,7 @@ export default {
             data: null,
             userId: null,
             orderId: null,
+            orderItems: [],
 
             fullPage: true,
             visible: false,
@@ -36,16 +43,17 @@ export default {
 
   computed: {
     ...mapGetters({
-        loggedUserData: 'loggedUserInfo',
-        lastOrderData: 'lastOrderInfo'
+        loggedUserData: 'getLoggedUserInfo',
+        currentOrderData: 'getLastOrderInfo',
+        currentOrderItems: 'getCurrOrderItems',
     }),
   },
 
   mounted: function() {
-    // console.log("this.lastOrderData::", this.lastOrderData);
     this.userId = this.loggedUserData.userId;
-    this.orderId = this.lastOrderData.orderId;
-    this.clearCart();
+    this.orderId = this.currentOrderData.orderId;
+    this.orderItems = this.currentOrderItems;
+    this.clearCart(); // clear cart on success redirect from the payment gateway/page
   },
 
   methods: {

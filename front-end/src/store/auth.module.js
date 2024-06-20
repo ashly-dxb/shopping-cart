@@ -22,13 +22,13 @@ export default {
       state.status.loggedIn = true;
       state.userObj = userObj;
 
-      console.log("loginSuccess # STORE STATE: ", state);
+      // console.log("loginSuccess # STORE STATE: ", state);
     },
     logoutSuccess(state) {
       state.status.loggedIn = false;
       state.userObj = null;
 
-      console.log("logoutSuccess # STORE STATE: ", state);
+      // console.log("logoutSuccess # STORE STATE: ", state);
     },
     loginFailure(state) {
       state.status.loggedIn = false;
@@ -63,7 +63,7 @@ export default {
     */
   },
   getters: {
-    loggedUserInfo: (state) => {
+    getLoggedUserInfo: (state) => {
       return state.userObj;
     },
   },

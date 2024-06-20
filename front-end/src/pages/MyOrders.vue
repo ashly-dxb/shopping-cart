@@ -44,7 +44,7 @@ export default {
     
     computed: {
         ...mapGetters({
-            loggedUserData: 'loggedUserInfo'
+            loggedUserData: 'getLoggedUserInfo'
         }),
     },
 

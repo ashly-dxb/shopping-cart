@@ -137,7 +137,7 @@ export default {
 
         addToCart: async function () {
             const response = await axios.post(baseURL + `/cart/${this.userId}`, {product_id: this.$route.params.productId} );
-            console.log('Item added to the cart!', response);
+            // console.log('Item added to the cart!', response);
 
             this.triggerToast();
         },

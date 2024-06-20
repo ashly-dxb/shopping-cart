@@ -32,7 +32,7 @@ export default {
         // }),
 
         ...mapGetters({
-            loggedUserData: 'loggedUserInfo'
+            loggedUserData: 'getLoggedUserInfo'
         }),
     },
     mounted() {

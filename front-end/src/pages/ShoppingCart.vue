@@ -55,8 +55,8 @@
 
 <script>
 import baseURL from '@/components/Config';
-import CartItems from '../components/CartItems.vue';
 import axios from 'axios';
+import CartItems from '../components/CartItems.vue';
 
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -66,7 +66,6 @@ export default {
     props: ['userId'],
     components: {
         CartItems,
-        // Loading: VueLoading.Component
     },
 
     data() {
@@ -101,6 +100,8 @@ export default {
         },
      
         redirectToCheckout2() {
+            this.$store.dispatch("storeCurrOrderItems", this.cartItems); // store action
+
             this.$router.push({path: '/stripe-checkout', query: { amount: this.cartTotalAmount }});
             // this.$router.push({name: 'StripeCheckoutPage', params: { amount: this.cartTotalAmount }});
         },
@@ -117,6 +118,8 @@ export default {
                 axios.get(baseURL + `/cart/${this.userId}`)
                 .then((response) => {
                     this.cartItems = response.data;
+
+                    // console.log("CART_ITEMS::::", response.data)
                     this.calculateCartTotal();
 
                     loader.hide();

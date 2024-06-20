@@ -42,7 +42,7 @@ export default {
 
         async addToCart(productID) {
             const response = await axios.post(baseURL + `/cart/${this.userId}`, {product_id: productID} );
-            console.log('Item added to the cart!', response);
+            // console.log('Item added to the cart!', response);
 
             this.triggerToast();
         },

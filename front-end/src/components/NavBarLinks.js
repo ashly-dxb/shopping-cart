@@ -21,7 +21,7 @@ const mainLinks = [
     link: "/orders",
     text: "My Orders",
     type: "LOGGED_IN",
-    icon: "pi-order",
+    icon: "pi-briefcase",
   },
   {
     link: "/favorites",

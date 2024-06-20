@@ -2,10 +2,15 @@ export default {
   // plugins: [createPersistedState({ storage: window.localStorage })],
   // plugins: [vuexLocal.plugin], // experimental
   state: {
+    currentOrderItems: [],
     orderData: null,
   },
 
   mutations: {
+    setCurrOrderItems(state, orderItems) {
+      state.currentOrderItems = orderItems;
+      console.log("In setCurrOrderItems # STORE STATE: ", state);
+    },
     checkoutSuccess(state, orderData) {
       state.orderData = orderData;
       console.log("In checkoutSuccess # STORE STATE: ", state);
@@ -17,6 +22,9 @@ export default {
   },
 
   actions: {
+    storeCurrOrderItems(context, payload) {
+      context.commit("setCurrOrderItems", payload);
+    },
     checkoutComplete(context, payload) {
       context.commit("checkoutSuccess", payload);
     },
@@ -26,7 +34,10 @@ export default {
   },
 
   getters: {
-    lastOrderInfo: (state) => {
+    getCurrOrderItems: (state) => {
+      return state.currentOrderItems;
+    },
+    getLastOrderInfo: (state) => {
       return state.orderData;
     },
   },

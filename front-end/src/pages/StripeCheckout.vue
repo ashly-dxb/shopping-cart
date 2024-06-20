@@ -99,7 +99,8 @@ export default {
             serverError: '',
             paymentAmount: 0,
             orderData: null,
-            userId:null,
+            userId: null,
+            orderItems: [],
 
             fullPage: true,
             visible: false,
@@ -109,13 +110,15 @@ export default {
 
     computed: {
         ...mapGetters({
-            loggedUserData: 'loggedUserInfo'
+            loggedUserData: 'getLoggedUserInfo',
+            currentOrderItems: 'getCurrOrderItems',
         }),
     },
     
     mounted: function () {
         this.userId = this.loggedUserData.userId;
-        this.created();        
+        this.orderItems = this.currentOrderItems;
+        this.created();
     },
 
     methods: {
@@ -140,12 +143,12 @@ export default {
         addOrder: async function() {
             const response = await axios.post(baseURL + `/orders/create`, {
                 userId: this.userId,
-                orderAmount: this.paymentAmount
+                orderAmount: this.paymentAmount,
+                orderItems: this.orderItems,
             })
             return response;
 
-            // .then((response) => {
-                
+            // .then((response) => {                
             //     console.log("response.data ::", response.data);
             // })
             // .catch((errors) => {
@@ -218,6 +221,7 @@ export default {
                     return false;
                 }
                 */
+
                 const resp = await this.addOrder(); // save order details in the database, after a successful payment
                 this.orderData = resp.data.savedOrder;
 
@@ -259,4 +263,3 @@ export default {
     pointer-events: none;
 }
 </style>
-
