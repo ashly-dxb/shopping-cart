@@ -3,68 +3,69 @@
     <div class="w-full lg:w-1/3 flex border-0 border-green-600">
 
         <div class="w-full border-0 border-red-300">
-                <div class="bg-gray-600 rounded-lg shadow p-2 border-0 border-orange-300">
-                    <p class="text-white">
-                        <form v-on:submit.prevent="register">
-                            <div class=" w-full m-auto mb-3 mt-4 border-0">
-                                <h2 class='text-white text-xl font-bold'>Register</h2>
+            <div class="bg-white-600 text-black rounded-xl shadow p-2  border-x border-y border-r-1 border-gray-300">
+                <!--<p class="text-white">-->
+                    <form v-on:submit.prevent="register">
+                        <div class="w-full m-auto mb-3 mt-4 border-0">
+                            <h2 class=' text-xl font-bold'>Register</h2>
+                        </div>
+
+                        <div class="w-full mb-3 mt-4 border-0 border-red-600 flex flex-wrap">
+                            <input
+                                type="text"
+                                placeholder="Enter your name"
+                                v-model="username"
+                                class="text-black border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
+                                />
+
+                            <div v-if="this.errors.username" class="my-1  text-red-700">
+                                {{this.errors.username}}
                             </div>
 
-                            <div class="w-full mb-3 mt-4 border-0 border-red-600 flex flex-wrap">
-                                <input
-                                    type="text"
-                                    placeholder="Enter your name"
-                                    v-model="username"
-                                    class="text-black border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
-                                    />
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                v-model="email"
+                                class="text-black border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
+                                />
 
-                                <div v-if="this.errors.username" class="my-1  text-red-700">
-                                    {{this.errors.username}}
-                                </div>
+                            <div v-if="this.errors.email" class="my-1  text-red-700">
+                                {{this.errors.email}}
+                            </div>
+                                
+                            <input
+                                type="password"
+                                placeholder="Enter password"
+                                v-model="password"
+                                class="text-black border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
+                                />
 
-                                <input
-                                    type="email"
-                                    placeholder="Enter your email"
-                                    v-model="email"
-                                    class="text-black border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
-                                    />
+                            <div v-if="this.errors.password" class="my-1  text-red-700">
+                                {{this.errors.password}}
+                            </div>
 
-                                <div v-if="this.errors.email" class="my-1  text-red-700">
-                                    {{this.errors.email}}
-                                </div>
-                                    
-                                <input
-                                    type="password"
-                                    placeholder="Enter password"
-                                    v-model="password"
-                                    class="text-black border-x border-y border-solid border-gray-400 p-2 mt-2  w-full hover:border-green-500 focus:outline-blue-500"
-                                    />
+                            <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-700">
+                                {{serverError}}
+                            </div>
 
-                                <div v-if="this.errors.password" class="my-1  text-red-700">
-                                    {{this.errors.password}}
-                                </div>
+                            <div class="w-full">
+                                <button type="submit" class="p-2 m-2 ml-0">Register</button>
+                            </div>
 
-                                <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-700">
-                                    {{serverError}}
-                                </div>
-
-                                <div class="w-full">
-                                    <button type="submit" class="p-2 m-2 ml-0">Register</button>
-                                </div>
-
-                                <div class="w-full border-t-2 p-3 my-5 clearfix">
-                                    <div class="float-left">Already have an account?</div>
-                                    <div class="float-right">
-                                        <router-link to="/Login" class="text-white">Login</router-link>
-                                    </div>
+                            <div class="w-full border-t-2 p-3 my-5 clearfix">
+                                <div class="float-left">Already have an account?</div>
+                                <div class="float-right">
+                                    <router-link to="/Login" class="">Login</router-link>
                                 </div>
                             </div>
-                        </form>
-                    </p>
-                </div>
+                        </div>
+                    </form>
+                <!--</p> -->
             </div>
+        </div>
 
         <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
+
     </div>
 </div>
 </template>

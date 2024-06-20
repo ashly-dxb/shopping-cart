@@ -15,8 +15,9 @@
         </div>
         <div class="w-full flex  border-b-2">
             <div class="flex-column w-1/2">Order Amount</div>
-            <div class="flex-column w-1/2">{{ order.orderAmount['$numberDecimal'].toLocaleString() }}</div>
+            <div class="flex-column w-1/2">{{ order.orderAmount }}</div>
         </div>
+        <!-- order.orderAmount['$numberDecimal'].toLocaleString() -->
 
         <div class="w-full flex  border-b-2">
             <ul>

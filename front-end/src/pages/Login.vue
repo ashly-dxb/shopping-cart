@@ -5,7 +5,7 @@
         <div class="w-full lg:w-1/3 float-right flex border-0 border-yellow-300">
 
             <div class="w-full border-0 border-red-300">
-                <div class="bg-gray-600 rounded-lg shadow p-2 border-0 border-orange-300">
+                <div class="bg-gray-600 rounded-2xl shadow p-2 border-0 border-orange-300">
                     <p class="text-white">
                         <form @submit.prevent="login">
                         <div class="m-auto mb-3 mt-4 ">

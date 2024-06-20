@@ -1,39 +1,47 @@
 <template>
 <div class="bg-white px-5 my-2 border-0">
     <div class="w-full lg:w-2/5 flex">
-        <form v-on:submit.prevent="sendLink">
-            <div class="m-auto mb-3 mt-4 ml-2">
-                <h2 class='text-green-700 text-xl font-bold'>Forgot Password</h2>
+
+        <div class="w-full border-0 border-red-300">
+            <div class="bg-white-600 text-black rounded-xl shadow p-2  border-x border-y border-gray-200">
+
+                <form v-on:submit.prevent="sendLink">
+                    <div class="m-auto mb-3 mt-4">
+                        <h2 class='text-green-700 text-xl font-bold'>Forgot Password</h2>
+                    </div>
+
+                    <div class="w-full m-auto mb-3 mt-4">
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            v-model="email"
+                            class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
+                            />
+
+                        <div v-if="this.errors.email" class="text-red-700">
+                            {{this.errors.email}}
+                        </div>
+
+                        <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-700">
+                            {{serverError}}
+                        </div>
+
+                        <div class="w-full">
+                            <button type="submit" class="p-2 m-2 ml-0">Send Password Reset Link</button>
+                        </div>
+
+                        <div v-if="successMessage" class="p-2 my-2 border-x border-y border-solid border-green-300 text-green-700">
+                            {{successMessage}}
+                        </div>
+
+                    </div>
+                </form>
+
             </div>
-
-            <div class="w-full m-auto mb-3 mt-4 ml-2">
-                <input
-                    type="email"
-                    placeholder="Enter your email"
-                    v-model="email"
-                    class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
-                    />
-
-                <div v-if="this.errors.email" class="my-1 border-x border-y border-solid border-red-300 text-red-700">
-                    {{this.errors.email}}
-                </div>
-
-                <div v-if="serverError" class="p-2 my-2 border-x border-y border-solid border-red-300 text-red-700">
-                    {{serverError}}
-                </div>
-
-                <div class="w-full">
-                    <button type="submit" class="p-2 m-2 ml-0">Send Password Reset Link</button>
-                </div>
-
-                <div v-if="successMessage" class="p-2 my-2 border-x border-y border-solid border-green-300 text-green-700">
-                    {{successMessage}}
-                </div>
-
-            </div>
-        </form>
+        </div>
 
         <loading v-model:active="visible" :is-full-page="fullPage" :loader="loader" :can-cancel="false" />
+
     </div>
 </div>
 </template>
