@@ -1,11 +1,10 @@
 <template>
     <button class="dark-mode-toggle" @click="toggleDarkMode">
+        <span class="icon-mode-toggle" v-html="isDarkMode ? moonIcon : sunIcon"></span>
+
         {{ isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode' }}
-        <span class="icon" v-html="isDarkMode ? moonIcon : sunIcon" />
     </button>
 </template>
-
-
 
 
 <script setup>
@@ -26,13 +25,13 @@ const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
   <path d="M14.53 11.29c.801-1.422.852-3.108.172-4.614-.679-1.506-1.946-2.578-3.465-2.932a.5.5 0 0 0-.568.271A5.023 5.023 0 0 0 9 9.75c0 1.01.374 1.93.973 2.628a.5.5 0 0 0 .567.274 5.538 5.538 0 0 0 4.257-2.064.5.5 0 0 0-.267-.79z"/>
 </svg>`
 
-function applyStyles () {
+function applyStyles() {
   for (const [key, value] of Object.entries(styleProperties.value)) {
     document.documentElement.style.setProperty(key, value)
   }
 }
 
-function toggleDarkMode () {
+function toggleDarkMode() {
   isDarkMode.value = !isDarkMode.value;
   localStorage.setItem('darkMode', JSON.stringify(isDarkMode.value));
   applyStyles();
@@ -49,25 +48,28 @@ onMounted(applyStyles);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px 28px;
+  margin: 50px 7px;
+  font-size: 18px;
   
   background-color: var(--background-color);
   color: var(--text-color);
-  border: 1px solid var(--text-color);
-  border-radius: 5px;
+  /* border: 1px solid var(--text-color); */
+  border: 1px solid red;
+  border-radius: 15px;
 
   cursor: pointer;
 }
 
-.icon {
+.icon-mode-toggle {
   display: inline-block;
-  margin-left: 10px;
+  margin-right: 14px;
 }
 
+
 :root {
-  --background-color: #FFF;
-  --text-color: #333;
+  --background-color: #fff;
+  --text-color: #000;
 }
 
 body {
@@ -75,4 +77,5 @@ body {
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
 }
+
 </style>

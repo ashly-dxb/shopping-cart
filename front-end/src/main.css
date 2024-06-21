@@ -9,9 +9,32 @@
     font-size: 18px;
     font-weight: 400;
     font-style: normal;
-    font-display: auto;
+    /* font-display: auto; */
     /* color: green; */
 }
+
+
+
+:root {
+    --background-color: rgb(230, 230, 230);
+    --text-color: rgb(33, 33, 33);
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/*
+body {
+    background-color: rgb(230, 230, 230);
+    color: rgb(33, 33, 33);
+}
+*/
+
+
+
 
 .error {
     background-color: rgb(145, 92, 92);
