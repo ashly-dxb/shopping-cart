@@ -1,7 +1,7 @@
 <template>
-    <div class='max-w-3xl flex flex-col px-5 m-auto my-2 border-0'>
+    <div class='max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-0'>
         <div class="m-auto mb-3 mt-4">
-          <h3 class='xxxxx text-xl font-bold'>Product Details</h3>
+          <h3 class='text-green-700 text-xl font-bold'>Product Details</h3>
         </div>
 
         <div v-if="product">
@@ -40,25 +40,25 @@
 import NotFoundPage from './NotFoundPage.vue';
 import baseURL from "../components/Config";
 import axios from 'axios';
-import { mapGetters} from 'vuex';
 
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+
 // import MdiArrowLeftIcon from 'vue-material-design-icons/MDIArrowLeft.vue';
 
 export default {
     name: 'ProductDetails',
-    // props: ['userId'],
+    props: ['userId'],
     components: {
         NotFoundPage,
         // MdiArrowLeftIcon
     },
     data() {
         return {
-            userId: null,
             product: {},
             cartItems: [],
             loading: false,
+            error: '',
 
             fullPage: true,
             visible: false,
@@ -68,13 +68,8 @@ export default {
     computed: {
         itemIsInCart() {
             return this.cartItems.some(item => item.id === parseInt(this.$route.params.productId));
-        },
-        ...mapGetters({
-            loggedUserData: 'getLoggedUserInfo',
-        }),
+        }
     },
-
-    /*
     watch: {
         async userId(newUserValue) {
             if (newUserValue) {
@@ -83,23 +78,15 @@ export default {
             }
         }
     },
-    */
-
     mounted: function () {
-        this.userId = this.loggedUserData.userId;
-        console.log("userId:::", this.userId);
-
-        this.created();        
+        this.created();
     },
-
     methods: {
         goBack: function() {
             this.$router.go(-1);
         },
         created: async function () {
             // this.loading = true;
-
-            console.log("created");
 
             let loader = this.$loading.show({
                     loader: 'dots',
@@ -118,19 +105,16 @@ export default {
             });
 
             if(this.userId) {
-                console.log("created 12222");
                 const response2 = await axios.get(baseURL + `/cart/${this.userId}`);
                 this.cartItems = response2.data;
             }
 
             // this.loading = false;
             loader.hide();
-
-            console.log("created 2");
         },
         
         getIMGPath: function(imageUrl) {
-            return imageUrl ? require("@/assets" + imageUrl) : require("@/assets/logo-hexagon.svg");
+            return imageUrl ? require("@/assets" + imageUrl) : "no-image";
         },
 
         triggerToast() {
