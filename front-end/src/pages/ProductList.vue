@@ -14,9 +14,10 @@
 </template>
 
 <script>
-import ProductCard from '../components/ProductCard.vue';
+import ProductCard from '@/components/ProductCard.vue';
+import baseURL from '@/components/Config';
 import axios from 'axios';
-import baseURL from "../components/Config";
+import { mapGetters} from 'vuex';
 
 export default {
     name: 'ProductList',
@@ -25,9 +26,8 @@ export default {
     },
     data() {
         return {
-            products: [],
             userId: null,
-            // loading: false,
+            products: [],
             error: '',
             cartItemsList: [],
 
@@ -45,12 +45,18 @@ export default {
             next(vm => vm.setError(err))
         }
     },
+    computed: {
+        ...mapGetters({
+            loggedUserData: 'getLoggedUserInfo',
+        }),
+    },
     mounted: function () {
-        this.created();
+        this.userId = this.loggedUserData.userId;
+        this.created(); // this.userId should be set before call to created()
     },
     methods: {
         created: async function () {
-            this.userId = localStorage.getItem("userId");
+            // this.userId = localStorage.getItem("userId");
 
             let loader = this.$loading.show({
                 loader: 'bars',
@@ -64,8 +70,7 @@ export default {
             const response = await axios.get(baseURL + '/products/list');
             this.products = response.data;
 
-            if(this.userId)
-            {
+            if(this.userId) {
                 const response2 = await axios.get(baseURL + `/cart/itemlist/${this.userId}`);
                 this.cartItemsList = response2.data;
             }

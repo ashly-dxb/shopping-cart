@@ -41,6 +41,12 @@ const mainLinks = [
     type: "LOGGED_IN",
     icon: "pi-key",
   },
+  {
+    link: "/mytheme",
+    text: "Theme",
+    type: "LOGGED_IN",
+    icon: "pi-heart",
+  },
 ];
 
 const otherLinks = [

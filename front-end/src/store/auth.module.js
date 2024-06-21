@@ -1,23 +1,38 @@
-/*
-const userId = JSON.parse(localStorage.getItem("userId"));
+const storeDataSession = JSON.parse(localStorage.getItem("vueAppStore"));
 
-const initialState = userId
-  ? { status: { loggedIn: true }, userId }
-  : { status: { loggedIn: false }, userId: null };
+const authDataSession = storeDataSession?.auth;
+const userObjDataSession = authDataSession?.userObj;
+const statusDataSession = authDataSession?.status;
+const initialState = authDataSession;
+console.log("##### initialState #####: ", initialState);
 
-*/
+// localStorage.removeItem("vueAppStore");
+
+// const initialState = userId
+//   ? { status: { loggedIn: true }, userObj }
+//   : { status: { loggedIn: false }, userObj: null };
 
 export default {
-  // plugins: [createPersistedState({ storage: window.localStorage })],
-  // plugins: [vuexLocal.plugin], // experimental
-  state: {
-    userObj: null,
-    status: {
-      loggedIn: false,
-    },
-  },
+  state: initialState
+    ? initialState
+    : {
+        userObj: null,
+        status: {
+          loggedIn: false,
+        },
+      },
 
   mutations: {
+    initialise_store(state) {
+      console.log("### initialise_store ###");
+
+      if (localStorage.getItem("vueAppStore")) {
+        this.replaceState(
+          Object.assign(state, JSON.parse(localStorage.getItem("vueAppStore")))
+        );
+      }
+    },
+
     loginSuccess(state, userObj) {
       state.status.loggedIn = true;
       state.userObj = userObj;
@@ -65,6 +80,9 @@ export default {
   getters: {
     getLoggedUserInfo: (state) => {
       return state.userObj;
+    },
+    getIsUserLoggedIn: (state) => {
+      return state.status.loggedIn;
     },
   },
 };

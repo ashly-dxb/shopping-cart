@@ -20,7 +20,7 @@
                 </router-link>
             </li>
 
-            <li class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2" v-if="loggedIn === true">
+            <li v-if="loggedIn === true" class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">
                 <div @click="signOut" class="logoutHover"><i class="pi pi-sign-out" style="font-size: 1.1rem"></i><span class="ps-2">Logout</span></div>
             </li>
         </ul>
@@ -92,7 +92,7 @@ export default {
     data() {
         return {
             logo,
-            isLogged: this.checkIfIsLogged(),
+            // isLogged: this.checkIfIsLogged(),
             isOpen: false,
             primaryLinks: mainLinks,
             secondaryLinks: otherLinks,
@@ -101,8 +101,6 @@ export default {
     },
 
     mounted() {
-        // console.log("NAV mapGetters", this.loggedUserData);
-        // console.log("NAV mapState", this.user);
         this.usedData = this.loggedUserData;
     },
 
@@ -119,7 +117,6 @@ export default {
             const data = await response.json();
 
             if(data.authenticated === false) {
-                localStorage.removeItem('token');
                 localStorage.removeItem('username');
                 localStorage.removeItem('userId');
 
@@ -127,19 +124,21 @@ export default {
                 // this.$store.commit("logoutSuccess"); // store mutation
                 this.$store.dispatch("logoutDone"); // store action
 
-                this.isLogged = this.checkIfIsLogged();
+                // this.isLogged = this.checkIfIsLogged();
                 this.$router.push('/Login');
             }
         },
 
+        /*
         checkIfIsLogged: function() {
-            let token = localStorage.getItem('token');
-            if (token) {
+            let userId = localStorage.getItem('userId');
+            if (userId) {
                 return true;
             } else {
                 return false;
             }
         },
+        */
 
         setIsOpen: function() {
             this.isOpen = !this.isOpen;

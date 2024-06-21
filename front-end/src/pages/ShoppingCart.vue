@@ -38,10 +38,10 @@
             </div>
         </div>
 
-        <div v-else-if="loading == false" class="flex w-full p-2 border-0">
-            <div class="left-pane">Your cart is empty!</div>
+        <div v-else-if="loading == false" class="flex flex-row flex-wrap w-full border-0">
+            <div class="w-full md:w-1/2 lg:w-2/3 border-0">Your cart is empty!</div>
 
-            <div class="right-pane">
+            <div class="w-full md:w-1/2 lg:w-1/3 border-0 mt-20 md:mt-0">
                 <router-link to="/products">
                     <i class="pi pi-shopping-bag" style="font-size: 1.1rem"></i><span class="text-l w-full shrink-0 ps-2">Continue Shopping</span>
                 </router-link>
@@ -54,22 +54,24 @@
 </template>
 
 <script>
+import CartItems from '@/components/CartItems.vue';
 import baseURL from '@/components/Config';
 import axios from 'axios';
-import CartItems from '../components/CartItems.vue';
+import { mapGetters} from 'vuex';
 
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
 export default {
     name: 'ShoppingCart',
-    props: ['userId'],
+    // props: ['userId'],
     components: {
         CartItems,
     },
 
     data() {
         return {
+            userId: null,
             cartItems: [],
             loading: false,
             error: '',
@@ -79,10 +81,17 @@ export default {
             visible: false,
             loader: 'bars',
         }
-    },  
+    },
+
+    computed: {
+        ...mapGetters({
+            loggedUserData: 'getLoggedUserInfo',
+        }),
+    },
     
-    mounted: function() {
-        this.created();
+    mounted: function() {        
+        this.userId = this.loggedUserData.userId;
+        this.created(); // this.userId should be set before call to created()
     },
 
     methods: {        

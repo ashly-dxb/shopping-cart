@@ -33,6 +33,7 @@ import CheckoutCancel from "./pages/CheckoutCancel.vue";
 import MyOrders from "./pages/MyOrders.vue";
 import Profile from "./pages/Profile.vue";
 import Favorite from "./pages/Favorite.vue";
+import Theme from "./pages/Theme.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
 
 var router = VueRouter.createRouter({
@@ -55,13 +56,16 @@ var router = VueRouter.createRouter({
       component: ShoppingCart,
       name: "CartPage",
     },
-
+    {
+      path: "/orders",
+      component: MyOrders,
+      name: "OrdersPage",
+    },
     {
       path: "/stripe-checkout",
       component: StripeCheckout,
       name: "StripeCheckoutPage",
     },
-
     {
       path: "/checkout",
       component: Checkout,
@@ -106,6 +110,7 @@ var router = VueRouter.createRouter({
     {
       path: "/ChangePassword",
       component: ChangePass,
+      name: "ChangePassPage",
     },
     {
       path: "/Profile",
@@ -113,13 +118,13 @@ var router = VueRouter.createRouter({
       name: "ProfilePage",
     },
     {
-      path: "/orders",
-      component: MyOrders,
-      name: "MyOrdersPage",
-    },
-    {
       path: "/:pathMatch(.*)*",
       component: NotFoundPage,
+    },
+    {
+      path: "/mytheme",
+      component: Theme,
+      name: "ThemePage",
     },
   ],
 });
@@ -130,12 +135,22 @@ const myApp = createApp(App)
   .use(LoadingPlugin)
   .mount("#app");
 
-/* Authorization checks */
+/* ##################################### Authorization checks##################################### */
+/* ##### The isLoggedIn check is currently based on the 'userId' in localStorage  */
+/* ##### This can be changed to cookie validation or any other validations also */
 const isLoggedIn = () => {
-  return localStorage.getItem("token");
+  // return localStorage.getItem("userId");
+  return store.getters.getIsUserLoggedIn;
 };
 
-const protectedRoutes = ["HomePage", "ProfilePage", "CartPage", "AirportPage"];
+const protectedRoutes = [
+  "HomePage",
+  "CartPage",
+  "OrdersPage",
+  "FavoritePage",
+  "ProfilePage",
+  "ChangePassPage",
+];
 
 router.beforeEach((to, from, next) => {
   // console.log("to.name: ", to.name, to.fullPath, from);
@@ -151,4 +166,4 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-/* Authorization checks */
+/* ##################################### Authorization checks##################################### */

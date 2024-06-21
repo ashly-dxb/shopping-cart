@@ -7,6 +7,8 @@
 
             <div class="m-auto mb-3 mt-4 border-0">
                 Welcome {{ usedData ? usedData.username : '..' }}
+                <br />
+                <i>{{ isUserLoggedIn ? 'LoggedIn' : 'NotLoggedIn' }}</i>
             </div>
         </div>
     </div>
@@ -22,21 +24,27 @@ export default {
         return {
             error: '',
             usedData: null,
-            user: 'xxx',
+            isUserLoggedIn: false,
+            userObj : {},           
         }
     },
     computed: {
+        ...mapState(['userObj', 'status']),
+        ...mapGetters(['getLoggedUserInfo', 'getIsUserLoggedIn']),
+
         // ...mapState({
         //     user: (state) => state.userObj
         // }),
 
-        ...mapGetters({
-            loggedUserData: 'getLoggedUserInfo'
-        }),
+        // ...mapGetters({
+        //     loggedUserData: 'getLoggedUserInfo'
+        // }),
     },
     mounted() {
-        // console.log("HOME GETTER", this.loggedUserData);
-        this.usedData = this.loggedUserData;
+        console.log("HOME MOUNT:::", this.getIsUserLoggedIn);
+        // this.usedData = this.loggedUserData;
+        this.usedData = this.getLoggedUserInfo;
+        this.isUserLoggedIn = this.getIsUserLoggedIn;
     },
 }
 </script>

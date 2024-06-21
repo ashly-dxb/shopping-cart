@@ -5,49 +5,49 @@
         <div class="w-full lg:w-1/3 float-right flex border-0 border-yellow-300">
 
             <div class="w-full border-0 border-red-300">
-                <div class="bg-gray-600 rounded-2xl shadow p-2 border-0 border-orange-300">
-                    <p class="text-white">
-                        <form @submit.prevent="login">
-                        <div class="m-auto mb-3 mt-4 ">
-                            <h2 class="text-white text-xl font-semibold">Login</h2>
+                <div class="bg-gray-600 text-white rounded-2xl shadow p-2 pb-8 border-0 border-orange-300">
+                    
+                    <form @submit.prevent="login">
+                    <div class="m-auto mb-3 mt-4 ">
+                        <h2 class="text-white text-xl font-semibold">Login</h2>
+                    </div>
+
+                    <div class="m-auto mb-3 mt-4 ">
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            v-model="email"
+                            v-validate="required"
+                            class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
+                            />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            v-model="password"
+                            v-validate="required"
+                            class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
+                            />
+
+                        <div v-if="showErrors" class="px-2 my-2 border-x border-y border-solid border-red-500 text-red-700">
+                            {{errors}}
                         </div>
 
-                        <div class="m-auto mb-3 mt-4 ">
-                            <input
-                                type="email"
-                                placeholder="Email"
-                                v-model="email"
-                                v-validate="required"
-                                class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
-                                />
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                v-model="password"
-                                v-validate="required"
-                                class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
-                                />
+                        <button
+                            type="submit"
+                            class="border-x border-y border-solid border-gray-400 p-2 my-2 md:text-xl w-full">
+                            Login
+                        </button>
 
-                            <div v-if="showErrors" class="px-2 my-2 border-x border-y border-solid border-red-500 text-red-700">
-                                {{errors}}
+                        <div class="border-t-2 p-3 my-5 clearfix">
+                            <div class="float-left">No account? <router-link to="/Register" class="text-white">Sign-up</router-link></div>
+                            <div class="float-right">
+                                <router-link to="/ForgotPassword" class="text-white">Forgot password?</router-link>
                             </div>
-
-                            <button
-                                type="submit"
-                                class="border-x border-y border-solid border-gray-400 p-2 my-2 md:text-xl w-full">
-                                Login
-                            </button>
-
-                            <div class="border-t-2 p-3 my-5 clearfix">
-                                <div class="float-left">No account? <router-link to="/Register" class="text-white">Sign-up</router-link></div>
-                                <div class="float-right">
-                                    <router-link to="/ForgotPassword" class="text-white">Forgot password?</router-link>
-                                </div>
-                            </div>
-
                         </div>
-                        </form>
-                    </p>
+
+                    </div>
+                    </form>
+
                 </div>
             </div>
 
@@ -129,7 +129,6 @@ export default {
                 })
                 .then((data) => {
                     if(data.authenticated) {
-                        localStorage.setItem('token', '123456789');
                         localStorage.setItem('username', data.user.username);
                         localStorage.setItem('userId', data.user.userId);
 

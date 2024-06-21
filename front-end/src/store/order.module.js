@@ -1,6 +1,4 @@
 export default {
-  // plugins: [createPersistedState({ storage: window.localStorage })],
-  // plugins: [vuexLocal.plugin], // experimental
   state: {
     currentOrderItems: [],
     orderData: null,
@@ -9,15 +7,15 @@ export default {
   mutations: {
     setCurrOrderItems(state, orderItems) {
       state.currentOrderItems = orderItems;
-      console.log("In setCurrOrderItems # STORE STATE: ", state);
+      console.log("****** setCurrOrderItems # STORE STATE: ", state);
     },
     checkoutSuccess(state, orderData) {
       state.orderData = orderData;
-      console.log("In checkoutSuccess # STORE STATE: ", state);
+      console.log("****** checkoutSuccess # STORE STATE: ", state);
     },
     clearOrderInfo(state) {
       state.orderData = null;
-      console.log("In clearOrderInfo # STORE STATE: ", state);
+      console.log("****** clearOrderInfo # STORE STATE: ", state);
     },
   },
 

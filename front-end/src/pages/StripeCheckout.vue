@@ -233,7 +233,7 @@ export default {
                 this.$router.push("/checkout-success");
             }
             catch (error) {
-                console.log("Error ::", error);
+                console.log("Error occured::", error);
 
                 this.loadingStatus = false;
                 loader.hide();
