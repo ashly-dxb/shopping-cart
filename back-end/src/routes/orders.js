@@ -84,9 +84,7 @@ router.get("/user/:userId", async (req, res) => {
     // const orders = await Orders.find({ userId: userId }).sort(mySort);
     const orders = await Orders.aggregate([
       {
-        $match: {
-          userId: userId,
-        },
+        $match: { userId: userId },
       },
       {
         $set: {

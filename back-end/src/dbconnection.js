@@ -12,12 +12,9 @@ module.exports = async () => {
       useUnifiedTopology: true,
     });
 
-    console.log("Connected to MongoDB: vue-node-app");
+    console.log("MongoDB: vue-node-app");
   } catch (error) {
-    console.log(
-      "Could not connect to MongoDB database. Check IP in server!",
-      error
-    );
+    console.log("Could not connect to MongoDB. Check IP in server!", error);
 
     // https://cloud.mongodb.com/v2/64ac0903f95ff95f3e392d85#/security/network/accessList
   }
