@@ -1,10 +1,9 @@
 <template>
-    <div class='max-w-3xl bg-white px-5 m-auto my-2 border-0'>
+    <div class='max-w-3xl px-5 m-auto my-2 border-0'>
         <div class="m-auto mb-3 mt-4">
-          <h3 class='text-green-700 text-xl font-bold'>Product List</h3>
+          <h3 class='xxxxx text-xl font-bold'>Product List</h3>
         </div>
 
-        <div v-if="loading" class="loading">Loading...</div>
         <div v-if="error" class="error">{{error}}</div>
 
         <ProductCard :products="products" :cartItemsList="cartItemsList" :userId="userId" />

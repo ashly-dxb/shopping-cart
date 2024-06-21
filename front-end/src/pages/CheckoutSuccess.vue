@@ -1,16 +1,16 @@
 <template>
-    <div class='max-w-3xl bg-white px-5 m-auto my-2 border-0'>
+    <div class='max-w-3xl px-5 m-auto my-2 border-0'>
         <div class="m-auto mb-3 mt-4">
-          <h3 class='text-green-700 text-xl font-bold'>Checkout success</h3>
+          <h3 class='xxxxx text-xl font-bold'>Checkout success</h3>
         </div>
 
-        <h2 class="p-2 border-2 border-green-700 text-black">Thank you for your purchase!</h2>
+        <h2 class="p-2 border-2 border-green-700">Thank you for your purchase!</h2>
         
-        <h2 class="p-2 bg-green-700 text-white">Order Number: {{ orderId }}</h2>
+        <h2 class="p-2 bg-green-700">Order Number: {{ orderId }}</h2>
 
         <ul>
             <li v-for="item in orderItems" :key="item._id">
-                ID: {{ item.id }} --- Price: {{ item.price }} --- Qty: {{ item.quantity }}
+                ID: {{ item.id }} / Price: {{ item.price }} / Qty: {{ item.quantity }}
             </li>
         </ul>
 

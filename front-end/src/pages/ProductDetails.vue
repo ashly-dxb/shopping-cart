@@ -1,12 +1,10 @@
 <template>
-    <div class='max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-0'>
+    <div class='max-w-3xl flex flex-col px-5 m-auto my-2 border-0'>
         <div class="m-auto mb-3 mt-4">
-          <h3 class='text-green-700 text-xl font-bold'>Product Details</h3>
+          <h3 class='xxxxx text-xl font-bold'>Product Details</h3>
         </div>
 
-        <div v-if="error" class="error">{{error}}</div>
-
-        <div v-if="product" class="">
+        <div v-if="product">
             <div class="w-full flex flex-col sm:flex-row flex-wrap sm:flex-nowrap pb-4 flex-grow">
                 <div class="w-fixed w-full flex-grow-0 px-4"><img :src="getIMGPath(product.imageUrl)" class="img-wrap" /></div>
                 <div class="w-fixed w-full flex-grow-0 px-4 mt-7">{{ product.description }}</div>
@@ -23,7 +21,7 @@
                 <button class="sign-in" v-if="!userId" @click="signIn">Sign in to add to cart</button>
 
                 <div class="text-right">
-                    <button @click="goBack" class="mt-5">
+                    <button v-on:click="goBack" class="mt-5">
                         <i class="pi pi-back" style="font-size: 1.1rem"></i><span class="ps-2">Back</span>
                     </button>
                 </div>
@@ -40,27 +38,27 @@
 
 <script>
 import NotFoundPage from './NotFoundPage.vue';
-import axios from 'axios';
 import baseURL from "../components/Config";
+import axios from 'axios';
+import { mapGetters} from 'vuex';
 
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
-
 // import MdiArrowLeftIcon from 'vue-material-design-icons/MDIArrowLeft.vue';
 
 export default {
     name: 'ProductDetails',
-    props: ['userId'],
+    // props: ['userId'],
     components: {
         NotFoundPage,
         // MdiArrowLeftIcon
     },
     data() {
         return {
+            userId: null,
             product: {},
             cartItems: [],
             loading: false,
-            error: '',
 
             fullPage: true,
             visible: false,
@@ -70,8 +68,13 @@ export default {
     computed: {
         itemIsInCart() {
             return this.cartItems.some(item => item.id === parseInt(this.$route.params.productId));
-        }
+        },
+        ...mapGetters({
+            loggedUserData: 'getLoggedUserInfo',
+        }),
     },
+
+    /*
     watch: {
         async userId(newUserValue) {
             if (newUserValue) {
@@ -80,15 +83,23 @@ export default {
             }
         }
     },
+    */
+
     mounted: function () {
-        this.created();
+        this.userId = this.loggedUserData.userId;
+        console.log("userId:::", this.userId);
+
+        this.created();        
     },
+
     methods: {
         goBack: function() {
             this.$router.go(-1);
         },
         created: async function () {
             // this.loading = true;
+
+            console.log("created");
 
             let loader = this.$loading.show({
                     loader: 'dots',
@@ -107,16 +118,19 @@ export default {
             });
 
             if(this.userId) {
+                console.log("created 12222");
                 const response2 = await axios.get(baseURL + `/cart/${this.userId}`);
                 this.cartItems = response2.data;
             }
 
             // this.loading = false;
             loader.hide();
+
+            console.log("created 2");
         },
         
         getIMGPath: function(imageUrl) {
-            return imageUrl ? require("@/assets" + imageUrl) : "no-image";
+            return imageUrl ? require("@/assets" + imageUrl) : require("@/assets/logo-hexagon.svg");
         },
 
         triggerToast() {

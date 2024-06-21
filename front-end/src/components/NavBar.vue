@@ -1,26 +1,26 @@
 <template>
-    <div class=" flex justify-between items-center w-full py-2 text-white bg-black">
+    <div class=" flex justify-between items-center w-full py-2 bg-gray-400">
         <div class="font-signature ml-2">
-            <a href="#" class="no-underline text-white">Vue.js App</a>
+            <a href="#" class="no-underline">Vue.js App</a>
             <p v-if="this.$store.getters.getLoggedUserInfo">{{ this.$store.getters.getLoggedUserInfo.username }}</p>
         </div>
 
         <ul class="hidden md:flex">
             <!-- <li v-if="loggedIn === true">Logged In</li> -->
 
-            <li v-if="loggedIn === true" v-for="item in primaryLinks" class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">
+            <li v-if="loggedIn === true" v-for="item in primaryLinks" class="mt-2 px-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
                 <router-link v-if="item.type === 'LOGGED_IN'" :to="item.link" active-class="active-link">
                     <i :class="['pi', item.icon]" style="font-size: 1.1rem"></i><span class="ps-2">{{ item.text }}</span>
                 </router-link>
             </li>
 
-            <li v-else  v-for="item in secondaryLinks" class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">
+            <li v-else  v-for="item in secondaryLinks" class="mt-2 px-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
                 <router-link :to="item.link" active-class="active-link">
                     <i :class="['pi', item.icon]" style="font-size: 1.1rem"></i><span class="ps-2">{{ item.text }}</span>
                 </router-link>
             </li>
 
-            <li v-if="loggedIn === true" class="mt-2 px-2 py-1 rounded hover:bg-gray-800 sm:mt-0 sm:ml-2">
+            <li v-if="loggedIn === true" class="mt-2 px-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
                 <div @click="signOut" class="logoutHover"><i class="pi pi-sign-out" style="font-size: 1.1rem"></i><span class="ps-2">Logout</span></div>
             </li>
         </ul>
@@ -45,18 +45,18 @@
         <ul class="flex flex-col justify-top items-center absolute top-0 left-0 px-2 w-full h-100 bg-gradient-to-b from-black to-gray-500 z-10" v-if="isOpen">
             <li v-if="loggedIn === true" v-for="item in primaryLinks" class="flex flex-row pl-3 py-6 sm:mt-0 w-full shrink-0 hover:bg-gray-900">
                 <router-link v-if="item.type === 'LOGGED_IN'" :to="item.link" @click="setIsOpen" active-class="active-link" class="">
-                    <i :class="['hover:text-blue-600 pi', item.icon]" style="font-size: 1.7rem"></i><span class="text-3xl text-white hover:text-blue-600 w-full shrink-0 ps-2 ms-3">{{ item.text }}</span>
+                    <i :class="['hover:text-blue-600 pi', item.icon]" style="font-size: 1.7rem"></i><span class="text-3xl hover:text-blue-600 w-full shrink-0 ps-2 ms-3">{{ item.text }}</span>
                 </router-link>
             </li>
 
             <li v-else  v-for="item in secondaryLinks" class="flex flex-row pl-3 py-6 sm:mt-0 w-full shrink-0 hover:bg-gray-900">
                 <router-link :to="item.link" @click="setIsOpen" active-class="active-link" class="">
-                    <i :class="['hover:text-blue-600 pi', item.icon]" style="font-size: 1.7rem"></i><span class="text-3xl text-white hover:text-blue-600 w-full shrink-0 ps-2 ms-3">{{ item.text }}</span>
+                    <i :class="['hover:text-blue-600 pi', item.icon]" style="font-size: 1.7rem"></i><span class="text-3xl hover:text-blue-600 w-full shrink-0 ps-2 ms-3">{{ item.text }}</span>
                 </router-link>
             </li>
 
             <li v-if="loggedIn === true" class="flex flex-row pl-3 py-6 sm:mt-0 w-full shrink-0 hover:bg-gray-900">
-                <div @click="signOut(); setIsOpen();" class="logoutHover"><i class="hover:text-blue-600 pi pi-sign-out" style="font-size: 1.7rem"></i><span class="text-3xl text-white hover:text-blue-600 w-full shrink-0 ps-2 ms-3">Logout</span></div>
+                <div @click="signOut(); setIsOpen();" class="logoutHover"><i class="hover:text-blue-600 pi pi-sign-out" style="font-size: 1.7rem"></i><span class="text-3xl hover:text-blue-600 w-full shrink-0 ps-2 ms-3">Logout</span></div>
             </li>
         </ul>
         

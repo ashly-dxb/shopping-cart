@@ -1,13 +1,13 @@
 <template>
-    <div class='max-w-3xl bg-white px-5 m-auto my-2 border-0'>
+    <div class='max-w-3xl px-5 m-auto my-2 border-0'>
         <div class="m-auto mb-3 mt-4">
-          <h3 class='text-green-700 text-xl font-bold'>Shopping Cart</h3>
+          <h3 class='xxxxx text-xl font-bold'>My Shopping Cart</h3>
         </div>
 
         <div v-if="error" class="error">{{error}}</div>
 
         <div v-if="cartItems.length > 0">
-            <div class="flex w-full p-2 mb-3 font-bold bg-gray-400 text-white">
+            <div class="flex w-full p-2 mb-3 font-bold bg-gray-500 text-white">
                 <div class="details-wrap">Item</div>
                 <div class="details-wrap">Qty</div>
                 <div class="details-wrap">Sub Total</div>
@@ -18,7 +18,7 @@
                 @decrease-qty="decreaseQty($event)" 
                 @increase-qty="increaseQty($event)" />
             
-            <div v-if="cartItems.length > 0" class="flex w-full p-2 mb-3 bg-cyan-300 text-black">
+            <div v-if="cartItems.length > 0" class="flex w-full p-2 mb-3 bg-wheat-700">
                 <div class="details-wrap font-bold text-center">Total</div>
                 <div class="details-wrap">&nbsp;</div>
                 <div class="details-wrap font-bold">AED {{cartTotalAmount}}</div>
@@ -26,7 +26,7 @@
 
             <div class="flex w-full p-2 mb-3 font-bold">
                 <div class="xxxx">
-                    <router-link to="/products">
+                    <router-link to="/products" class="hover:text-blue-500">
                         <i class="pi pi-shopping-bag" style="font-size: 1.1rem"></i> <span class="text-l w-full">Continue Shopping</span>
                     </router-link>
                 </div>                
@@ -42,8 +42,8 @@
             <div class="w-full md:w-1/2 lg:w-2/3 border-0">Your cart is empty!</div>
 
             <div class="w-full md:w-1/2 lg:w-1/3 border-0 mt-20 md:mt-0">
-                <router-link to="/products">
-                    <i class="pi pi-shopping-bag" style="font-size: 1.1rem"></i><span class="text-l w-full shrink-0 ps-2">Continue Shopping</span>
+                <router-link to="/products" class="hover:text-blue-500">
+                    <i class="pi pi-shopping-bag" style="font-size: 1.1rem"></i> <span class="text-l w-full">Continue Shopping</span>
                 </router-link>
             </div>
         </div>

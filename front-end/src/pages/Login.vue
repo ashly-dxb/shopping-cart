@@ -1,15 +1,15 @@
 <template>
-    <div class="bg-white px-5 my-2 flex border-0 border-green-300">
+    <div class="px-5 my-2 flex border-0 border-green-300">
         <div class="w-0 lg:w-2/3 float-left">&nbsp;</div>
 
         <div class="w-full lg:w-1/3 float-right flex border-0 border-yellow-300">
 
             <div class="w-full border-0 border-red-300">
-                <div class="bg-gray-600 text-white rounded-2xl shadow p-2 pb-8 border-0 border-orange-300">
+                <div class="bg-gray-600 rounded-2xl shadow p-2 pb-8 border-0 border-orange-300">
                     
                     <form @submit.prevent="login">
                     <div class="m-auto mb-3 mt-4 ">
-                        <h2 class="text-white text-xl font-semibold">Login</h2>
+                        <h2 class="text-xl font-semibold">Login</h2>
                     </div>
 
                     <div class="m-auto mb-3 mt-4 ">
@@ -18,14 +18,14 @@
                             placeholder="Email"
                             v-model="email"
                             v-validate="required"
-                            class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
+                            class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
                             />
                         <input
                             type="password"
                             placeholder="Password"
                             v-model="password"
                             v-validate="required"
-                            class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
+                            class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
                             />
 
                         <div v-if="showErrors" class="px-2 my-2 border-x border-y border-solid border-red-500 text-red-700">
@@ -39,9 +39,9 @@
                         </button>
 
                         <div class="border-t-2 p-3 my-5 clearfix">
-                            <div class="float-left">No account? <router-link to="/Register" class="text-white">Sign-up</router-link></div>
+                            <div class="float-left">No account? <router-link to="/Register" class="xxxx">Sign-up</router-link></div>
                             <div class="float-right">
-                                <router-link to="/ForgotPassword" class="text-white">Forgot password?</router-link>
+                                <router-link to="/ForgotPassword" class="xxxx">Forgot password?</router-link>
                             </div>
                         </div>
 

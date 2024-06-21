@@ -1,20 +1,10 @@
-const storeDataSession = JSON.parse(localStorage.getItem("vueAppStore"));
-
-const authDataSession = storeDataSession?.auth;
-const userObjDataSession = authDataSession?.userObj;
-const statusDataSession = authDataSession?.status;
-const initialState = authDataSession;
-console.log("##### initialState #####: ", initialState);
-
-// localStorage.removeItem("vueAppStore");
-
-// const initialState = userId
-//   ? { status: { loggedIn: true }, userObj }
-//   : { status: { loggedIn: false }, userObj: null };
+const storeLocalStorage = JSON.parse(localStorage.getItem("vueAppStore"));
+const authLocalStorage = storeLocalStorage?.auth;
+console.log("##### Setting initial state #####: ", authLocalStorage);
 
 export default {
-  state: initialState
-    ? initialState
+  state: authLocalStorage
+    ? authLocalStorage
     : {
         userObj: null,
         status: {

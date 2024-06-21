@@ -41,8 +41,6 @@ function toggleDarkMode() {
 onMounted(applyStyles);
 </script>
 
-
-
 <style scoped>
 .dark-mode-toggle {
   display: flex;
@@ -66,16 +64,9 @@ onMounted(applyStyles);
   margin-right: 14px;
 }
 
-
 :root {
   --background-color: #fff;
   --text-color: #000;
-}
-
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  transition: background-color 0.3s, color 0.3s;
 }
 
 </style>

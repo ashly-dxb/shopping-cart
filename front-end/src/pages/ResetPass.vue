@@ -1,9 +1,9 @@
 <template>
-    <div class="bg-white px-5 my-2 border-2">
+    <div class="px-5 my-2 border-2">
         <div class="w-full lg:w-2/6 flex">
             <form v-on:submit.prevent="updatePassword">
                 <div class="m-auto mb-3 mt-4 ml-2">
-                    <h2 class='text-green-700 text-xl font-bold'>Choose New Password</h2>
+                    <h2 class='xxxxx text-xl font-bold'>Choose New Password</h2>
                 </div>
 
                 <div class="m-auto mb-3 mt-4 ml-2">

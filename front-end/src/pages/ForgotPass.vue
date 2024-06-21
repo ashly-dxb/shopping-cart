@@ -1,13 +1,13 @@
 <template>
-<div class="bg-white px-5 my-2 border-0">
+<div class="px-5 my-2 border-0">
     <div class="w-full lg:w-2/5 flex">
 
         <div class="w-full border-0 border-red-300">
-            <div class="bg-white-600 text-black rounded-xl shadow p-2  border-x border-y border-gray-200">
+            <div class="rounded-xl shadow p-2  border-x border-y border-gray-200">
 
                 <form v-on:submit.prevent="sendLink">
                     <div class="m-auto mb-3 mt-4">
-                        <h2 class='text-green-700 text-xl font-bold'>Forgot Password</h2>
+                        <h2 class='xxxxx text-xl font-bold'>Forgot Password</h2>
                     </div>
 
                     <div class="w-full m-auto mb-3 mt-4">
@@ -15,7 +15,7 @@
                             type="email"
                             placeholder="Enter your email"
                             v-model="email"
-                            class="text-black border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
+                            class="border-x border-y border-solid border-gray-400 p-2 my-2 w-full hover:border-green-500 focus:outline-blue-500"
                             />
 
                         <div v-if="this.errors.email" class="text-red-700">

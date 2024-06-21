@@ -1,7 +1,7 @@
 <template>
-    <div class='max-w-3xl bg-white px-5 m-auto my-2 border-0'>
+    <div class='max-w-3xl px-5 m-auto my-2 border-0'>
         <div class="m-auto mb-3 mt-4">
-          <h3 class='text-green-700 text-xl font-bold'>Checkout</h3>
+          <h3 class='xxxxx text-xl font-bold'>Checkout</h3>
         </div>
 
         <div>

@@ -1,13 +1,13 @@
 <template>
-    <div class='max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-0'>
+    <div class='max-w-3xl flex flex-col px-5 m-auto my-2 border-0'>
         <div class="w-full m-auto mb-3 mt-4">
-          <h2 class='text-green-700 text-xl font-bold'>My Orders</h2>
+          <h2 class='xxxxx text-xl font-bold'>My Orders</h2>
         </div>
 
         <div class="w-full flex m-auto border-0">
           <div class="flex-column w-1/3 border-0 border-green-400 max-h-80 overflow-y-auto">
             <div v-for="eachOrder in myOrders" :key="eachOrder.orderId" class="pt-2">
-              <div @click="loadDetails(eachOrder)" :class="['bg-gray-300 cursor-pointer', eachOrder.orderId == selectedID ? 'activeItem' : '']">
+              <div @click="loadDetails(eachOrder)" :class="['cursor-pointer hover:bg-gray-400', eachOrder.orderId == selectedID ? 'activeItem' : '']">
                 {{ eachOrder.orderId }} / {{ new Date(eachOrder.orderDate).toISOString().slice(0, 10) }} 
                 {{ new Date(eachOrder.orderDate).toISOString().slice(11, 19) }}
               </div>

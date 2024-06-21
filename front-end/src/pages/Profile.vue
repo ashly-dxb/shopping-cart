@@ -1,7 +1,7 @@
 <template>
-  <div class='max-w-3xl bg-white flex flex-col px-5 m-auto my-2 border-0'>
+  <div class='max-w-3xl flex flex-col px-5 m-auto my-2 border-0'>
     <div class="w-full m-auto mb-3 mt-4 ml-2">
-      <h2 class='text-green-700 text-xl font-bold'>Profile</h2>
+      <h2 class='xxxxx text-xl font-bold'>Profile</h2>
     </div>
 
     <div class="w-full m-auto mb-3 mt-4 ml-2 border-0 border-yellow-300">

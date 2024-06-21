@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row flex-wrap gap-x-2 gap-y-2 py-2 border-0">
-        <div :data-label="itemAddedToCart(product.id) ? 'In cart' : ''" v-for="product in products" :key="product.id" class="individual-card sm:w-3/4 md:w-48 lg:w-56 sm:flex-wrap md:flex-wrap px-4 py-2 border-x border-y border-gray-400 rounded-xl hover:bg-gray-200 hover:border-blue-400" >
+        <div :data-label="itemAddedToCart(product.id) ? 'In cart' : ''" v-for="product in products" :key="product.id" class="individual-card sm:w-3/4 md:w-48 lg:w-56 sm:flex-wrap md:flex-wrap px-4 py-2 border-x border-y rounded-xl hover:border-x-2 hover:opacity-70 border-gray-400 hover:border-blue-800" >
             <img :src="require(`@/assets${product.imageUrl}`)" />
 
             <h3 class="product-name">{{ product.name }}</h3>
