@@ -1,5 +1,6 @@
 <template>
-    <div class=" flex justify-between items-center w-full py-2 bg-gray-400">
+    <nav class="sticky top-0 z-50"> 
+    <div class="flex justify-between items-center w-full py-2 bg-gray-400">
         <div class="font-signature ml-2">
             <a href="#" class="no-underline">Vue.js App</a>
             <p v-if="this.$store.getters.getLoggedUserInfo">{{ this.$store.getters.getLoggedUserInfo.username }}</p>
@@ -62,6 +63,7 @@
             </li>
         </ul>        
     </div>
+</nav>
 </template>
 
 <script>

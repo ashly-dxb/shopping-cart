@@ -1,6 +1,7 @@
 <template>
     <div>
         <NavBar :userId="userId" :loggedIn="isLoggedIn"  @user-logged-out="getLoggedOutUserInfo" />
+        
         <router-view 
             :userId="userId"
             @user-logged-in="getLoggedInUserInfo" 
@@ -12,12 +13,14 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue';
+// import NavTest from './components/NavTest.vue';
 import {mapState, mapGetters} from 'vuex';
 
 export default {
     name: 'App',
     components: {
         NavBar,
+        // NavTest,
     },
 
     data: function () {
