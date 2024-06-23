@@ -20,11 +20,18 @@
         <!-- order.orderAmount['$numberDecimal'].toLocaleString() -->
 
         <div class="w-full flex  border-b-2">
-            <ul>
-                <li v-for="item in order.orderItems" :key="item._id">
-                    Name: {{ item.itemName }} / Price: {{ item.itemPrice }} / Qty: {{ item.itemQty }}
-                </li>
-            </ul>
+            <div class="w-full flex border-b-2 bg-gray-300">
+                <div class="flex-column w-1/2">Name</div>
+                <div class="flex-column w-1/2">Price</div>
+                <div class="flex-column w-1/2">Qty</div>
+            </div>
+        </div>
+        <div v-for="item in order.orderItems" :key="item._id" class="w-full flex border-b-2">
+            <div class="w-full flex border-b-2">
+                <div class="flex-column w-1/2">{{ item.itemName }}</div>
+                <div class="flex-column w-1/2">{{ item.itemPrice }}</div>
+                <div class="flex-column w-1/2">{{ item.itemQty }}</div>
+            </div>
         </div>
     </div>
 </template>
