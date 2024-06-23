@@ -71,8 +71,8 @@ const cardElementStyle = {
                 style: {
                     base: {
                         iconColor: isDarkMode ? "#fff" : "#000",
-                        // backgroundColor: isDarkMode ? "yellow" : "pink",
-                        color: isDarkMode ? "#fff" : "#000",
+                        backgroundColor: isDarkMode ? "#fff" : "#fff",
+                        color: isDarkMode ? "#000" : "#000",
                         padding: "10px 8px 10px",
                         lineHeight: "2em",
                         
