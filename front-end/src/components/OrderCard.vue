@@ -26,12 +26,11 @@
                 <div class="flex-column w-1/2">Qty</div>
             </div>
         </div>
+        
         <div v-for="item in order.orderItems" :key="item._id" class="w-full flex border-b-2">
-            <div class="w-full flex border-b-2">
-                <div class="flex-column w-1/2">{{ item.itemName }}</div>
-                <div class="flex-column w-1/2">{{ item.itemPrice }}</div>
-                <div class="flex-column w-1/2">{{ item.itemQty }}</div>
-            </div>
+            <div class="flex-column w-1/2">{{ item.itemName }}</div>
+            <div class="flex-column w-1/2">{{ item.itemPrice }}</div>
+            <div class="flex-column w-1/2">{{ item.itemQty }}</div>
         </div>
     </div>
 </template>
