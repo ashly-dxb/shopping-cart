@@ -119,8 +119,19 @@ export default {
 
             if(this.userId) {
                 console.log("created 12222");
-                const response2 = await axios.get(baseURL + `/cart/${this.userId}`);
-                this.cartItems = response2.data;
+                // const response2 = await axios.get(baseURL + `/cart/${this.userId}`);
+                // this.cartItems = response2.data;
+
+                axios.get(baseURL + `/cart/${this.userId}`)
+                .then((response2) => {
+                    this.cartItems = response2.data;
+                })
+                .catch((error) => {
+                    console.log("error:", error);
+                })
+                .finally(() => {
+                    // loader.hide();
+                });
             }
 
             // this.loading = false;

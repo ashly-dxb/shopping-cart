@@ -1,6 +1,6 @@
 <template>
     <button class="dark-mode-toggle" @click="toggleDarkMode">
-        <span class="icon-mode-toggle" v-html="isDarkMode ? moonIcon : sunIcon"></span>
+        <span class="icon-mode-toggle" :html="isDarkMode ? moonIcon : sunIcon"></span>
 
         {{ isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode' }}
     </button>
@@ -41,6 +41,7 @@ function toggleDarkMode() {
 onMounted(applyStyles);
 </script>
 
+
 <style scoped>
 .dark-mode-toggle {
   display: flex;
@@ -52,7 +53,6 @@ onMounted(applyStyles);
   
   background-color: var(--background-color);
   color: var(--text-color);
-  /* border: 1px solid var(--text-color); */
   border: 1px solid red;
   border-radius: 15px;
 
@@ -64,9 +64,8 @@ onMounted(applyStyles);
   margin-right: 14px;
 }
 
-:root {
+/* :root {
   --background-color: #fff;
   --text-color: #000;
-}
-
+} */
 </style>

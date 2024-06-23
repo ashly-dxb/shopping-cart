@@ -1,6 +1,6 @@
 const storeLocalStorage = JSON.parse(localStorage.getItem("vueAppStore"));
 const authLocalStorage = storeLocalStorage?.auth;
-console.log("##### Setting initial state #####: ", authLocalStorage);
+// console.log("##### Setting initial state #####: ", authLocalStorage);
 
 export default {
   state: authLocalStorage

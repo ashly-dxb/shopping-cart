@@ -18,7 +18,7 @@
                 @decrease-qty="decreaseQty($event)" 
                 @increase-qty="increaseQty($event)" />
             
-            <div v-if="cartItems.length > 0" class="flex w-full p-2 mb-3 bg-wheat-700">
+            <div v-if="cartItems.length > 0" class="flex w-full p-2 mb-3 bg-wheat-700 border-b-2 border-gray-500">
                 <div class="details-wrap font-bold text-center">Total</div>
                 <div class="details-wrap">&nbsp;</div>
                 <div class="details-wrap font-bold">AED {{cartTotalAmount}}</div>
@@ -127,13 +127,12 @@ export default {
                 axios.get(baseURL + `/cart/${this.userId}`)
                 .then((response) => {
                     this.cartItems = response.data;
-
-                    // console.log("CART_ITEMS::::", response.data)
                     this.calculateCartTotal();
-
-                    loader.hide();
                 })
-                .catch((errors) => {
+                .catch((error) => {
+                    console.log("Error: ", error);
+                })
+                .finally(() => {
                     loader.hide();
                 });
             }

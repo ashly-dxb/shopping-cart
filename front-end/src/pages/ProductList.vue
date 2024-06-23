@@ -1,7 +1,7 @@
 <template>
     <div class='max-w-3xl px-5 m-auto my-2 border-0'>
         <div class="m-auto mb-3 mt-4">
-          <h3 class='xxxxx text-xl font-bold'>Product List</h3>
+          <h3 class='text-xl font-bold'>Product List</h3>
         </div>
 
         <div v-if="error" class="error">{{error}}</div>
@@ -66,15 +66,23 @@ export default {
                 opacity: 0.5,
             });
 
-            const response = await axios.get(baseURL + '/products/list');
-            this.products = response.data;
+            axios.get(baseURL + '/products/list')
+                .then((response) => {
+                    this.products = response.data;
+                })
+                .catch((error) => {
+                    console.log("error:", error);
+                })
+                .finally(() => {
+                    loader.hide();
+                });
 
             if(this.userId) {
                 const response2 = await axios.get(baseURL + `/cart/itemlist/${this.userId}`);
                 this.cartItemsList = response2.data;
             }
 
-            loader.hide();
+            // loader.hide();
         },
         setPost(products) {
             // console.log("setPost", products);

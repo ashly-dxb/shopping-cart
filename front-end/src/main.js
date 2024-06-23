@@ -33,7 +33,7 @@ import CheckoutCancel from "./pages/CheckoutCancel.vue";
 import MyOrders from "./pages/MyOrders.vue";
 import Profile from "./pages/Profile.vue";
 import Favorite from "./pages/Favorite.vue";
-import Theme from "./pages/Theme.vue";
+// import Theme from "./pages/Theme.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
 
 var router = VueRouter.createRouter({
@@ -121,11 +121,11 @@ var router = VueRouter.createRouter({
       path: "/:pathMatch(.*)*",
       component: NotFoundPage,
     },
-    {
-      path: "/mytheme",
-      component: Theme,
-      name: "ThemePage",
-    },
+    // {
+    //   path: "/mytheme",
+    //   component: Theme,
+    //   name: "ThemePage",
+    // },
   ],
 });
 

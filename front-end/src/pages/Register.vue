@@ -85,12 +85,7 @@ export default {
             loader: 'dots',
         }
     },
-    methods: {
-        created: async function () {
-            // const response = await axios.get(baseURL + 'xxx/yyy');
-            // this.products = response.data;
-        },
-
+    methods: {        
         register(e) {
             e.preventDefault();
 
@@ -101,8 +96,7 @@ export default {
             let email = this.email;
             let password = this.password;
 
-            this.errors = {}
-
+            this.errors = {};
             let invalidForm = false;
             
             if(!username) {

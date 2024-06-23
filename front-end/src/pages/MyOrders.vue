@@ -67,11 +67,11 @@ export default {
                 axios.get(baseURL + `/orders/user/${this.userId}`)
                 .then((response) => {
                     this.myOrders = response.data.orders;
-
-                    loader.hide();
                 })
                 .catch((error) => {
                     console.log("error:", error);
+                })
+                .finally(() => {
                     loader.hide();
                 });
             }
