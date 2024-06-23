@@ -44,7 +44,7 @@
             </svg>
         </div>
 
-        <ul class="flex flex-col justify-top items-center absolute top-0 left-0 px-2 w-full h-100 bg-gradient-to-b from-black to-gray-500 z-10" v-if="isOpen">
+        <ul class="flex flex-col justify-top items-center absolute top-0 left-0 px-2 w-full h-100 bg-gradient-to-b from-gray-200 to-gray-900 z-10" v-if="isOpen">
             <li v-if="loggedIn === true" v-for="item in primaryLinks" class="flex flex-row pl-3 py-6 sm:mt-0 w-full shrink-0 hover:bg-gray-900">
                 <router-link v-if="item.type === 'LOGGED_IN'" :to="item.link" @click="setIsOpen" active-class="active-link" class="">
                     <i :class="['hover:text-blue-600 pi', item.icon]" style="font-size: 1.7rem"></i><span class="text-3xl hover:text-blue-600 w-full shrink-0 ps-2 ms-3">{{ item.text }}</span>
@@ -70,7 +70,7 @@ import logo from '@/assets/logo-hexagon.svg';
 import mainLinks, {otherLinks}  from './NavBarLinks';
 import 'primeicons/primeicons.css';
 import {mapState, mapGetters} from 'vuex';
-import {ref} from 'vue';
+// import {ref} from 'vue';
 
 export default {
     name: 'NavBar',
@@ -106,7 +106,7 @@ export default {
             </svg>`,
 
             isDarkMode : JSON.parse(localStorage.getItem('darkMode')) ? true : false,
-            darkModeVal : ref(JSON.parse(localStorage.getItem('darkMode') ?? 'false')),
+            // darkModeVal : ref(JSON.parse(localStorage.getItem('darkMode') ?? 'false')),
             styleProperties: {
                                 '--background-color'  : this.darkModeVal ? '#000' : '#fff',
                                 '--text-color'        : this.darkModeVal ? '#fff' : '#000'
@@ -118,11 +118,9 @@ export default {
         this.usedData = this.loggedUserData;
 
         this.styleProperties = {
-                                '--background-color'  : this.darkModeVal ? '#000' : '#fff',
-                                '--text-color'        : this.darkModeVal ? '#fff' : '#000'
+                                '--background-color'  : this.isDarkMode ? '#000' : '#fff',
+                                '--text-color'        : this.isDarkMode ? '#fff' : '#000'
                             };
-
-        console.log("styleProperties: ", this.styleProperties)
 
         this.applyStyles();
     },

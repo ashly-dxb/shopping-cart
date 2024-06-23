@@ -3,14 +3,7 @@ import App from "./App.vue";
 import store from "./store";
 
 import * as VueRouter from "vue-router";
-
 import "./main.css";
-
-// import PrimeVue from "primevue/config";
-// import Badge from "primevue/badge";
-// import Button from "primevue/button";
-// import "primevue/resources/themes/aura-light-green/theme.css";
-
 import { LoadingPlugin } from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
 
@@ -33,7 +26,6 @@ import CheckoutCancel from "./pages/CheckoutCancel.vue";
 import MyOrders from "./pages/MyOrders.vue";
 import Profile from "./pages/Profile.vue";
 import Favorite from "./pages/Favorite.vue";
-// import Theme from "./pages/Theme.vue";
 import NotFoundPage from "./pages/NotFoundPage.vue";
 
 var router = VueRouter.createRouter({
@@ -128,6 +120,41 @@ var router = VueRouter.createRouter({
     // },
   ],
 });
+
+/*
+
+const router = new Router({
+  mode: "history",
+  routes: [
+    //ADMIN
+    {
+      path: "/admin",
+      name: "admin",
+      component: AdminPanelIndex,
+      meta: {
+        requiresAuth: true,
+        adminAuth: true,
+        userAuth: false,
+        layout: "k-backend-admin",
+        title: "Admin area",
+      },
+    },
+    //USERS ONLY
+    {
+      path: "/admin/adminBlogging",
+      name: "admin-blogging",
+      component: AdminBlogging,
+      meta: {
+        requiresAuth: true,
+        adminAuth: false,
+        userAuth: true,
+        layout: "k-backend-admin",
+        title: "View Blog Posts",
+      },
+    },
+  ],
+});
+*/
 
 const myApp = createApp(App)
   .use(router)

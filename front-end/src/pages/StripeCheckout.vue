@@ -1,7 +1,7 @@
 <template>
     <div class='max-w-3xl px-5 m-auto my-2 border-0'>
-        <div class="m-auto mb-3 mt-4">
-          <h3 class='xxxxx text-xl font-bold'>Custom Checkout</h3>
+        <div class="w-full md:w-2/3 m-auto mb-3 mt-4">
+          <h3 class='w-full text-xl font-bold'>Custom Checkout</h3>
         </div>
 
         <div class="w-full md:w-2/3 m-auto mb-3 mt-4 border-0 border-green-300">
@@ -62,27 +62,37 @@ import baseURL from '@/components/Config';
 import axios from 'axios';
 
 import { loadStripe } from "@stripe/stripe-js";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { mapGetters} from 'vuex';
+
+const  isDarkMode = JSON.parse(localStorage.getItem('darkMode')) ? true : false;
 
 const cardElementStyle = {
                 style: {
                     base: {
-                        iconColor: "#000",
-                        color: "#000",
-                        fontSize: "18px",
-                        // fontWeight: "500",
-                        fontFamily: "Press Start 2P",
+                        iconColor: isDarkMode ? "#fff" : "#000",
+                        // backgroundColor: isDarkMode ? "yellow" : "pink",
+                        color: isDarkMode ? "#fff" : "#000",
+                        padding: "10px 8px 10px",
+                        lineHeight: "2em",
+                        
+                        fontFamily: "Segoe UI",
+                        fontSize: "20px",
+                        fontVariant: "tabular-nums",
                         fontSmoothing: "antialiased",
                         ":-webkit-autofill": {
-                            color: "#fce883"
+                            color: isDarkMode ? "#0000cc" : "#ff0066",
                         },
                         "::placeholder": {
-                            color: "#D3D3D3"
+                            color: isDarkMode ? "#0000cc" : "#ff0066",
+                        },
+                        ":focus": {
+                            backgroundColor: isDarkMode ? "lightgreen" : "lightblue",
+                            color: isDarkMode ? "#0000cc" : "#ff0066",
                         }
                     },
                     invalid: {
-                        iconColor: "#FFC7EE",
+                        iconColor: isDarkMode ? "#FFC7EE" : "#ff0033",
                         color: "red"
                     }
                 }
