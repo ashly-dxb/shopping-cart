@@ -17,15 +17,15 @@ const ProductSchema = new mongoose.Schema({
     required: [true, "Please enter price"],
     maxlength: [10, "Price cannot be more than 10 characters"],
   },
-  imageUrl: {
-    type: String,
-    required: [true, "Please enter Image URL/Path"],
-    maxlength: [100, "Image URL cannot be more than 100 characters"],
-  },
   description: {
     type: String,
     required: [true, "Please enter description"],
     maxlength: [2000, "Description cannot be more than 2000 characters"],
+  },
+  imageUrl: {
+    type: String,
+    required: [true, "Please enter Image URL/Path"],
+    maxlength: [100, "Image URL cannot be more than 100 characters"],
   },
 });
 
