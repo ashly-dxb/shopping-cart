@@ -4,6 +4,8 @@
           <h2 class='xxxxx text-xl font-bold'>My Orders</h2>
         </div>
 
+        <div v-if="error" class="error">{{error}}</div>
+
         <div class="w-full flex m-auto border-0">
           <div class="flex-column w-1/3 border-0 border-green-400 max-h-80 overflow-y-auto">
             <div v-for="eachOrder in myOrders" :key="eachOrder.orderId" class="pt-2">
@@ -39,6 +41,8 @@ export default {
             userId: null,
             currentOrder: null,
             selectedID: null,
+
+            error: '',
         }
     },
     
@@ -70,6 +74,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("error:", error);
+                    this.error = error.toString();
                 })
                 .finally(() => {
                     loader.hide();

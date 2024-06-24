@@ -11,21 +11,27 @@
         </div>
 
         <ul class="hidden md:flex">
-            <li v-if="loggedIn === true" v-for="item in primaryLinks" class="mt-2 px-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
+            <li v-if="loggedIn === true" v-for="item in primaryLinks" class="mt-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
                 <router-link v-if="item.type === 'LOGGED_IN'" :to="item.link" active-class="active-link">
                     <i :class="['pi', item.icon]" style="font-size: 1.1rem"></i><span class="ps-2">{{ item.text }}</span>
                 </router-link>
             </li>
 
-            <li v-else  v-for="item in secondaryLinks" class="mt-2 px-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
+            <li v-else  v-for="item in secondaryLinks" class="mt-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
                 <router-link :to="item.link" active-class="active-link">
                     <i :class="['pi', item.icon]" style="font-size: 1.1rem"></i><span class="ps-2">{{ item.text }}</span>
                 </router-link>
             </li>
 
-            <li v-if="loggedIn === true" class="mt-2 px-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
+            <li v-if="loggedIn === true" class="mt-2 py-1 rounded hover:bg-blue-500 sm:mt-0 sm:ml-2">
                 <div @click="signOut" class="logoutHover"><i class="pi pi-sign-out" style="font-size: 1.1rem"></i><span class="ps-2">Logout</span></div>
             </li>
+
+
+
+
+            
+
         </ul>
 
         <div
@@ -43,6 +49,10 @@
                 d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
                 />
             </svg>
+
+           
+
+
         </div>
 
         <ul class="flex flex-col justify-top items-center absolute top-0 left-0 px-2 w-full h-100 bg-gradient-to-b from-gray-200 to-gray-900 z-10" v-if="isOpen">
@@ -99,19 +109,18 @@ export default {
             secondaryLinks: otherLinks,
             usedData: null,
 
-            sunIcon : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16">
-            <path d="M8 4.41a3.59 3.59 0 1 1 0 7.18 3.59 3.59 0 0 1 0-7.18zM8 1a.5.5 0 0 1 .5.5v1.5a.5.5 0 0 1-1 0V1.5A.5.5 0 0 1 8 1zm0 12a.5.5 0 0 1 .5.5v1.5a.5.5 0 0 1-1 0v-1.5a.5.5 0 0 1 .5-.5zm6-6a.5.5 0 0 1 .5.5h1.5a.5.5 0 0 1 0 1H14.5a.5.5 0 0 1-.5-.5zm-12 0A.5.5 0 0 1 2 8H.5a.5.5 0 0 1 0-1H2a.5.5 0 0 1 .5.5zm9.396 5.106a.5.5 0 0 1 .708 0l1.06 1.06a.5.5 0 1 1-.708.708l-1.06-1.06a.5.5 0 0 1 0-.708zM3.146 3.854a.5.5 0 0 1 .708 0L4.914 5.56a.5.5 0 1 1-.708.708L3.146 4.562a.5.5 0 0 1 0-.708zm9.708 9.292a.5.5 0 0 1 .708 0L14.06 14.44a.5.5 0 0 1-.708.708l-1.06-1.06a.5.5 0 0 1 0-.708zM3.146 14.44a.5.5 0 0 1 0 .708l-1.06 1.06a.5.5 0 1 1-.708-.708l1.06-1.06a.5.5 0 0 1 .708 0z"/>
-            </svg>`,
+            sunIcon : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
+                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                        </svg>`,
 
-            moonIcon : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-moon" viewBox="0 0 16 16">
-            <path d="M14.53 11.29c.801-1.422.852-3.108.172-4.614-.679-1.506-1.946-2.578-3.465-2.932a.5.5 0 0 0-.568.271A5.023 5.023 0 0 0 9 9.75c0 1.01.374 1.93.973 2.628a.5.5 0 0 0 .567.274 5.538 5.538 0 0 0 4.257-2.064.5.5 0 0 0-.267-.79z"/>
+            moonIcon : ` <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="w-5 h-5 transform -rotate-90" viewBox="0 0 24 24">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
             </svg>`,
 
             isDarkMode : JSON.parse(localStorage.getItem('darkMode')) ? true : false,
-            // darkModeVal : ref(JSON.parse(localStorage.getItem('darkMode') ?? 'false')),
             styleProperties: {
-                                '--background-color'  : this.darkModeVal ? '#000' : '#fff',
-                                '--text-color'        : this.darkModeVal ? '#fff' : '#000'
+                                '--background-color'  : this.isDarkMode ? '#121228' : '#fff',
+                                '--text-color'        : this.isDarkMode ? '#fff' : '#121228'
                             },
         }
     },
@@ -120,8 +129,8 @@ export default {
         this.usedData = this.loggedUserData;
 
         this.styleProperties = {
-                                '--background-color'  : this.isDarkMode ? '#000' : '#fff',
-                                '--text-color'        : this.isDarkMode ? '#fff' : '#000'
+                                '--background-color'  : this.isDarkMode ? '#121228' : '#fff',
+                                '--text-color'        : this.isDarkMode ? '#fff' : '#121228'
                             };
 
         this.applyStyles();
@@ -134,25 +143,19 @@ export default {
             this.isDarkMode = JSON.parse(localStorage.getItem('darkMode')) ? true : false;
 
             this.styleProperties = {
-                                '--background-color'  : this.isDarkMode ? '#000' : '#fff',
-                                '--text-color'        : this.isDarkMode ? '#fff' : '#000'
+                                '--background-color'  : this.isDarkMode ? '#121228' : '#fff',
+                                '--text-color'        : this.isDarkMode ? '#fff' : '#121228'
                             };
 
             this.applyStyles();            
         },
 
         applyStyles: function() {
-            console.log("apply styles started.. darkmode; ", this.isDarkMode);
-
             var root = document.querySelector(':root');
 
             for(const [key, value] of Object.entries(this.styleProperties)) {
                 root.style.setProperty(key, value);
-
-                console.log("Setting props: Key: ", key, ' Val: ',  value);
             }
-
-            console.log("apply styles completed");
         },
 
         signOut: async function() {
@@ -181,7 +184,7 @@ export default {
         setIsOpen: function() {
             this.isOpen = !this.isOpen;
         }
-    },    
+    },
 }
 </script>
 

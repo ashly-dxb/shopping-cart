@@ -26,6 +26,10 @@ import CheckoutCancel from "./pages/CheckoutCancel.vue";
 import MyOrders from "./pages/MyOrders.vue";
 import Profile from "./pages/Profile.vue";
 import Favorite from "./pages/Favorite.vue";
+import ProductList from "./pages/admin/ProductList.vue";
+import AddProduct from "./pages/admin/AddProduct.vue";
+import EditProduct from "./pages/admin/EditProduct.vue";
+
 import NotFoundPage from "./pages/NotFoundPage.vue";
 
 var router = VueRouter.createRouter({
@@ -76,7 +80,7 @@ var router = VueRouter.createRouter({
     {
       path: "/products",
       component: () => import("./pages/ProductList.vue"),
-      name: "ProductPage",
+      name: "ProductsPage",
     },
     {
       path: "/products/:productId",
@@ -108,6 +112,22 @@ var router = VueRouter.createRouter({
       path: "/Profile",
       component: Profile,
       name: "ProfilePage",
+    },
+
+    {
+      path: "/Admin/ProductList",
+      component: ProductList,
+      name: "ProductListPage",
+    },
+    {
+      path: "/Admin/AddProduct",
+      component: AddProduct,
+      name: "AddProductPage",
+    },
+    {
+      path: "/Admin/EditProduct/:id",
+      component: EditProduct,
+      name: "EditProductPage",
     },
     {
       path: "/:pathMatch(.*)*",

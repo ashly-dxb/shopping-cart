@@ -41,6 +41,18 @@ const mainLinks = [
     type: "LOGGED_IN",
     icon: "pi-key",
   },
+  {
+    link: "/Admin/ProductList",
+    text: "Product",
+    type: "LOGGED_IN",
+    icon: "pi-pin",
+  },
+  {
+    link: "/Admin/AddProduct",
+    text: "Add",
+    type: "LOGGED_IN",
+    icon: "pi-pin",
+  },
 ];
 
 const otherLinks = [

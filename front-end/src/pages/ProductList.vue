@@ -35,6 +35,7 @@ export default {
             loader: 'dots',
         }
     },
+    /*
     async beforeRouteEnter(to, from, next) {
         // console.log("beforeRouteEnter");
         try {
@@ -44,6 +45,7 @@ export default {
             next(vm => vm.setError(err))
         }
     },
+    */
     computed: {
         ...mapGetters({
             loggedUserData: 'getLoggedUserInfo',
@@ -55,7 +57,6 @@ export default {
     },
     methods: {
         created: async function () {
-            // this.userId = localStorage.getItem("userId");
 
             let loader = this.$loading.show({
                 loader: 'bars',
@@ -72,6 +73,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("error:", error);
+                    this.error = error.toString();
                 })
                 .finally(() => {
                     loader.hide();
@@ -81,7 +83,6 @@ export default {
                 const response2 = await axios.get(baseURL + `/cart/itemlist/${this.userId}`);
                 this.cartItemsList = response2.data;
             }
-
             // loader.hide();
         },
         setPost(products) {

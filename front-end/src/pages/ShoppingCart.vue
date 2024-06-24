@@ -124,15 +124,20 @@ export default {
                     opacity: 0.5,
                 });
 
+                this.loading = true;
+
                 axios.get(baseURL + `/cart/${this.userId}`)
                 .then((response) => {
                     this.cartItems = response.data;
                     this.calculateCartTotal();
+                    this.loading = false;
                 })
                 .catch((error) => {
                     console.log("Error: ", error);
+                    this.error = error.toString();
                 })
                 .finally(() => {
+                    // this.loading = false;
                     loader.hide();
                 });
             }

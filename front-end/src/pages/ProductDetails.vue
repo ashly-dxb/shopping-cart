@@ -111,9 +111,12 @@ export default {
             axios.get(baseURL + `/products/details/${this.$route.params.productId}`)
             .then((response) => {
                 this.product = response.data;
-                loader.hide();
+                // loader.hide();
             })
-            .catch((errors) => {
+            .catch((error) => {
+                // loader.hide();
+            })
+            .finally(() => {
                 loader.hide();
             });
 
